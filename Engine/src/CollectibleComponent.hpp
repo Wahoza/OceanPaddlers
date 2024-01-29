@@ -20,6 +20,7 @@ public:
     Vector2f  getPosition();
     bool      init();
     FloatRect m_shape = {0, 0, 0, 0};
+    string    m_identifier = "Player0";
 
 private:
     string type = "";
