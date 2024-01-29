@@ -28,6 +28,7 @@ public:
     {
         return m_sprite;
     }
+    
 
 private:
     std::string m_textureFile;

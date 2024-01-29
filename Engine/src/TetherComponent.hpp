@@ -18,7 +18,7 @@ public:
     TetherComponent(GameObject& gameObject, FloatRect shape, Vector2f offset, string forces, float mass, float loss, bool controll, float _movePercentage);
     ~TetherComponent();
     void update(const float deltaTime) override;
-    void GetForce();
+    void GetForce(float deltaTime);
     void CalculateEffect();
     void RepositionBodies();
     bool init() override;
@@ -30,12 +30,12 @@ public:
     GameObject& TetherItem2;
 
     vector<Vector2f> forces;
+    Vector2f         orientation = {1, 0};
 
 private:
     //orientation should be normalized, then multiplied with length
     //position is in the center -> actual vec of orientation = pos + orientation - 1/2 orientation
     //also note: GameObject Position is defined by topleft, therefore at init change Pos of game Object, so no weird effects at init
-    Vector2f orientation = {1, 0};
     float movePercentage;
     float       length;
 };

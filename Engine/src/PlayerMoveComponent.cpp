@@ -44,6 +44,18 @@ void PlayerMoveComponent::update(const float deltaTime)
     Vector2f moveVec = translation;
     moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
 
+    if (m_gameObject.getComponent<TetherComponent>() != nullptr)
+    {
+            Vector2f Y = m_gameObject.getComponent<TetherComponent>().get()->orientation;
+            float    dotProduct    = moveVec.x * Y.x + moveVec.y * Y.y;
+            float    lengthSquared = Y.x * Y.x + Y.y * Y.y;
+
+            float scalarProjection = dotProduct / lengthSquared;
+
+            sf::Vector2f X_projected(scalarProjection * Y.x, scalarProjection * Y.y);
+
+            moveVec = X_projected;
+    }
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr && rigidControll)
     {
         m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(translation * 100.f * deltaTime);

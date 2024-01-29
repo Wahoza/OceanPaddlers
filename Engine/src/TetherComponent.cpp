@@ -6,6 +6,8 @@
 
 #include "GameObjectManager.hpp"
 #include "PlayerMoveComponent.hpp"
+#include "SpriteRenderComponent.hpp"
+#include <cmath>
 using namespace sf;
 using namespace std;
 
@@ -62,42 +64,56 @@ TetherItem2(createNewTetheredObject("tethered2"))
 
     Vector2f pos2 = (orientation / 2.f + m_gameObject.getPosition()) * length;
     TetherItem2.setPosition(pos2);
+    //m_gameObject.setOrigin(shape.width / 2, shape.height / 2);
 }
 void TetherComponent::update(const float deltaTime)
 {
     TetherItem1.update(deltaTime);
     TetherItem2.update(deltaTime);
 
-    //GetForce();
-    //CalculateEffect();
+    GetForce(deltaTime);
+    CalculateEffect();
     RepositionBodies();
     //note: rotate sprite later
+    if (m_gameObject.getComponent<SpriteRenderComponent>() != nullptr)
+    {
+        auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
+        float angle  = atan2(orientation.y, orientation.x);
+        angle        = angle * 180.0f / static_cast<float>(3.14);
+        Vector2f spriteOffset = {sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2};
+        sprite.setOrigin(spriteOffset);
+        sprite.setRotation(angle);
+    }
 }
-void TetherComponent::GetForce()
+void TetherComponent::GetForce(float deltaTime)
 {
-    forces.push_back(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity());
-    forces.push_back(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity());
+    forces.push_back(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
+    forces.push_back(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
 }
 void TetherComponent::CalculateEffect()
 {
     for (Vector2f force : forces)
     {
-        m_gameObject.setPosition(force * movePercentage);
+
+        m_gameObject.setPosition(m_gameObject.getPosition() + force * movePercentage);
         force = force - force*movePercentage;
     }
     
     //only two objects are tethered
-    orientation = normalize(- orientation / 2.f + forces[0]);
+    //behind:
+    orientation = normalize(orientation / 2.f - forces[0]);
+
     orientation = normalize(orientation / 2.f + forces[1]);
     forces.clear();
 }
 void TetherComponent::RepositionBodies()
 {
-    std::cout << TetherItem2.getComponent<RigidBodyComponent>().get()->m_shape.width << std::endl;
-    //std::cout << "to:" + to_string(TetherItem1.getPosition().x) + " " + to_string(TetherItem1.getPosition().y) << std::endl;
-    //std::cout << "go:" + to_string(m_gameObject.getPosition().x) + " " + to_string(m_gameObject.getPosition().y) << std::endl;
-    TetherItem1.setPosition((-orientation / 2.f * length + m_gameObject.getPosition()));
-    TetherItem2.setPosition((orientation / 2.f * length + m_gameObject.getPosition()));
+    Vector2f size1 = {TetherItem1.getComponent<RigidBodyComponent>().get()->m_shape.width,
+                      TetherItem1.getComponent<RigidBodyComponent>().get()->m_shape.height};
+    Vector2f size2 = {TetherItem2.getComponent<RigidBodyComponent>().get()->m_shape.width,
+                      TetherItem2.getComponent<RigidBodyComponent>().get()->m_shape.height};
+    TetherItem1.setPosition((-orientation / 2.f * length + m_gameObject.getPosition() - size1/ 2.f));
+    TetherItem2.setPosition((orientation / 2.f * length + m_gameObject.getPosition() - size2 / 2.f));
 }
 Vector2f TetherComponent::normalize(Vector2f vec)
 {
