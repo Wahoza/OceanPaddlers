@@ -65,7 +65,7 @@ void MainState::init()
 
     {
         const auto camera = GameObject::create("Camera");
-
+        camera->setPosition(sf::Vector2f((m_game->getWindow().getSize().x / 2), (m_game->getWindow().getSize().y / 2)));
         const auto renderComp = camera->addComponent<CameraRenderComponent>(*camera,
                                                                             m_game->getWindow(),
                                                                             m_game->getWindow().getView());
