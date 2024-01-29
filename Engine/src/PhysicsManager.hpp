@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "RigidBodyComponent.hpp"
 #include "StaticColliderComponent.hpp"
 #include "TriggerComponent.hpp"

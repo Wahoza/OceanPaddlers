@@ -9,6 +9,7 @@
 #include "Tileson.hpp"
 #include "RigidBodyComponent.hpp"
 #include "StaticColliderComponent.hpp"
+#include "TetherComponent.hpp"
 #include "PhysicsManager.hpp"
 #include "Hud.hpp"
 #include "AIController.hpp"
@@ -71,6 +72,7 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         }
         else if (name == "Mass")
         {
+
             auto mass = std::any_cast<float>(property->getValue());
             string forces;
             if (object.getProperties().getProperty("Forces"))
@@ -90,11 +92,35 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
             {
                 loss = 0;
             }
-            gameObject->addComponent<RigidBodyComponent>(*gameObject,
-                                                         FloatRect{0, 0, static_cast<float>(object.getSize().x), static_cast<float>(object.getSize().y)},
-                                                         Vector2f{0.f, 0.f},
-                                                         forces,
-                                                         mass, loss);
+
+            if (object.getProperties().getProperty("TetherPercentage"))
+            {
+                float percentage = std::any_cast<float>(object.getProperties().getProperty("TetherPercentage")->getValue());
+                gameObject->addComponent<TetherComponent>(*gameObject,
+                                                             FloatRect{0,
+                                                                       0,
+                                                                       static_cast<float>(object.getSize().x),
+                                                                       static_cast<float>(object.getSize().y)},
+                                                             Vector2f{0.f, 0.f},
+                                                             forces,
+                                                             mass,
+                                                             loss,
+                                                             true,
+                                                             percentage
+                    );
+            }
+            else
+            {
+                gameObject->addComponent<RigidBodyComponent>(*gameObject,
+                                                             FloatRect{0,
+                                                                       0,
+                                                                       static_cast<float>(object.getSize().x),
+                                                                       static_cast<float>(object.getSize().y)},
+                                                             Vector2f{0.f, 0.f},
+                                                             forces,
+                                                             mass,
+                                                             loss);
+            }
 
         }
         else if (name == "Collectible")

@@ -4,6 +4,8 @@
 #include "PhysicsManager.hpp"
 #include "RigidBodyComponent.hpp"
 #include "DebugDraw.hpp"
+#include "TetherComponent.hpp"
+
 using namespace sf;
 using namespace std;
 
@@ -99,7 +101,8 @@ void PhysicsManager::findCollisions()
                 continue;
 
             auto& body2 = *itB;
-
+            if (body1->GetTether() != nullptr && body1->GetTether() == body2->GetTether())
+                continue;
             // if both object don't have a mass or body is the same skip
             if (body1->m_mass == 0 && body2->m_mass == 0)
                 continue;

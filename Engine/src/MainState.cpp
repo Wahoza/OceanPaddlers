@@ -50,15 +50,25 @@ void MainState::init()
         }
     }
 
+    const auto player = m_gameObjectManager.getGameObject("Player0");
+    const auto player1 = m_gameObjectManager.getGameObject("Player1");
+    const auto ball = m_gameObjectManager.getGameObject("Ball");
+    
+    if (player1->getComponent<AIController>() != nullptr)
+    {
+        player1->getComponent<AIController>()->GetGoalObject(ball.get());
+    }
+    // Moving 
+
     {
         const auto camera = GameObject::create("Camera");
 
         const auto renderComp = camera->addComponent<CameraRenderComponent>(*camera,
                                                                             m_game->getWindow(),
                                                                             m_game->getWindow().getView());
-        //Change this later
+
         camera->addComponent<TransformAnimationComponent>(*camera,
-                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(nullptr, 10.F));
+                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(ball, 10.F));
 
 
         if (!camera->init())

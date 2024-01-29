@@ -1,5 +1,7 @@
 #pragma once
+
 #include "stdafx.h"
+#include "TetherComponent.hpp"
 #include "IComponent.hpp"
 
 using namespace sf;
@@ -44,9 +46,9 @@ public:
     Vector2f    getPosition();
     void        ChangePosition(Vector2f changePos);
     void        calculateOffset();
-
+    void        SetTether(TetherComponent* Tether);
     RigidBodyComponent(GameObject& gameObject, FloatRect shape, Vector2f offset, string forces, float mass, float Loss);
-
+    TetherComponent*        GetTether();
     std::list<sf::Vector2f> StringToVecList(string input)
     {
 
@@ -62,5 +64,7 @@ public:
         return vecs;
     }
 
+private:
+    TetherComponent* m_tether = nullptr;
 };
 } // namespace mmt_gd
