@@ -5,7 +5,7 @@
 #include "GameObject.hpp"
 #include "InputManager.hpp"
 #include "RigidBodyComponent.hpp"
-
+#include "SpriteRenderComponent.hpp"
 #include <cmath>
 
 namespace mmt_gd
@@ -21,29 +21,54 @@ bool PlayerMoveComponent::init()
 {
     return true;
 }
+sf::Vector2i PlayerMoveComponent::toSpriteOffset(int value, int playerIdx)
+{
+    if (playerIdx == 0)
+    {
+        return (Vector2i{value, 0});
+    }
+    if (playerIdx == 1)
+    {
+        return (Vector2i{0, value});
+    }
+}
 
 void PlayerMoveComponent::update(const float deltaTime)
 {
-    const auto   speed = 1'000.0F; // pixels/second
+    const auto   speed = 10.0F; // pixels/second
     sf::Vector2f translation{};
-
+    Vector2i     SpriteOffset = {0, 0};
         if (InputManager::getInstance().isKeyDown("right", m_playerIndex))
         {
             translation.x += 1;
+            SpriteOffset += toSpriteOffset(0, m_playerIndex);
         }
         if (InputManager::getInstance().isKeyDown("left", m_playerIndex))
         {
             translation.x -= 1;
+            SpriteOffset += toSpriteOffset(0, m_playerIndex);
         }
+
         if (InputManager::getInstance().isKeyDown("up", m_playerIndex))
         {
             translation.y -= 1;
+            SpriteOffset += toSpriteOffset(2, m_playerIndex);
         }
         if (InputManager::getInstance().isKeyDown("down", m_playerIndex))
         {
             translation.y += 1;
+            SpriteOffset += toSpriteOffset(1, m_playerIndex);
         }
-
+        if (m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether() != nullptr)
+        {
+            m_gameObject.getComponent<RigidBodyComponent>()
+                .get()
+                ->GetTether()
+                ->getGameObject()
+                .getComponent<SpriteRenderComponent>()
+                .get()
+                ->IncrementOffset(SpriteOffset);
+        }
     Vector2f moveVec = translation;
         if (moveVec.x != 0 && moveVec.y != 0)
         {
@@ -65,7 +90,7 @@ void PlayerMoveComponent::update(const float deltaTime)
                 //moveVec = T * moveVec.y;
             }
            
-        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * 100.f * deltaTime);
+        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * speed * deltaTime);
     }
     else
     {

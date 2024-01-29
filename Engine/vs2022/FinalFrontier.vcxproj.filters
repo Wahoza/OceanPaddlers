@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\GameObject">
-      <UniqueIdentifier>{5783397e-48fb-4d06-abf7-4fe3dab64aa4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{e7e786fc-d12f-4c78-91fb-a9797d7c9df3}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,9 @@
     <Filter Include="Source Files\Animations">
       <UniqueIdentifier>{06ab3e91-e435-4694-853d-d496d0686ad2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Debug\GameObject">
+      <UniqueIdentifier>{5783397e-48fb-4d06-abf7-4fe3dab64aa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/stdafx.h">
@@ -70,7 +70,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameObject.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\MenuState.hpp">
       <Filter>Header Files\GameState</Filter>
@@ -82,25 +82,25 @@
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\IComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\IRenderComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SpriteRenderComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\CameraRenderComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerMoveComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TileLayerRenderComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SpriteManager.hpp">
       <Filter>Header Files\Manager</Filter>
@@ -166,7 +166,7 @@
       <Filter>Header Files\Animations</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerShootComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ObjectFactory.hpp">
       <Filter>Header Files\Map</Filter>
@@ -175,25 +175,25 @@
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\RigidBodyComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\StaticColliderComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TriggerComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Hud.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AIController.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\CollectibleComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TetherComponent.hpp">
-      <Filter>Header Files\GameObject</Filter>
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

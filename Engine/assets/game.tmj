@@ -132,7 +132,7 @@
          "name":"GameObjects",
          "objects":[
                 {
-                 "height":90,
+                 "height":61,
                  "id":16,
                  "name":"Player0",
                  "properties":[
@@ -179,27 +179,27 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"Hunter1.bmp"
+                         "value":"turtles.png"
                         }, 
                         {
                          "name":"TextureRectHeight",
                          "type":"int",
-                         "value":25
+                         "value":61
                         }, 
                         {
                          "name":"TextureRectLeft",
                          "type":"int",
-                         "value":49
+                         "value":0
                         }, 
                         {
                          "name":"TextureRectTop",
                          "type":"int",
-                         "value":25
+                         "value":0
                         }, 
                         {
                          "name":"TextureRectWidth",
                          "type":"int",
-                         "value":25
+                         "value":86
                         }, 
                         {
                          "name":"VelocityLoss",
@@ -209,9 +209,9 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":90,
-                 "x":1083.84815151515,
-                 "y":270
+                 "width":86,
+                 "x":947.838023101332,
+                 "y":339.451980466631
                 }, 
                 {
                  "height":112.424242424242,

@@ -18,9 +18,7 @@ public:
 
     bool init() override;
 
-    void update(float deltaTime) override
-    {
-    }
+    void update(float deltaTime) override;
 
     void draw() override;
 
@@ -28,12 +26,15 @@ public:
     {
         return m_sprite;
     }
-    
+    void updateIntRect(sf::Vector2i Iterator);
+
+    void IncrementOffset(sf::Vector2i increment);
 
 private:
     std::string m_textureFile;
     sf::Texture m_texture;
     sf::Sprite  m_sprite;
     std::string m_layerName;
+    sf::Vector2i m_offset;
 };
 } // namespace mmt_gd
