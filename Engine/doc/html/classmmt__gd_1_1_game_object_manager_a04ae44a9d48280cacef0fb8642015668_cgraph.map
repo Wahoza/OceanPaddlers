@@ -1,0 +1,6 @@
+<map id="mmt_gd::GameObjectManager::init" name="mmt_gd::GameObjectManager::init">
+<area shape="rect" id="node1" title=" " alt="" coords="5,63,205,103"/>
+<area shape="rect" id="node2" href="$classmmt__gd_1_1_game_object_manager.html#afb4a0d7bed052fd6339a1cbe6f7b76af" title=" " alt="" coords="257,5,457,45"/>
+<area shape="rect" id="node3" href="$classmmt__gd_1_1_event_bus.html#a92f09869ea30cefecf86955b30c7e1e4" title="´Add/remove event listeners Be careful: Due to the usage of std::function, multiple additions of the ..." alt="" coords="253,70,460,95"/>
+<area shape="rect" id="node4" href="$classmmt__gd_1_1_event_bus.html#ab7f4ea3d3a894bb83c4bfdf76d501811" title=" " alt="" coords="253,119,460,145"/>
+</map>

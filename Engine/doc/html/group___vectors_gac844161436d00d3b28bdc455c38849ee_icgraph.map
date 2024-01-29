@@ -1,0 +1,4 @@
+<map id="MathUtil::crossProduct" name="MathUtil::crossProduct">
+<area shape="rect" id="node1" title="Computes the cross product of two 2D vectors (Z component only)." alt="" coords="203,5,357,31"/>
+<area shape="rect" id="node2" href="$group___vectors.html#gad2f4e4396615f6d8fc541a51053ce079" title="Computes the signed angle from lhs to rhs." alt="" coords="5,5,155,31"/>
+</map>

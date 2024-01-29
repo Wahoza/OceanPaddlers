@@ -1,0 +1,6 @@
+<map id="MathUtil::setPolarAngle" name="MathUtil::setPolarAngle">
+<area shape="rect" id="node1" title="Sets the polar angle of the specified vector." alt="" coords="5,5,164,31"/>
+<area shape="rect" id="node2" href="$group___vectors.html#gac64b6398e74001b7f1089cfe21d1745b" title="Returns the length of the 2D vector." alt="" coords="212,5,325,31"/>
+<area shape="rect" id="node3" href="$group___vectors.html#ga4684eab3debf72da3f8a4936b21f71f6" title="Returns the square of vector&#39;s length." alt="" coords="373,5,536,31"/>
+<area shape="rect" id="node4" href="$group___vectors.html#gaf03beaae17966de61c46d85ba400c60c" title="Computes the dot product of two 2D vectors." alt="" coords="584,5,725,31"/>
+</map>

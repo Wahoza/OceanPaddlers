@@ -1,0 +1,5 @@
+<map id="MathUtil::projectedVector" name="MathUtil::projectedVector">
+<area shape="rect" id="node1" title="Returns the projection of vector onto axis." alt="" coords="5,5,175,31"/>
+<area shape="rect" id="node2" href="$group___vectors.html#gaf03beaae17966de61c46d85ba400c60c" title="Computes the dot product of two 2D vectors." alt="" coords="433,5,575,31"/>
+<area shape="rect" id="node3" href="$group___vectors.html#ga4684eab3debf72da3f8a4936b21f71f6" title="Returns the square of vector&#39;s length." alt="" coords="223,31,385,56"/>
+</map>

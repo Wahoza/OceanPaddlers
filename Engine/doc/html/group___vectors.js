@@ -1,0 +1,28 @@
+var group___vectors =
+[
+    [ "MathUtil::crossProduct", "group___vectors.html#gac844161436d00d3b28bdc455c38849ee", null ],
+    [ "MathUtil::crossProduct", "group___vectors.html#gafd24e56547aaaa13739491443e3a486d", null ],
+    [ "MathUtil::cwiseProduct", "group___vectors.html#ga0e39e6e7e4f41b9da7f8f1b85c523382", null ],
+    [ "MathUtil::cwiseProduct", "group___vectors.html#gaa480b56a4dd4ede680823a9ac47cfc19", null ],
+    [ "MathUtil::cwiseQuotient", "group___vectors.html#ga75e4af01dec078326dd343b1b59739ea", null ],
+    [ "MathUtil::cwiseQuotient", "group___vectors.html#gace7b6642882a0fbe2ba2c11a954d20bd", null ],
+    [ "MathUtil::dotProduct", "group___vectors.html#gaf03beaae17966de61c46d85ba400c60c", null ],
+    [ "MathUtil::dotProduct", "group___vectors.html#ga42e6fc0029dac80e9a915593be6b3142", null ],
+    [ "MathUtil::elevationAngle", "group___vectors.html#ga6c7153cd9d8b052c5587ee90ad285501", null ],
+    [ "MathUtil::length", "group___vectors.html#gac64b6398e74001b7f1089cfe21d1745b", null ],
+    [ "MathUtil::length", "group___vectors.html#gac40d187fe249ce0742340076defd17ea", null ],
+    [ "MathUtil::perpendicularVector", "group___vectors.html#ga1f1599418c1167e05d15d46bae8ee9e5", null ],
+    [ "MathUtil::polarAngle", "group___vectors.html#gad86f5cb2a3d9fc002216e3e4a0157494", null ],
+    [ "MathUtil::polarAngle", "group___vectors.html#gabfaecb50d0a0b84b4885620b154488f1", null ],
+    [ "MathUtil::projectedVector", "group___vectors.html#ga789bc21d31bbeea29333d5ed6b5c0b65", null ],
+    [ "MathUtil::rotate", "group___vectors.html#ga0db56a3352442dfd751950b7f47e54fa", null ],
+    [ "MathUtil::rotatedVector", "group___vectors.html#ga3286aa6285deb51bc400752b80dc99d5", null ],
+    [ "MathUtil::setLength", "group___vectors.html#ga861348e5cbd8acaa464eca8f686ad787", null ],
+    [ "MathUtil::setPolarAngle", "group___vectors.html#ga264efb8b7d6d54aa20819710f5843903", null ],
+    [ "MathUtil::signedAngle", "group___vectors.html#gad2f4e4396615f6d8fc541a51053ce079", null ],
+    [ "MathUtil::squaredLength", "group___vectors.html#ga4684eab3debf72da3f8a4936b21f71f6", null ],
+    [ "MathUtil::squaredLength", "group___vectors.html#ga445fc778a2838ef670c35e6e7856a676", null ],
+    [ "MathUtil::toVector3", "group___vectors.html#ga30fe31420a9dc80afecffadd3dfde0b1", null ],
+    [ "MathUtil::unitVector", "group___vectors.html#gaf80f377c55ade0ac9b511de989b0876f", null ],
+    [ "MathUtil::unitVector", "group___vectors.html#gacddced6e8c5ccf9e5a7213bea0ed826a", null ]
+];

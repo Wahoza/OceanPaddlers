@@ -1,0 +1,5 @@
+<map id="mmt_gd::GameStateManager::setState" name="mmt_gd::GameStateManager::setState">
+<area shape="rect" id="node1" title="Changes the current GameState to the one with the given name." alt="" coords="201,37,395,77"/>
+<area shape="rect" id="node2" href="$classmmt__gd_1_1_menu_state.html#a09c7a8ff7f4e07c4a04e0d3ab1f4e6cd" title=" " alt="" coords="5,5,153,45"/>
+<area shape="rect" id="node3" href="$classmmt__gd_1_1_main_state.html#aab7c6bdae1d0295807872729eda3730c" title=" " alt="" coords="7,69,151,109"/>
+</map>

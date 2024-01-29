@@ -1,0 +1,7 @@
+<map id="mmt_gd::SpriteManager::init" name="mmt_gd::SpriteManager::init">
+<area shape="rect" id="node1" title=" " alt="" coords="5,88,167,128"/>
+<area shape="rect" id="node2" href="$classmmt__gd_1_1_sprite_manager.html#a9a7bb990cc5d9ba1e18feea6b604a101" title="Add component to the named layer. If the component is already in a layer it is removed from this laye..." alt="" coords="237,5,399,45"/>
+<area shape="rect" id="node3" href="$classmmt__gd_1_1_event_bus.html#a92f09869ea30cefecf86955b30c7e1e4" title="´Add/remove event listeners Be careful: Due to the usage of std::function, multiple additions of the ..." alt="" coords="215,70,421,95"/>
+<area shape="rect" id="node4" href="$classmmt__gd_1_1_event_bus.html#ab7f4ea3d3a894bb83c4bfdf76d501811" title=" " alt="" coords="215,119,421,145"/>
+<area shape="rect" id="node5" href="$classmmt__gd_1_1_sprite_manager.html#a434cc71eedd1e856fe10b309d2324a62" title=" " alt="" coords="237,169,399,209"/>
+</map>

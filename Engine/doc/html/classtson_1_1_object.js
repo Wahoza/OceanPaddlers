@@ -1,0 +1,28 @@
+var classtson_1_1_object =
+[
+    [ "Object", "classtson_1_1_object.html#a21457f0596184e36e69852a730bda829", null ],
+    [ "Object", "classtson_1_1_object.html#ad1fde9d6453d6540e059464c602a9fa3", null ],
+    [ "get", "classtson_1_1_object.html#a24082e07c3b08bed0ca4c23321a895f1", null ],
+    [ "getClass", "classtson_1_1_object.html#abcf98f9023442eb66f4c12dd573c0397", null ],
+    [ "getClassType", "classtson_1_1_object.html#a13328dfacc21b0b9e950b300aafc94ce", null ],
+    [ "getFlipFlags", "classtson_1_1_object.html#a376a1082001ed4f1ff5200dd735deef0", null ],
+    [ "getGid", "classtson_1_1_object.html#ab95d441052cc1231748e3efeee06126a", null ],
+    [ "getId", "classtson_1_1_object.html#adbfd0c407766d4ce42445b4d2cc7d3a0", null ],
+    [ "getName", "classtson_1_1_object.html#a34304ec8a32264ea727a316dafe161bf", null ],
+    [ "getObjectType", "classtson_1_1_object.html#ab23b1aacebd3f336e2276ad81c1fffe9", null ],
+    [ "getPolygons", "classtson_1_1_object.html#a3abca1e9aabc88855e1b187c13cfdb8f", null ],
+    [ "getPolylines", "classtson_1_1_object.html#a7748b51bd933bf1d03487769edcaf9a9", null ],
+    [ "getPosition", "classtson_1_1_object.html#a88bcc0a8b442397ea4468254bbccd7e7", null ],
+    [ "getProp", "classtson_1_1_object.html#a4d34c740f45c97a19014f5ffe334ea63", null ],
+    [ "getProperties", "classtson_1_1_object.html#ae3fed079c2129007b0b4f70c67737d1c", null ],
+    [ "getRotation", "classtson_1_1_object.html#a6348140db92546bd48c84dfe5712deda", null ],
+    [ "getSize", "classtson_1_1_object.html#a99729d2eaf19db160178b679499a3b80", null ],
+    [ "getTemplate", "classtson_1_1_object.html#a0720e228d43b38e032beb1ddd5d47fba", null ],
+    [ "getText", "classtson_1_1_object.html#ad3d7c49ed26289d3438adfca3f0c21c5", null ],
+    [ "getType", "classtson_1_1_object.html#a57a0d7e77f6cbe037770392ac72e7a25", null ],
+    [ "hasFlipFlags", "classtson_1_1_object.html#a22e5910e077d32be2076e425be7ced87", null ],
+    [ "isEllipse", "classtson_1_1_object.html#ad4e021ff8d2eaa7c660d8b90db3ec005", null ],
+    [ "isPoint", "classtson_1_1_object.html#afda3ed8a906aef01e4b834ece6965e50", null ],
+    [ "isVisible", "classtson_1_1_object.html#ab2c504d55d8ddadd40cef0ca3711d49d", null ],
+    [ "parse", "classtson_1_1_object.html#a8d1afaeb2878eb4dcd5c519a4b6d9db3", null ]
+];

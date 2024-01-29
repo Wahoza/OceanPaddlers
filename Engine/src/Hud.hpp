@@ -1,0 +1,42 @@
+#pragma once
+//Note: this is probably noth the ideal solution, but i think its best if this is completely seperate (as it is for a very specific case)
+//Idea: i can alway put it in the render /update after all the game object/sprites consistantly
+#include "stdafx.h"
+#include "EventBus.hpp"
+using namespace sf;
+using namespace std;
+
+namespace mmt_gd
+{
+class Hud
+{
+public:
+    static Hud* getInstance();
+    void        shutdown();
+    void        CreateHud();
+    Hud();
+    void        Notify(IEvent::Ptr event);
+    
+    //void IEvent::getEventType
+    //list<Sprite, Vector2f> spriteList;
+
+    //EventBus::EventListener listener;
+    //using Ptr = std::shared_ptr<Hud>;
+
+    View m_view;
+    int   scoreP1 = 0;
+    int   scoreP2 = 0;
+    void  update(float deltaTime);
+    void  draw(sf::RenderWindow& m_window);
+    
+    string mainText = "Score: P1 - P2";
+    Vector2f offset   = {-400, -400};
+
+    Text* text;
+    Font m_font;
+
+private:
+    string        m_layerName;
+    static Hud* m_instance;
+};
+} // namespace mmt_gd

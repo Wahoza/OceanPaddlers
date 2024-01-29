@@ -1,0 +1,5 @@
+<map id="MathUtil::signedAngle" name="MathUtil::signedAngle">
+<area shape="rect" id="node1" title="Computes the signed angle from lhs to rhs." alt="" coords="5,31,155,56"/>
+<area shape="rect" id="node2" href="$group___vectors.html#gac844161436d00d3b28bdc455c38849ee" title="Computes the cross product of two 2D vectors (Z component only)." alt="" coords="203,5,357,31"/>
+<area shape="rect" id="node3" href="$group___vectors.html#gaf03beaae17966de61c46d85ba400c60c" title="Computes the dot product of two 2D vectors." alt="" coords="209,55,351,80"/>
+</map>
