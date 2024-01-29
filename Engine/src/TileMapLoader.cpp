@@ -40,7 +40,8 @@ void TileMapLoader::createTileSprite(
     int                               layerIdx,
     const tson::Layer&                layer,
     int                               i,
-    const unsigned                    gid)
+    const unsigned                    gid,
+    SpriteManager                     spriteManager)
 {
     // get tileSet and tileSet texture
     const auto* const  tileSet = map->getTilesetByGid(gid);
@@ -51,6 +52,8 @@ void TileMapLoader::createTileSprite(
 
     // horizontal tile count in tileSet texture
     const int tileCountX = texture->getSize().x / tileSize.x;
+    const int tileCountY = texture->getSize().y / tileSize.y;
+
 
     // calculate position of tile
     sf::Vector2f position;
@@ -66,10 +69,13 @@ void TileMapLoader::createTileSprite(
     const sf::IntRect source(idxX * tileSize.x, idxY * tileSize.y, tileSize.x, tileSize.y);
 
     // create tile and put it into a layer
+    auto       mapHeight = map->getSize().y * map->getTileSize().y;
+    auto       scaleFactor = spriteManager.getWindow().getSize().y / mapHeight;
     const auto sprite = std::make_shared<sf::Sprite>();
     sprite->setTexture(*texture);
     sprite->setTextureRect(source);
-    sprite->setPosition(position.x, position.y);
+    sprite->setPosition(position.x * scaleFactor, position.y * scaleFactor);
+    sprite->setScale(sf::Vector2f(scaleFactor, scaleFactor));
 
     tileLayers[layerIdx].m_tiles.push_back({i, sprite});
 }
@@ -112,7 +118,7 @@ void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const 
                 continue;
             }
 
-            createTileSprite(map, tileSets, tileLayers, layerIdx, layer, i, gid);
+            createTileSprite(map, tileSets, tileLayers, layerIdx, layer, i, gid, spriteManager);
         }
     }
 

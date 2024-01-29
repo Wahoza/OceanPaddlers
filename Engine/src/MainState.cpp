@@ -46,19 +46,32 @@ void MainState::init()
         }
         else
         {
+            map->getStatus();
             std::cerr << "Error loading " << mapPath << std::endl;
         }
     }
 
+        // const auto ball = m_gameObjectManager.getGameObject("Ball");
+
+    /*const auto player = m_gameObjectManager.getGameObject("Player0");
+    const auto player1 = m_gameObjectManager.getGameObject("Player1");
+    const auto ball = m_gameObjectManager.getGameObject("Ball");
+    
+    if (player1->getComponent<AIController>() != nullptr)
+    {
+        player1->getComponent<AIController>()->GetGoalObject(ball.get());
+    }*/
+    // Moving 
+
     {
         const auto camera = GameObject::create("Camera");
-
+        camera->setPosition(sf::Vector2f((m_game->getWindow().getSize().x / 2), (m_game->getWindow().getSize().y / 2)));
         const auto renderComp = camera->addComponent<CameraRenderComponent>(*camera,
                                                                             m_game->getWindow(),
                                                                             m_game->getWindow().getView());
-        //Change this later
-        camera->addComponent<TransformAnimationComponent>(*camera,
-                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(nullptr, 10.F));
+
+        // camera->addComponent<TransformAnimationComponent>(*camera,
+        //                                                  std::make_shared<mmt::TransformAnimationSmoothFollow>(ball, 10.F));
 
 
         if (!camera->init())
