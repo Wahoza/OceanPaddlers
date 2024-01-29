@@ -31,6 +31,7 @@ public:
 
     vector<Vector2f> forces;
     Vector2f         orientation = {1, 0};
+    vector<GameObject*> getTethers();
 
 private:
     //orientation should be normalized, then multiplied with length

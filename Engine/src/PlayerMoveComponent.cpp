@@ -5,6 +5,9 @@
 #include "GameObject.hpp"
 #include "InputManager.hpp"
 #include "RigidBodyComponent.hpp"
+
+#include <cmath>
+
 namespace mmt_gd
 {
 PlayerMoveComponent::PlayerMoveComponent(GameObject& gameObject,  const int playerIndex, bool rigidControll) :
@@ -42,23 +45,27 @@ void PlayerMoveComponent::update(const float deltaTime)
         }
 
     Vector2f moveVec = translation;
-    moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+        if (moveVec.x != 0 && moveVec.y != 0)
+        {
+            moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+        }
 
-    if (m_gameObject.getComponent<TetherComponent>() != nullptr)
-    {
-            Vector2f Y = m_gameObject.getComponent<TetherComponent>().get()->orientation;
-            float    dotProduct    = moveVec.x * Y.x + moveVec.y * Y.y;
-            float    lengthSquared = Y.x * Y.x + Y.y * Y.y;
-
-            float scalarProjection = dotProduct / lengthSquared;
-
-            sf::Vector2f X_projected(scalarProjection * Y.x, scalarProjection * Y.y);
-
-            moveVec = X_projected;
-    }
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr && rigidControll)
     {
-        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(translation * 100.f * deltaTime);
+            if (m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether() != nullptr)
+            {
+                Vector2f Y = m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether()->orientation;
+                
+                float    angle = std::atan2(Y.y, Y.x);
+
+                Vector2f T = Vector2f(-std::sin(angle), std::cos(angle));
+
+                moveVec = T * moveVec.y + Y * moveVec.x;
+               
+                //moveVec = T * moveVec.y;
+            }
+           
+        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * 100.f * deltaTime);
     }
     else
     {

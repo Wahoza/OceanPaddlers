@@ -84,6 +84,7 @@ void TetherComponent::update(const float deltaTime)
         sprite.setOrigin(spriteOffset);
         sprite.setRotation(angle);
     }
+
 }
 void TetherComponent::GetForce(float deltaTime)
 {
@@ -104,6 +105,13 @@ void TetherComponent::CalculateEffect()
     orientation = normalize(orientation / 2.f - forces[0]);
 
     orientation = normalize(orientation / 2.f + forces[1]);
+    //I still need to treat tether like Physics Object->apply forces from Component 1 and 2 to it
+    m_gameObject.move(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() *
+                      TetherItem1.getComponent<RigidBodyComponent>()->getInvMass());
+    m_gameObject.move(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity() *
+                      TetherItem2.getComponent<RigidBodyComponent>()->getInvMass());
+    /*TetherItem1
+    TetherItem2*/
     forces.clear();
 }
 void TetherComponent::RepositionBodies()
@@ -130,7 +138,12 @@ GameObject& TetherComponent::createNewTetheredObject(string id)
     return *(new GameObject(init));
 
 }
-TetherComponent::~TetherComponent()
+vector<GameObject*> TetherComponent::getTethers()
+{
+    vector<GameObject*> Tethers{&TetherItem1, &TetherItem2};
+    return Tethers;
+}
+    TetherComponent::~TetherComponent()
 {
     //TetherItem1.removeComponent(TetherItem1.getComponent<RigidBodyComponent>());
     //TetherItem1.removeComponent(TetherItem1.getComponent<PlayerMoveComponent>());
