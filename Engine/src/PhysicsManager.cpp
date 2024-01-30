@@ -151,6 +151,13 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
         if (aabbVsAabb(body1Transform.transformRect(body1->m_shape), body2Transform.transformRect(body2->m_shape), normal, penetration))
         {
             
+            if (body1->GetTether() != nullptr &&
+                body2->m_coll == StaticColliderComponent::Hard) //.getId().find(itB->m_identifier) == std::string::npos))
+            {
+                float hurtTime = body1->GetTether()->hurtTime;
+                if (hurtTime > 0 && hurtTime < 4.3) continue;
+            }
+
             if (body2->m_coll == StaticColliderComponent::Event)
             {
                 std::cout << "Event" << std::endl;
@@ -168,7 +175,7 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
             sf::Vector2f impulse    = j * normal;
 
-            if (body2->m_coll == StaticColliderComponent::Hard)
+            if (body2->m_coll == StaticColliderComponent::Hard || body2->m_coll == StaticColliderComponent::Wall)
             {
 
                 if (abs(normal.x) > abs(normal.y))
@@ -189,7 +196,6 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
             }
             
             CheckforTether(body1);
-
         }
     }
 }
@@ -298,13 +304,18 @@ void PhysicsManager::resolveCollisions()
     }
 }
 
-void PhysicsManager::CheckforTether(RigidBodyComponent* obj)
+bool PhysicsManager::CheckforTether(RigidBodyComponent* obj)
 {
+    //returns true if HasTether && is player, else false
     if (obj->GetTether() !=nullptr)
     {
         TetherComponent* tether = obj->GetTether();
-        tether->CollisionPhysics(&obj->getGameObject());
+        if (tether->CollisionPhysics(&obj->getGameObject()))
+        {
+            return true;
+        }
     }
+    return false;
 }
 bool PhysicsManager::aabbVsAabb(const FloatRect& a, const FloatRect& b, Vector2f& normal, float& penetration)
 {

@@ -33,7 +33,8 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
-    void CollisionPhysics(GameObject* collider);
+    bool CollisionPhysics(GameObject* collider);
+    float hurtTime = 0;
 
 private:
     //orientation should be normalized, then multiplied with length

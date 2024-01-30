@@ -696,7 +696,7 @@
                         {
                          "name":"CollisionType",
                          "type":"string",
-                         "value":"Hard"
+                         "value":"Wall"
                         }],
                  "rotation":0,
                  "type":"Collider",
@@ -815,7 +815,7 @@
                         {
                          "name":"CollisionType",
                          "type":"string",
-                         "value":"Hard"
+                         "value":"Wall"
                         }],
                  "rotation":0,
                  "type":"Collider",
@@ -832,7 +832,7 @@
                         {
                          "name":"CollisionType",
                          "type":"string",
-                         "value":"Hard"
+                         "value":"Wall"
                         }],
                  "rotation":0,
                  "type":"Collider",
@@ -849,7 +849,7 @@
                         {
                          "name":"CollisionType",
                          "type":"string",
-                         "value":"Hard"
+                         "value":"Wall"
                         }],
                  "rotation":0,
                  "type":"Collider",

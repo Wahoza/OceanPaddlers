@@ -48,17 +48,25 @@ bool SpriteRenderComponent::init()
         sf::err() << "Could not load texture from " << m_textureFile << std::endl;
         return false;
     }
-    image.createMaskFromColor(sf::Color::Black);
+    //image.createMaskFromColor(sf::Color::Black);
     m_texture.loadFromImage(image);
     m_sprite.setTexture(m_texture);
 
     return true;
 }
-
+void SpriteRenderComponent::HideSprite()
+{
+    show = false;
+}
+void SpriteRenderComponent::ShowSprite()
+{
+    show = true;
+}
 void SpriteRenderComponent::draw()
 {
-    // TODO: adapt transform to have pixel precise movement
-
-    m_renderWindow.draw(m_sprite, m_gameObject.getTransform());
+    if (show)
+    {
+        m_renderWindow.draw(m_sprite, m_gameObject.getTransform());
+    }
 }
 } // namespace mmt_gd

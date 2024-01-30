@@ -7,6 +7,8 @@
 #include "GameObjectManager.hpp"
 #include "PlayerMoveComponent.hpp"
 #include "SpriteRenderComponent.hpp"
+
+#include "GameObjectEvents.hpp"
 #include <cmath>
 using namespace sf;
 using namespace std;
@@ -86,12 +88,26 @@ void TetherComponent::update(const float deltaTime)
         sprite.setRotation(angle);
     }
 
+    if (hurtTime > 0)
+    {
+        hurtTime -= deltaTime;
+        if (((int)(hurtTime * 3)) % 2 == 0 && hurtTime >0.3)
+        {
+            m_gameObject.getComponent<SpriteRenderComponent>().get()->HideSprite();
+        }
+        else
+        {
+            m_gameObject.getComponent<SpriteRenderComponent>().get()->ShowSprite();
+        }
+    }
 }
+
 void TetherComponent::GetForce(float deltaTime)
 {
     forces.push_back(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
     forces.push_back(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
 }
+
 void TetherComponent::CalculateEffect()
 {
     for (Vector2f force : forces)
@@ -150,7 +166,7 @@ TetherComponent::~TetherComponent()
     delete &TetherItem1;
     delete &TetherItem2;
 }
-void TetherComponent::CollisionPhysics(GameObject* collider)
+bool TetherComponent::CollisionPhysics(GameObject* collider)
 {
     GameObject* other;
     if (collider->getId() == TetherItem1.getId())
@@ -168,8 +184,23 @@ void TetherComponent::CollisionPhysics(GameObject* collider)
 
     Vector2f result = -Vector2f(-std::sin(angle), std::cos(angle));
     
-    other->getComponent<RigidBodyComponent>().get()->setVelocity(
-        result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    other->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    //collider->getComponent<RigidBodyComponent>().get()->setVelocity(
+    //    -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    if (m_gameObject.getId() == "Player0")
+    {
+        
+        if (!(hurtTime > 0))
+        {
+            int         eventData(1);
+            IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
+            EventBus::getInstance().fireEvent(Hurt);
+            hurtTime = 5;
+        }
+        return true;
+    }
+
+    return false;
 }
 
 }

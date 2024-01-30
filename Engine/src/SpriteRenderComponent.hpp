@@ -30,11 +30,15 @@ public:
 
     void IncrementOffset(sf::Vector2i increment);
 
+    void HideSprite();
+    void ShowSprite();
+
 private:
     std::string m_textureFile;
     sf::Texture m_texture;
     sf::Sprite  m_sprite;
     std::string m_layerName;
     sf::Vector2i m_offset;
+    bool         show;
 };
 } // namespace mmt_gd
