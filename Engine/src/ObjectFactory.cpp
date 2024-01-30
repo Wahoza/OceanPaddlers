@@ -163,7 +163,7 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
 
     if (input)
     {
-        if (playerIdx <= 2)
+        if (playerIdx < 2)
         {
             gameObject->addComponent<PlayerMoveComponent>(*gameObject, playerIdx, true);
         }

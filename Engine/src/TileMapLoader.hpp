@@ -20,7 +20,8 @@ public:
                                  int                               layerIdx,
                                  const tson::Layer&                layer,
                                  int                               i,
-                                 unsigned                          gid);
+                                 unsigned                          gid,
+                                 SpriteManager spriteManager);
 
     static void loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
 

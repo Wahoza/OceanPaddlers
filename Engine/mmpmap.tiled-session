@@ -1,0 +1,78 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "TiledMap/TiledmapMMP2a.tmj",
+    "expandedProjectPaths": [
+        "bevorRepository/TiledMap",
+        "TiledMap",
+        "bevorRepository",
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Alle Dateien (*)",
+    "fileStates": {
+        "C:/Users/Startklar/Desktop/Fh-Salzburg/3. Semester/GameDev/gameengine_selmanovic_kolb/Engine/assets/game.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1517,
+                "y": 491
+            }
+        },
+        "C:/Users/Startklar/Desktop/Fh-Salzburg/3. Semester/GameDev/gameengine_selmanovic_kolb/Engine/assets/game.tmj#Sci-Fi-Tiles_A2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Startklar/Desktop/Fh-Salzburg/3. Semester/GameDev/gameengine_selmanovic_kolb/Engine/assets/game.tmj#Sci-Fi-Tiles_B": {
+            "scaleInDock": 1
+        },
+        "TiledMap/MasterSimple.tsx": {
+            "scaleInDock": 1.5
+        },
+        "TiledMap/MasterSimple2.tsx": {
+            "scaleInDock": 2
+        },
+        "TiledMap/Swamp.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 3
+        },
+        "TiledMap/TX Tileset Grass.tsx": {
+            "scaleInDock": 1
+        },
+        "TiledMap/TiledmapMMP2a.tmj": {
+            "scale": 3,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 1509.3333333333333,
+                "y": 134.16666666666669
+            }
+        },
+        "TiledMap/puddle_.tsx": {
+            "scaleInDock": 3
+        },
+        "TiledMap/swamp_ [resources].tsx": {
+            "scaleInDock": 1.5
+        },
+        "TiledMap/tundra_ [bridgeHorizontal].tsx": {
+            "scaleInDock": 2
+        }
+    },
+    "last.imagePath": "C:/Users/Startklar/Desktop/Fh-Salzburg/3. Semester/MMP2/assets/TileMaps/swamp_",
+    "map.height": 15,
+    "map.lastUsedFormat": "json",
+    "map.width": 120,
+    "openFiles": [
+        "TiledMap/TiledmapMMP2a.tmj"
+    ],
+    "project": "mmpmap.tiled-project",
+    "recentFiles": [
+        "TiledMap/TiledmapMMP2a.tmj",
+        "TiledMap/Swamp.tsx",
+        "C:/Users/Startklar/Desktop/Fh-Salzburg/3. Semester/GameDev/gameengine_selmanovic_kolb/Engine/assets/game.tmj"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
