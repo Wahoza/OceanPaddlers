@@ -57,13 +57,14 @@ void Hud::CreateHud()
         {
             sf::err() << "Could not load font\n";
         }
+        m_font.setSmooth(false);
         text = new Text();
         text->setFillColor(sf::Color::Green);
         text->setFont(m_font);
-        text->setCharacterSize(55);
+        text->setCharacterSize(10);
         text->setString("x" + to_string(EggScore));
         text->setFillColor(sf::Color::White);
-        text->setOutlineThickness(5);
+        text->setOutlineThickness(1);
         text->setOutlineColor(sf::Color::Black);
     }
     {
@@ -79,7 +80,7 @@ void Hud::CreateHud()
         Egg = Sprite();
         Egg.setTexture(m_texture_egg);
         //Egg.setPosition(-200, -200);
-        Egg.setScale(5.f, 5.f);
+        Egg.setScale(1.5, 1.5);
     }
     {
         sf::Image image;
@@ -94,7 +95,7 @@ void Hud::CreateHud()
         heart = Sprite();
         heart.setTexture(m_texture_heart);
         //Egg.setPosition(-200, -200);
-        heart.setScale(5.f, 5.f);
+        heart.setScale(1.5, 1.5);
     }
 }
 void Hud::update(float deltaTime)
@@ -107,7 +108,7 @@ void Hud::draw(sf::RenderWindow& m_window)
     {
         Vector2f windowTopLeft = m_window.getView().getCenter() -
                                  Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};
-        Vector2f TextOffset = {100, 60};
+        Vector2f TextOffset = {25, 20};
         text->setPosition(windowTopLeft + TextOffset);
         Egg.setPosition(windowTopLeft);
 

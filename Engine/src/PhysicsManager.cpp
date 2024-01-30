@@ -188,6 +188,7 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
             }
             
+            CheckforTether(body1);
 
         }
     }
@@ -270,9 +271,9 @@ void PhysicsManager::doCollectibleCollisions(RigidBodyComponent* body1)
 
     }
 }
-void PhysicsManager::resolveCollisions() const
+void PhysicsManager::resolveCollisions()
 {
-    for (auto man : m_manifolds)
+    for (auto& man : m_manifolds)
     {
         if (man.m_body1->m_invMass == 0 && man.m_body2->m_invMass == 0)
         {
@@ -292,13 +293,19 @@ void PhysicsManager::resolveCollisions() const
         man.m_body1->m_velocity = (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse);
         man.m_body2->m_velocity = (man.m_body2->m_velocity + man.m_body2->m_invMass * impulse);
 
-        // TODO: implement simple collision resolution without restitution. see slides for formulas
-        // TODO: add restitution to collision resolution (j)
-        // HINT: pay attention to the direction of the normal and relative velocity.
-        // TODO: implement positional correction (see slides)
+        CheckforTether(man.m_body1);
+        CheckforTether(man.m_body2);
     }
 }
 
+void PhysicsManager::CheckforTether(RigidBodyComponent* obj)
+{
+    if (obj->GetTether() !=nullptr)
+    {
+        TetherComponent* tether = obj->GetTether();
+        tether->CollisionPhysics(&obj->getGameObject());
+    }
+}
 bool PhysicsManager::aabbVsAabb(const FloatRect& a, const FloatRect& b, Vector2f& normal, float& penetration)
 {
     auto getCenter = [](const sf::FloatRect& rect) -> Vector2f

@@ -52,24 +52,23 @@ void MainState::init()
     }
 
     const auto player = m_gameObjectManager.getGameObject("Player0");
-    const auto player1 = m_gameObjectManager.getGameObject("Player1");
-    const auto ball = m_gameObjectManager.getGameObject("Ball");
-    
-    if (player1->getComponent<AIController>() != nullptr)
-    {
-        player1->getComponent<AIController>()->GetGoalObject(ball.get());
-    }
+   
     // Moving 
 
     {
+        float scaleFactor = m_game->getWindow().getSize().y / ((m_spriteManager.getTileSize().y-2) * 16);
+        sf::View gameView = View(FloatRect(0, 0, m_game->getWindow().getSize().x / scaleFactor, m_game->getWindow().getSize().y / scaleFactor));
+        //gameView.zoom(1.5);
+        m_game->getWindow().setView(gameView);
+
         const auto camera = GameObject::create("Camera");
         camera->setPosition(sf::Vector2f((m_game->getWindow().getSize().x / 2), (m_game->getWindow().getSize().y / 2)));
         const auto renderComp = camera->addComponent<CameraRenderComponent>(*camera,
                                                                             m_game->getWindow(),
                                                                             m_game->getWindow().getView());
-
+        
         camera->addComponent<TransformAnimationComponent>(*camera,
-                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(ball, 10.F));
+                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(player, 10.F));
 
 
         if (!camera->init())

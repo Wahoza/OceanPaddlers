@@ -21,6 +21,7 @@ public:
     void update(float deltaTime) override;
 
 private:
+
     ITransformAnimation::Ptr m_animation;
 };
 } // namespace mmt_gd

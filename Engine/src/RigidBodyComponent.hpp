@@ -46,6 +46,7 @@ public:
     Vector2f    getPosition();
     void        ChangePosition(Vector2f changePos);
     void        calculateOffset();
+    void        setVelocity(Vector2f velocity);
     void        SetTether(TetherComponent* Tether);
     RigidBodyComponent(GameObject& gameObject, FloatRect shape, Vector2f offset, string forces, float mass, float Loss);
     TetherComponent*        GetTether();

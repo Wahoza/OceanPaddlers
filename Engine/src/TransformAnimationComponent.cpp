@@ -3,7 +3,7 @@
 #include "TransformAnimationComponent.hpp"
 
 #include "GameObject.hpp"
-
+#include "CameraRenderComponent.hpp"
 #include <utility>
 
 namespace mmt_gd

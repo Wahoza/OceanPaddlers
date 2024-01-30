@@ -25,7 +25,7 @@ void mmt::TransformAnimationSmoothFollow::update(float deltaTime, sf::Transforma
         return;
     }
 
-    const auto toTarget = m_target->getPosition() - transform.getPosition();
-
+    sf::Vector2f toTarget = m_target->getPosition() - transform.getPosition();
     transform.move(toTarget * m_smoothFactor * deltaTime);
+    transform.setPosition(transform.getPosition().x, middleYval);
 }

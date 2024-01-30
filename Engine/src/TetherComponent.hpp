@@ -33,6 +33,8 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
+    void CollisionPhysics(GameObject* collider);
+
 private:
     //orientation should be normalized, then multiplied with length
     //position is in the center -> actual vec of orientation = pos + orientation - 1/2 orientation

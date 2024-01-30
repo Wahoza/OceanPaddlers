@@ -70,12 +70,12 @@ void TileMapLoader::createTileSprite(
 
     // create tile and put it into a layer
     auto       mapHeight = map->getSize().y * map->getTileSize().y;
-    auto       scaleFactor = spriteManager.getWindow().getSize().y / mapHeight;
+    //auto       scaleFactor = spriteManager.getWindow().getSize().y / mapHeight;
     const auto sprite = std::make_shared<sf::Sprite>();
     sprite->setTexture(*texture);
     sprite->setTextureRect(source);
-    sprite->setPosition(position.x * scaleFactor, position.y * scaleFactor);
-    sprite->setScale(sf::Vector2f(scaleFactor, scaleFactor));
+    sprite->setPosition(position.x , position.y );
+    //sprite->setScale(sf::Vector2f(scaleFactor, scaleFactor));
 
     tileLayers[layerIdx].m_tiles.push_back({i, sprite});
 }
