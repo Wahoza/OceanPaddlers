@@ -29,12 +29,12 @@ public:
 
     vector<RigidBodyComponent*> m_bodies;
     vector<StaticColliderComponent*> m_staticcolliders;
-    vector<TriggerComponent*>        m_triggers;
-    vector<CollectibleComponent*>        m_collectibles;
+    vector<TriggerComponent*> m_triggers;
+    vector<CollectibleComponent*> m_collectibles;
 
     vector<Manifold> m_manifolds;
     static PhysicsManager * m_instance;
-    void CheckforTether(RigidBodyComponent* gameObject);
+    bool CheckforTether(RigidBodyComponent* gameObject);
     void findCollisions();
     void resolveCollisions();
     void doStaticCollisions(RigidBodyComponent* body1);

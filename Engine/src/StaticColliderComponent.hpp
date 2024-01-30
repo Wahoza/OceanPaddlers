@@ -22,11 +22,13 @@ public:
     {
         Bouncy,
         Hard,
-        Event
+        Event,
+        Wall
     };
 
     //how do rigidbodies interact?
-    const std::unordered_map<std::string, CollisionType> collisionTypeMap = {{"Bouncy", Bouncy}, {"Hard", Hard}, {"Event", Event}};
+    const std::unordered_map<std::string, CollisionType> collisionTypeMap =
+        {{"Bouncy", Bouncy}, {"Hard", Hard}, {"Event", Event}, {"Wall", Wall}};
 
     // The debug geometry to visualize the bounding geometry of the object.
     // Can be part of a BBoxCollisionComponent.

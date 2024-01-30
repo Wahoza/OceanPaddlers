@@ -23,6 +23,7 @@ Hud::Hud()
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
+    EventBus::getInstance().addListener(HurtEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
 }
 void Hud::Notify(IEvent::Ptr event)
 {
@@ -47,6 +48,17 @@ void Hud::Notify(IEvent::Ptr event)
         EggScore += eggEvent.get()->getData();
         std::cout << "eggAlert" << std::endl;
         text->setString("x" + to_string(EggScore));
+    }
+    if (auto hurtEvent = std::dynamic_pointer_cast<HurtEvent>(event))
+    {
+        if (currentlives > 0)
+        {
+            currentlives--;
+        }
+        else
+        {
+            //trigger Game Over
+        }
     }
 }
 void Hud::CreateHud()
