@@ -859,7 +859,7 @@
                  "y":0
                 }, 
                 {
-                 "height":15.5,
+                 "height":24.6666666666667,
                  "id":89,
                  "name":"Egg1",
                  "properties":[
@@ -896,12 +896,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16,
+                 "width":23.8958333333333,
                  "x":208.5,
-                 "y":112.5
+                 "y":103.333333333333
                 }, 
                 {
-                 "height":18.5,
+                 "height":23.3333333333333,
                  "id":90,
                  "name":"Egg2",
                  "properties":[
@@ -938,12 +938,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16.5,
+                 "width":23.3333333333333,
                  "x":320,
-                 "y":143.5
+                 "y":136.666666666667
                 }, 
                 {
-                 "height":17,
+                 "height":24.3333333333333,
                  "id":91,
                  "name":"Egg3",
                  "properties":[
@@ -980,12 +980,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":17.5,
-                 "x":463.5,
-                 "y":111.5
+                 "width":24.3333333333333,
+                 "x":455.666666666667,
+                 "y":112
                 }, 
                 {
-                 "height":17.5,
+                 "height":26.3333333333334,
                  "id":92,
                  "name":"Egg4",
                  "properties":[
@@ -1022,12 +1022,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":17.5,
-                 "x":591,
-                 "y":94.5
+                 "width":26.3333333333334,
+                 "x":592,
+                 "y":96
                 }, 
                 {
-                 "height":19,
+                 "height":26.15625,
                  "id":95,
                  "name":"Egg5",
                  "properties":[
@@ -1064,12 +1064,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":19,
-                 "x":719,
-                 "y":142.5
+                 "width":27,
+                 "x":720,
+                 "y":144
                 }, 
                 {
-                 "height":17,
+                 "height":24.6666666666667,
                  "id":96,
                  "name":"Egg6",
                  "properties":[
@@ -1106,12 +1106,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16,
-                 "x":881.5,
-                 "y":158.5
+                 "width":24.6666666666667,
+                 "x":871.333333333333,
+                 "y":151.333333333333
                 }, 
                 {
-                 "height":17.5,
+                 "height":23.3333333333333,
                  "id":97,
                  "name":"Egg7",
                  "properties":[
@@ -1148,12 +1148,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":17,
-                 "x":959.5,
-                 "y":93
+                 "width":23.3333333333333,
+                 "x":960,
+                 "y":88.6666666666667
                 }, 
                 {
-                 "height":16.5,
+                 "height":25.3333333333333,
                  "id":98,
                  "name":"Egg8",
                  "properties":[
@@ -1190,12 +1190,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16.5,
-                 "x":1056,
-                 "y":128
+                 "width":25.3333333333333,
+                 "x":1051,
+                 "y":135.666666666667
                 }, 
                 {
-                 "height":15.5,
+                 "height":25.3333333333333,
                  "id":99,
                  "name":"Egg9",
                  "properties":[
@@ -1232,12 +1232,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":17.5,
-                 "x":1168,
-                 "y":160.5
+                 "width":25.3333333333333,
+                 "x":1168.33333333333,
+                 "y":158.333333333333
                 }, 
                 {
-                 "height":18.5,
+                 "height":27.0000000000002,
                  "id":100,
                  "name":"Egg10",
                  "properties":[
@@ -1274,12 +1274,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16.5,
-                 "x":1231.5,
+                 "width":27.0000000000002,
+                 "x":1232,
                  "y":96
                 }, 
                 {
-                 "height":16.5,
+                 "height":26.3333333333335,
                  "id":101,
                  "name":"Egg11",
                  "properties":[
@@ -1316,12 +1316,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":16,
-                 "x":1329.5,
-                 "y":127.5
+                 "width":26.3333333333335,
+                 "x":1328,
+                 "y":128
                 }, 
                 {
-                 "height":17,
+                 "height":23.6666666666667,
                  "id":102,
                  "name":"Egg12",
                  "properties":[
@@ -1358,12 +1358,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":18,
+                 "width":23.6666666666667,
                  "x":1456,
-                 "y":97.5
+                 "y":96
                 }, 
                 {
-                 "height":17,
+                 "height":26.6666666666665,
                  "id":103,
                  "name":"Egg13",
                  "properties":[
@@ -1400,12 +1400,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":18,
-                 "x":1552.5,
-                 "y":158
+                 "width":26.6666666666665,
+                 "x":1549.66666666667,
+                 "y":153
                 }, 
                 {
-                 "height":17,
+                 "height":27,
                  "id":104,
                  "name":"Egg14",
                  "properties":[
@@ -1442,12 +1442,12 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":18.5,
-                 "x":1695.5,
-                 "y":111.5
+                 "width":27,
+                 "x":1685,
+                 "y":101
                 }, 
                 {
-                 "height":17.5,
+                 "height":27.6666666666667,
                  "id":105,
                  "name":"Egg15",
                  "properties":[
@@ -1484,9 +1484,9 @@
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":19.5,
-                 "x":1839.5,
-                 "y":109.5
+                 "width":27.6666666666667,
+                 "x":1845,
+                 "y":136.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
