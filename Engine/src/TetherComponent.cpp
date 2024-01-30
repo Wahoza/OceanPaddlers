@@ -162,10 +162,14 @@ void TetherComponent::CollisionPhysics(GameObject* collider)
         other = &TetherItem1;
     }
     Vector2f otherVelocity = other->getComponent<RigidBodyComponent>()->getVelocity();
-    Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
-    Vector2f resultVec        = {colliderVelocity.x * otherVelocity.x, colliderVelocity.y * otherVelocity.y};
-    //other->getComponent<RigidBodyComponent>().get()->setVelocity(resultVec);
-    //collider->getComponent<RigidBodyComponent>().get()->setVelocity(resultVec);
+    //Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
+    float otherSpeed = sqrt(otherVelocity.x * otherVelocity.x + otherVelocity.y * otherVelocity.y);
+    float angle = std::atan2(orientation.y, orientation.x);
+
+    Vector2f result = -Vector2f(-std::sin(angle), std::cos(angle));
+    
+    other->getComponent<RigidBodyComponent>().get()->setVelocity(
+        result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
 }
 
 }
