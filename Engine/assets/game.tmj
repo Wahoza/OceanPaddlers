@@ -1487,6 +1487,28 @@
                  "width":27.6666666666667,
                  "x":1829,
                  "y":157
+                }, 
+                {
+                 "height":32,
+                 "id":106,
+                 "name":"current1",
+                 "properties":[
+                        {
+                         "name":"Identifier",
+                         "type":"string",
+                         "value":"Player0"
+                        }, 
+                        {
+                         "name":"Notification",
+                         "type":"string",
+                         "value":"Current"
+                        }],
+                 "rotation":0,
+                 "type":"Trigger",
+                 "visible":true,
+                 "width":64,
+                 "x":336,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1495,7 +1517,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":106,
+ "nextobjectid":107,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
