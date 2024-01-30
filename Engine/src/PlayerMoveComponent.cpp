@@ -35,7 +35,7 @@ sf::Vector2i PlayerMoveComponent::toSpriteOffset(int value, int playerIdx)
 
 void PlayerMoveComponent::update(const float deltaTime)
 {
-    const auto   speed = 10.0F; // pixels/second
+    const auto   speed = 1.0F; // pixels/second
     sf::Vector2f translation{};
     Vector2i     SpriteOffset = {0, 0};
         if (InputManager::getInstance().isKeyDown("right", m_playerIndex))
@@ -84,7 +84,6 @@ void PlayerMoveComponent::update(const float deltaTime)
                 float    angle = std::atan2(Y.y, Y.x);
 
                 Vector2f T = Vector2f(-std::sin(angle), std::cos(angle));
-
                 moveVec = T * moveVec.y + Y * moveVec.x;
                
                 //moveVec = T * moveVec.y;

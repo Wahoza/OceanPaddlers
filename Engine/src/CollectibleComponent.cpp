@@ -3,7 +3,8 @@
 #include "CollectibleComponent.hpp"
 #include "GameObject.hpp";
 #include "PhysicsManager.hpp"
-
+#include "EventBus.hpp"
+#include "GameObjectEvents.hpp"
 using namespace sf;
 using namespace std;
 namespace mmt_gd
@@ -39,7 +40,10 @@ Vector2f CollectibleComponent::getPosition()
 void CollectibleComponent::CollissionMessage()
 {
 	//send event later
-    std::cout << type << std::endl;
+    //std::cout << type << std::endl;
+    int eventData(1);
+    IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
+    EventBus::getInstance().fireEvent(eggEvent);
     m_gameObject.markForDelete();
     //delete &m_gameObject;
 }

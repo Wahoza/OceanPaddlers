@@ -35,6 +35,16 @@ public:
     Text* text;
     Font m_font;
 
+    Texture m_texture_egg;
+    Sprite Egg;
+
+    Texture m_texture_heart;
+    Sprite  heart;
+
+    int EggScore = 0;
+    int initlives    = 3;
+    int currentlives = initlives;
+
 private:
     string        m_layerName;
     static Hud* m_instance;
