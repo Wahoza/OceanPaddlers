@@ -28,9 +28,9 @@ length(shape.width / 2),
 TetherItem1(createNewTetheredObject("tethered1")),
 TetherItem2(createNewTetheredObject("tethered2"))
 {
-    
-    length = shape.width / 2;
-    float height = shape.height;
+    float scaleFactor = 0.7;
+    length = shape.width / 2 * scaleFactor;
+    float height = shape.height*scaleFactor;
 
     TetherItem1.addComponent<RigidBodyComponent>(TetherItem1,
                             FloatRect{0, 0, length, height},
@@ -65,6 +65,7 @@ TetherItem2(createNewTetheredObject("tethered2"))
     Vector2f pos2 = (orientation / 2.f + m_gameObject.getPosition()) * length;
     TetherItem2.setPosition(pos2);
     //m_gameObject.setOrigin(shape.width / 2, shape.height / 2);
+    //std::cout << "something" << std::endl;
 }
 void TetherComponent::update(const float deltaTime)
 {
@@ -143,15 +144,28 @@ vector<GameObject*> TetherComponent::getTethers()
     vector<GameObject*> Tethers{&TetherItem1, &TetherItem2};
     return Tethers;
 }
-    TetherComponent::~TetherComponent()
+TetherComponent::~TetherComponent()
 {
-    //TetherItem1.removeComponent(TetherItem1.getComponent<RigidBodyComponent>());
-    //TetherItem1.removeComponent(TetherItem1.getComponent<PlayerMoveComponent>());
-    //TetherItem2.removeComponent(TetherItem2.getComponent<RigidBodyComponent>());
-    //TetherItem2.removeComponent(TetherItem2.getComponent<PlayerMoveComponent>());
 
     delete &TetherItem1;
     delete &TetherItem2;
 }
-//Still needs special deconstructer
+void TetherComponent::CollisionPhysics(GameObject* collider)
+{
+    GameObject* other;
+    if (collider->getId() == TetherItem1.getId())
+    {
+        other = &TetherItem2;
+    }
+    else
+    {
+        other = &TetherItem1;
+    }
+    Vector2f otherVelocity = other->getComponent<RigidBodyComponent>()->getVelocity();
+    Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
+    Vector2f resultVec        = {colliderVelocity.x * otherVelocity.x, colliderVelocity.y * otherVelocity.y};
+    //other->getComponent<RigidBodyComponent>().get()->setVelocity(resultVec);
+    //collider->getComponent<RigidBodyComponent>().get()->setVelocity(resultVec);
+}
+
 }

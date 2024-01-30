@@ -17,7 +17,7 @@ class CameraRenderComponent final : public IRenderComponent
 {
 public:
     using Ptr = std::shared_ptr<CameraRenderComponent>;
-
+    sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight);
     CameraRenderComponent(GameObject& gameObject, sf::RenderWindow& renderWindow, sf::View view);
 
     bool init() override;

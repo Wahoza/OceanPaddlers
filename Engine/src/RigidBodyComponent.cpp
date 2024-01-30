@@ -32,7 +32,10 @@ Vector2f RigidBodyComponent::getVelocity()
 {
     return m_velocity;
 }
-
+void RigidBodyComponent::setVelocity(Vector2f velocity)
+{
+    m_velocity = velocity;
+}
 void RigidBodyComponent::addVelocity(Vector2f velocity)
 {
     m_velocity += velocity;

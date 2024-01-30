@@ -34,12 +34,14 @@ public:
 
     vector<Manifold> m_manifolds;
     static PhysicsManager * m_instance;
+    void CheckforTether(RigidBodyComponent* gameObject);
     void findCollisions();
-    void resolveCollisions() const;
+    void resolveCollisions();
     void doStaticCollisions(RigidBodyComponent* body1);
     void doTriggerCollisions(RigidBodyComponent* body1);
     void doCollectibleCollisions(RigidBodyComponent* body1);
     static bool aabbVsAabb(const FloatRect& a, const FloatRect& b, Vector2f& normal, float& penetration);
+    
 };
 
 }
