@@ -17,6 +17,7 @@ public:
     void RegisterCollider(StaticColliderComponent* Collider);
     void RegisterTrigger(TriggerComponent* Trigger);
     void RegisterCollectible(CollectibleComponent* Collectible);
+
     private:
     struct Manifold
     {
@@ -34,7 +35,7 @@ public:
 
     vector<Manifold> m_manifolds;
     static PhysicsManager * m_instance;
-    bool CheckforTether(RigidBodyComponent* gameObject);
+    bool CheckforTether(RigidBodyComponent* gameObject,Vector2f collisionVec, bool damage);
     void findCollisions();
     void resolveCollisions();
     void doStaticCollisions(RigidBodyComponent* body1);

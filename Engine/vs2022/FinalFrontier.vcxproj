@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\AIController.hpp" />
+    <ClInclude Include="..\src\AiManager.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="../src/GameStateManager.cpp" />
     <ClCompile Include="../src/InputManager.cpp" />
     <ClCompile Include="..\src\AIController.cpp" />
+    <ClCompile Include="..\src\AiManager.cpp" />
     <ClCompile Include="..\src\CollectibleComponent.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />

@@ -38,7 +38,7 @@ TetherItem2(createNewTetheredObject("tethered2"))
                             FloatRect{0, 0, length, height},
                             Vector2f{0.f, 0.f},
                             forces,
-                            mass,
+                            mass/2,
                             loss);
     TetherItem1.getComponent<RigidBodyComponent>()->SetTether(this);
 
@@ -47,7 +47,7 @@ TetherItem2(createNewTetheredObject("tethered2"))
                             FloatRect{0, 0, length, height},
                             Vector2f{0.f, 0.f},
                             forces,
-                            mass,
+                            mass/2,
                             loss);
     TetherItem2.getComponent<RigidBodyComponent>()->SetTether(this);
 
@@ -166,7 +166,7 @@ TetherComponent::~TetherComponent()
     delete &TetherItem1;
     delete &TetherItem2;
 }
-bool TetherComponent::CollisionPhysics(GameObject* collider)
+bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVec, bool damage)
 {
     GameObject* other;
     if (collider->getId() == TetherItem1.getId())
@@ -177,20 +177,25 @@ bool TetherComponent::CollisionPhysics(GameObject* collider)
     {
         other = &TetherItem1;
     }
+
     Vector2f otherVelocity = other->getComponent<RigidBodyComponent>()->getVelocity();
-    //Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
+    Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
     float otherSpeed = sqrt(otherVelocity.x * otherVelocity.x + otherVelocity.y * otherVelocity.y);
     float angle = std::atan2(orientation.y, orientation.x);
 
     Vector2f result = -Vector2f(-std::sin(angle), std::cos(angle));
-    
+
+    m_gameObject.move(-collisionVec);
+    //collider->getComponent<RigidBodyComponent>().get()->addVelocity(collisionVec);
+    //other->getComponent<RigidBodyComponent>().get()->addVelocity(collisionVec);
+
     other->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
     //collider->getComponent<RigidBodyComponent>().get()->setVelocity(
     //    -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
     if (m_gameObject.getId() == "Player0")
     {
         
-        if (!(hurtTime > 0))
+        if (!(hurtTime > 0) && damage)
         {
             int         eventData(1);
             IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
@@ -202,5 +207,12 @@ bool TetherComponent::CollisionPhysics(GameObject* collider)
 
     return false;
 }
-
+GameObject* TetherComponent::getOtherObj(GameObject collider)
+{
+    if (collider.getId() == TetherItem1.getId())
+    {
+        return &TetherItem2;
+    }
+    return &TetherItem1;
+}
 }

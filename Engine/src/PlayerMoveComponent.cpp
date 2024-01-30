@@ -25,11 +25,11 @@ sf::Vector2i PlayerMoveComponent::toSpriteOffset(int value, int playerIdx)
 {
     if (playerIdx == 0)
     {
-        return (Vector2i{value, 0});
+        return (Vector2i{0, value});
     }
     if (playerIdx == 1)
     {
-        return (Vector2i{0, value});
+        return (Vector2i{value, 0});
     }
 }
 

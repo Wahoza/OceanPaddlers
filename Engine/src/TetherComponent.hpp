@@ -24,7 +24,7 @@ public:
     bool init() override;
     Vector2f normalize(Vector2f vec);
     using ptr = std::shared_ptr<TetherComponent>;
-
+    GameObject* getOtherObj(GameObject collider);
     GameObject& createNewTetheredObject(string id);
     GameObject& TetherItem1;
     GameObject& TetherItem2;
@@ -33,7 +33,7 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
-    bool CollisionPhysics(GameObject* collider);
+    bool CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
     float hurtTime = 0;
 
 private:

@@ -195,6 +195,9 @@
     <ClInclude Include="..\src\TetherComponent.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\AiManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="..\src\TetherComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AiManager.cpp">
+      <Filter>Source Files\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

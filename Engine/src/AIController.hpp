@@ -1,24 +1,26 @@
 #pragma once
 #include "stdafx.h"
-#include "IComponent.hpp"
-#include "GameObject.hpp"
 
-using namespace sf;
+#include "GameObject.hpp"
+#include "IComponent.hpp"
+
+
+//using namespace sf;
 namespace mmt_gd
 {
-class AIController : public IComponent
+class AIController final : public IComponent
 {
     using ptr = std::shared_ptr<AIController>;
 
 public:
     enum State
     {
-        defensive,
+        interested,
         agressive,
         idle
     };
 
-    void GetGoalObject(GameObject* _ball);
+    void setGoalObject(GameObject* _goal);
 
     void update(float deltaTime) override;
 
@@ -26,15 +28,15 @@ public:
     void idleUpdate(float deltaTime);
     void defensiveUpdate(float deltaTime);
 
-    void moveObj(Vector2f moveVec, float deltaTime);
+    void moveObj(sf::Vector2f moveVec, float deltaTime);
     void RequestNextState();
 
-    AIController(GameObject& gameObject);
+    AIController(GameObject& _gameObject);
     bool init() override;
 
 private:
     State       currentState = idle;
-    GameObject* m_ball;
+    GameObject* m_goal = nullptr;
     float       elapsedTimeInPhase = 0;
 };
 } // namespace mmt_gd

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "AiManager.hpp"
 #include "AIController.hpp"
 #include "GameObject.hpp"
 #include "RigidBodyComponent.hpp";
@@ -6,6 +7,10 @@ namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
 {
+    if (m_goal == nullptr)
+    {
+        return;
+    }
     RequestNextState();
     elapsedTimeInPhase += deltaTime;
 
@@ -16,7 +21,7 @@ void AIController::update(const float deltaTime)
 
             idleUpdate(deltaTime);
             break;
-        case defensive:
+        case interested:
             //std::cout << "def" << std::endl;
 
             defensiveUpdate(deltaTime);
@@ -34,14 +39,14 @@ bool AIController::init()
 }
 void AIController::agressiveUpdate(float deltaTime)
 {
-    Vector2f moveVec = m_ball->getPosition() - m_gameObject.getPosition();
+    Vector2f moveVec = m_goal->getPosition() - m_gameObject.getPosition();
 
     moveObj(moveVec, deltaTime);
 }
 void AIController::defensiveUpdate(float deltaTime)
 {
     Vector2f moveVec{};
-    moveVec.y = m_ball->getPosition().y - m_gameObject.getPosition().y;
+    moveVec.y = m_goal->getPosition().y - m_gameObject.getPosition().y;
     moveVec.x = 2240 - m_gameObject.getPosition().x;
 
     moveObj(moveVec, deltaTime);
@@ -73,8 +78,8 @@ void AIController::RequestNextState()
     {
         //std::cout << "new" << std::endl;
         elapsedTimeInPhase = 0;
-        float Xdist        = (m_ball->getPosition().x - m_gameObject.getPosition().x);
-        float Ydist                 = (m_ball->getPosition().y - m_gameObject.getPosition().y);
+        float Xdist        = (m_goal->getPosition().x - m_gameObject.getPosition().x);
+        float Ydist                 = (m_goal->getPosition().y - m_gameObject.getPosition().y);
         float DistanceToGoal = sqrt(Xdist * Xdist + Ydist * Ydist);
         
         if (std::rand() % 100 < 5)
@@ -86,7 +91,7 @@ void AIController::RequestNextState()
         {
             if (DistanceToGoal >= 800 || std::rand() % 100 + 1 < 10)
             {
-                currentState = defensive;
+                currentState = interested;
             }
             else
             {
@@ -96,12 +101,12 @@ void AIController::RequestNextState()
 
     }
 }
-void AIController::GetGoalObject(GameObject* _ball)
+void AIController::setGoalObject(GameObject* _goal)
 {
-    m_ball = _ball;
+    m_goal = _goal;
 }
-AIController::AIController(GameObject& gameObject) : IComponent(gameObject)
+AIController::AIController(GameObject& m_gameObject) : IComponent(m_gameObject)
 {
+    AiManager::getInstance()->registerAIComponent(this);
 }
-
 }

@@ -195,7 +195,7 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
             }
             
-            CheckforTether(body1);
+            CheckforTether(body1, impulse * penetration * body1->m_invMass, true);
         }
     }
 }
@@ -295,21 +295,37 @@ void PhysicsManager::resolveCollisions()
         j /= man.m_body1->m_invMass + man.m_body2->m_invMass;
 
         sf::Vector2f impulse    = j * man.m_normal;
-        man.m_body1->m_velocity = (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse);
-        man.m_body2->m_velocity = (man.m_body2->m_velocity + man.m_body2->m_invMass * impulse);
 
-        CheckforTether(man.m_body1);
-        CheckforTether(man.m_body2);
+        if (!CheckforTether(man.m_body1, impulse * man.m_penetration * man.m_body1->m_invMass, false))
+        {
+            man.m_body1->m_velocity = (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse);
+        }
+        else
+        {
+            GameObject* body1Other  = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
+            man.m_body2->m_velocity = (man.m_body2->m_velocity + man.m_body2->m_invMass * impulse * 2.f) + body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
+        }
+        if (!CheckforTether(man.m_body2, impulse * man.m_penetration * man.m_body2->m_invMass, false))
+        {
+            man.m_body2->m_velocity = (man.m_body2->m_velocity + man.m_body2->m_invMass * impulse);
+        }
+        else
+        {
+            GameObject* body1Other = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
+            man.m_body1->m_velocity += (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse * 2.f) +
+                                       body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
+        }
+
     }
 }
 
-bool PhysicsManager::CheckforTether(RigidBodyComponent* obj)
+bool PhysicsManager::CheckforTether(RigidBodyComponent* obj,Vector2f collisionVec, bool damage)
 {
     //returns true if HasTether && is player, else false
     if (obj->GetTether() !=nullptr)
     {
         TetherComponent* tether = obj->GetTether();
-        if (tether->CollisionPhysics(&obj->getGameObject()))
+        if (tether->CollisionPhysics(&obj->getGameObject(),collisionVec, damage))
         {
             return true;
         }
