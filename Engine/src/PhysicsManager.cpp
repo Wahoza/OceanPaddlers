@@ -4,6 +4,8 @@
 #include "PhysicsManager.hpp"
 #include "RigidBodyComponent.hpp"
 #include "DebugDraw.hpp"
+#include "TetherComponent.hpp"
+
 using namespace sf;
 using namespace std;
 
@@ -99,7 +101,8 @@ void PhysicsManager::findCollisions()
                 continue;
 
             auto& body2 = *itB;
-
+            if (body1->GetTether() != nullptr && body1->GetTether() == body2->GetTether())
+                continue;
             // if both object don't have a mass or body is the same skip
             if (body1->m_mass == 0 && body2->m_mass == 0)
                 continue;
@@ -195,8 +198,20 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
     {
         auto& body2 = *itB;
         //std::cout << body1->getGameObject().getId() << std::endl;
+        //some conditionals
         if (body1->getGameObject().getId() != body2->m_identifier)
-            continue;
+        {
+            if (body1->getGameObject().getComponent<TetherComponent>() != nullptr)
+            {
+
+                if (body1->GetTether()->getGameObject().getId() != body2->m_identifier)
+                    continue;
+            }
+            else
+            {
+                continue;
+            }
+        }
 
 
         Transform body1Transform;
@@ -228,11 +243,13 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
 }
 void PhysicsManager::doCollectibleCollisions(RigidBodyComponent* body1)
 {
-    if (body1->getGameObject().getId() != "Player0")
-        return;
     int ctr = 0;
     for (auto& itB : m_collectibles)
     {
+        if (body1->getGameObject().getId().find(itB->m_identifier) == std::string::npos)
+        {
+            continue;
+        }
 
         auto removeIterator = std::remove_if(m_collectibles.begin(),m_collectibles.end(),[&](const auto& body2)
         {

@@ -161,6 +161,7 @@
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
     <ClInclude Include="..\src\StaticColliderComponent.hpp" />
+    <ClInclude Include="..\src\TetherComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationSmoothFollow.hpp" />
     <ClInclude Include="..\src\SpriteManager.hpp" />
     <ClInclude Include="..\src\TileMapLoader.hpp" />
@@ -204,6 +205,7 @@
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
     <ClCompile Include="..\src\StaticColliderComponent.cpp" />
+    <ClCompile Include="..\src\TetherComponent.cpp" />
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp" />
     <ClCompile Include="..\src\SpriteManager.cpp" />
     <ClCompile Include="..\src\SpriteRenderComponent.cpp" />

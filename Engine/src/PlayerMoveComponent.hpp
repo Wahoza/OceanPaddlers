@@ -14,8 +14,8 @@ public:
 
     bool init() override;
     void update(float deltaTime) override;
-
-private:
+    sf::Vector2i toSpriteOffset(int value, int inputIdx);
+    private:
     bool rigidControll;
     int m_playerIndex;
 };

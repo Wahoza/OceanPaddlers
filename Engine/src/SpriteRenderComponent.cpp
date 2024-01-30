@@ -20,12 +20,26 @@ m_layerName(std::move(layerName))
 {
     EventBus::getInstance().fireEvent(std::make_shared<RenderableCreateEvent>(m_layerName, *this));
 }
-
+void SpriteRenderComponent::update(float deltaTime)
+{
+    updateIntRect(m_offset);
+    m_offset = {0, 0};
+}
 SpriteRenderComponent::~SpriteRenderComponent()
 {
     EventBus::getInstance().fireEvent(std::make_shared<RenderableDestroyEvent>(m_layerName, *this));
 }
-
+void SpriteRenderComponent::updateIntRect(sf::Vector2i Iterator)
+{
+    sf::IntRect newRect = m_sprite.getTextureRect();
+    newRect.top     = newRect.height * Iterator.y;
+    newRect.left    = newRect.width * Iterator.x;
+    m_sprite.setTextureRect(newRect);
+}
+void SpriteRenderComponent::IncrementOffset(sf::Vector2i increment)
+{
+    m_offset += increment;
+}
 bool SpriteRenderComponent::init()
 {
     sf::Image image;

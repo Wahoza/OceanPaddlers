@@ -22,6 +22,7 @@ Hud* Hud::getInstance()
 Hud::Hud()
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
+    EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
 }
 void Hud::Notify(IEvent::Ptr event)
 {
@@ -39,22 +40,62 @@ void Hud::Notify(IEvent::Ptr event)
         {
             scoreP2 += score;
         }
-        text->setString("P1 " + to_string(scoreP1) + " - P2 " + to_string(scoreP2));
+        //text->setString("P1 " + to_string(scoreP1) + " - P2 " + to_string(scoreP2));
+    }
+    if (auto eggEvent = std::dynamic_pointer_cast<EggEvent>(event))
+    {
+        EggScore += eggEvent.get()->getData();
+        std::cout << "eggAlert" << std::endl;
+        text->setString("x" + to_string(EggScore));
     }
 }
 void Hud::CreateHud()
 {
     //do stuff for initialization here, currently no sprites, etc.
-    if (!m_font.loadFromFile("../assets/consolab.ttf"))
     {
-        sf::err() << "Could not load font\n";
+        if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
+        {
+            sf::err() << "Could not load font\n";
+        }
+        text = new Text();
+        text->setFillColor(sf::Color::Green);
+        text->setFont(m_font);
+        text->setCharacterSize(55);
+        text->setString("x" + to_string(EggScore));
+        text->setFillColor(sf::Color::White);
+        text->setOutlineThickness(5);
+        text->setOutlineColor(sf::Color::Black);
     }
-    text = new Text();
-    text->setPosition(-100, -100);
-    text->setString("P1 " + to_string(scoreP1) + " - P2 " + to_string(scoreP2));
-    text->setFillColor(sf::Color::Green);
-    text->setFont(m_font);
-    text->setCharacterSize(60);
+    {
+        sf::Image image;
+        if (!image.loadFromFile("../assets/HudAssets/egg.png"))
+        {
+            sf::err() << "failed to load egg.png" << std::endl;
+        }
+        //image.createMaskFromColor(sf::Color::Black);
+
+        m_texture_egg.loadFromImage(image);
+
+        Egg = Sprite();
+        Egg.setTexture(m_texture_egg);
+        //Egg.setPosition(-200, -200);
+        Egg.setScale(5.f, 5.f);
+    }
+    {
+        sf::Image image;
+        if (!image.loadFromFile("../assets/HudAssets/heart.png"))
+        {
+            sf::err() << "failed to load heart.png" << std::endl;
+        }
+        //image.createMaskFromColor(sf::Color::Black);
+
+        m_texture_heart.loadFromImage(image);
+
+        heart = Sprite();
+        heart.setTexture(m_texture_heart);
+        //Egg.setPosition(-200, -200);
+        heart.setScale(5.f, 5.f);
+    }
 }
 void Hud::update(float deltaTime)
 {
@@ -63,9 +104,27 @@ void Hud::update(float deltaTime)
 void Hud::draw(sf::RenderWindow& m_window)
 {
     //std::cout << "Draw" << std::endl;
-    Vector2f windowTopLeft = m_window.getView().getCenter() - Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};
-    text->setPosition(windowTopLeft);
-    m_window.draw(*text);
+    {
+        Vector2f windowTopLeft = m_window.getView().getCenter() -
+                                 Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};
+        Vector2f TextOffset = {100, 60};
+        text->setPosition(windowTopLeft + TextOffset);
+        Egg.setPosition(windowTopLeft);
+
+        m_window.draw(Egg);
+        m_window.draw(*text);
+    }
+    {
+        Vector2f windowTopRight = m_window.getView().getCenter() + Vector2f{m_window.getView().getSize().x / 2, -m_window.getView().getSize().y / 2};
+        Vector2f HeartOffset = {heart.getScale().x * heart.getTexture()->getSize().x, 0};
+        
+        Vector2f NextHeartOffset = {heart.getScale().x * heart.getTexture()->getSize().x/5, 0};
+        for (float i = initlives; i >initlives-currentlives; i--)
+        {
+            heart.setPosition(windowTopRight - HeartOffset -NextHeartOffset*i);
+            m_window.draw(heart);
+        }
+    }
 }
 void Hud::shutdown()
 {

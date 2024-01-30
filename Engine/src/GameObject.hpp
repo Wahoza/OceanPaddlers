@@ -108,6 +108,7 @@ public:
 
     std::string getId() const
     {
+        //std::cout << m_id << std::endl;
         return m_id;
     }
 
@@ -117,10 +118,10 @@ public:
     }
 
 protected:
-    std::string m_id        = "unnamed"; ///< unique name of object, e.g. player
+     ///< unique name of object, e.g. player
     bool        m_wantToDie = false;
     bool        m_isActive  = true;
-
+    std::string m_id = "unnamed";
     std::list<IComponent::Ptr> m_componentList;
 };
 } // namespace mmt_gd

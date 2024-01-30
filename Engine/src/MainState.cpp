@@ -51,16 +51,14 @@ void MainState::init()
         }
     }
 
-        // const auto ball = m_gameObjectManager.getGameObject("Ball");
-
-    /*const auto player = m_gameObjectManager.getGameObject("Player0");
+    const auto player = m_gameObjectManager.getGameObject("Player0");
     const auto player1 = m_gameObjectManager.getGameObject("Player1");
     const auto ball = m_gameObjectManager.getGameObject("Ball");
     
     if (player1->getComponent<AIController>() != nullptr)
     {
         player1->getComponent<AIController>()->GetGoalObject(ball.get());
-    }*/
+    }
     // Moving 
 
     {
@@ -70,8 +68,8 @@ void MainState::init()
                                                                             m_game->getWindow(),
                                                                             m_game->getWindow().getView());
 
-        // camera->addComponent<TransformAnimationComponent>(*camera,
-        //                                                  std::make_shared<mmt::TransformAnimationSmoothFollow>(ball, 10.F));
+        camera->addComponent<TransformAnimationComponent>(*camera,
+                                                          std::make_shared<mmt::TransformAnimationSmoothFollow>(ball, 10.F));
 
 
         if (!camera->init())

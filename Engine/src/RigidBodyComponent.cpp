@@ -2,6 +2,7 @@
 #include "RigidBodyComponent.hpp"
 #include "GameObject.hpp"
 #include "PhysicsManager.hpp"
+#include "TetherComponent.hpp"
 
 namespace mmt_gd
 {
@@ -17,7 +18,7 @@ Loss(loss)
 {
     m_shape.top = gameObject.getPosition().y;
     m_shape.left = gameObject.getPosition().x;
-    std::cout << "added obj to physmanager" << std::endl;
+    //std::cout << gameObject.getId() + "lol" << std::endl;
     PhysicsManager::getInstance()->RegisterBody(this);
 
 }
@@ -74,5 +75,14 @@ void RigidBodyComponent::calculateOffset()
 {
     m_shape.left = m_gameObject.getPosition().x + m_gameObjectOffset.x;
     m_shape.top  = m_gameObject.getPosition().y + m_gameObjectOffset.y;
+}
+void RigidBodyComponent::SetTether(TetherComponent* Tether)
+{
+    m_tether = Tether;
+    std::cout << "Tether updated!" << std::endl;
+}
+TetherComponent* RigidBodyComponent::GetTether()
+{
+    return m_tether;
 }
 } // namespace mmt_gd
