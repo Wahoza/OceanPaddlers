@@ -204,22 +204,14 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
     for (auto itB = m_triggers.begin(); itB != m_triggers.end(); ++itB)
     {
         auto& body2 = *itB;
-        //std::cout << body1->getGameObject().getId() << std::endl;
+        //
         //some conditionals
-        if (body1->getGameObject().getId() != body2->m_identifier)
+        
+
+        if (body1->getGameObject().getId().find(body2->m_identifier) == std::string::npos)
         {
-            if (body1->getGameObject().getComponent<TetherComponent>() != nullptr)
-            {
-
-                if (body1->GetTether()->getGameObject().getId() != body2->m_identifier)
-                    continue;
-            }
-            else
-            {
-                continue;
-            }
+            continue;
         }
-
 
         Transform body1Transform;
         body1Transform.translate(body1->getGameObject().getPosition());
@@ -231,6 +223,13 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
         
         if (aabbVsAabb(body1Transform.transformRect(body1->m_shape), body2Transform.transformRect(body2->m_shape), normal, penetration))
         {
+            
+             if (body2->m_notification == "Current")
+             {
+                body1->addVelocity({0.01, 0});
+             }
+                
+                
             //only trigger on inital collision
             if (body2->collided == false)
             {
