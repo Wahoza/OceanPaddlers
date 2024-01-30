@@ -30,7 +30,7 @@ length(shape.width / 2),
 TetherItem1(createNewTetheredObject("tethered1")),
 TetherItem2(createNewTetheredObject("tethered2"))
 {
-    float scaleFactor = 0.7;
+    float scaleFactor = 0.6;
     length = shape.width / 2 * scaleFactor;
     float height = shape.height*scaleFactor;
 
