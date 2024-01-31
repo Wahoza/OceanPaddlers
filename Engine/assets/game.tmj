@@ -129,7 +129,7 @@
                         {
                          "name":"Forces",
                          "type":"string",
-                         "value":"4 0"
+                         "value":"1 0"
                         }, 
                         {
                          "name":"Mass",

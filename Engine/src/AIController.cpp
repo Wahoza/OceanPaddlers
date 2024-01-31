@@ -4,6 +4,7 @@
 #include "GameObject.hpp"
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
+#include "TetherComponent.hpp"
 namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
@@ -41,8 +42,14 @@ bool AIController::init()
 void AIController::agressiveUpdate(float deltaTime)
 {
     //error here, but where??
-    //Vector2f moveVec = m_goal->getPosition() - m_gameObject.getPosition();
-    Vector2f moveVec = {0, 1};
+    Vector2f moveVec{};
+
+    moveVec = m_goal->getPosition() - m_gameObject.getPosition() - m_gameObject.getComponent<RigidBodyComponent>().get()->m_velocity;
+    std::cout << m_goal->getPosition().x << std::endl;
+    std::cout << m_goal->getPosition().y << std::endl;
+
+    //Vector2f moveVec = {0, 1};
+
     moveObj(moveVec, deltaTime);
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
     CompleteSpriteChanges(moveVec);
@@ -64,20 +71,19 @@ void AIController::idleUpdate(float deltaTime)
 }
 void AIController::moveObj(Vector2f moveVec, float deltaTime)
 {
-    if (moveVec.x != 0 && moveVec.y != 0)
+    if (!(moveVec.x == 0 && moveVec.y == 0))
     {
         moveVec.x = moveVec.x / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
         moveVec.y = moveVec.y / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
-
+        std::cout << "something" << std::endl;
     }
 
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)
     {
-        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * deltaTime * speed);
+        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * speed * deltaTime);
     }
     else
     {
-        //note: still needs to be normalized
         m_gameObject.move(moveVec * deltaTime * speed);
     }
 }
@@ -98,14 +104,12 @@ void AIController::RequestNextState()
         if (CalculateDist() <= 80)
         {
             elapsedTimeInPhase = 0;
-            m_gameObject.getComponent<RigidBodyComponent>()->setVelocity({0, 0});
-
             currentState = agressive;
         }
     }
     else if (currentState == agressive)
     {
-        if (elapsedTimeInPhase > 5)
+        if (elapsedTimeInPhase > 4)
         {
             m_gameObject.markForDelete();
         }
@@ -117,9 +121,10 @@ void AIController::CompleteSpriteChanges(Vector2f orientation)
     auto& sprite          = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
     float    angle                    = atan2(NewOrientation.y, NewOrientation.x);
     angle                 = angle * 180.0f / static_cast<float>(3.14);
-    //FloatRect gameObjectSize = m_gameObject.getComponent<RigidBodyComponent>().get()->m_shape;
+    FloatRect gameObjectSize = m_gameObject.getComponent<RigidBodyComponent>().get()->m_shape;
     Vector2f  spriteOffset   = Vector2f{sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2};
     sprite.setOrigin(spriteOffset);
+    sprite.setPosition(Vector2f{gameObjectSize.width / 2.f, gameObjectSize.height / 2.f});
     sprite.setRotation(angle);
 }
 void AIController::setGoalObject(GameObject* _goal)

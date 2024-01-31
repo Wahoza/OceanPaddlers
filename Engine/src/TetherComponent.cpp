@@ -189,15 +189,12 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
     float otherSpeed = sqrt(otherVelocity.x * otherVelocity.x + otherVelocity.y * otherVelocity.y);
     float angle = std::atan2(orientation.y, orientation.x);
 
-    Vector2f result = -Vector2f(-std::sin(angle), std::cos(angle));
+    Vector2f result = Vector2f(-std::sin(angle), std::cos(angle));
 
-    //m_gameObject.move(-collisionVec);
-    //collider->getComponent<RigidBodyComponent>().get()->addVelocity(collisionVec);
-    //other->getComponent<RigidBodyComponent>().get()->addVelocity(collisionVec);
+    collider->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    other->getComponent<RigidBodyComponent>().get()->setVelocity(
+        -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
 
-    other->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
-    //collider->getComponent<RigidBodyComponent>().get()->setVelocity(
-    //    -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
 
     if (m_gameObject.getId() == "Player0")
     {
@@ -219,6 +216,10 @@ void TetherComponent::ApplyForce(Vector2f _force)
     TetherItem1.getComponent<RigidBodyComponent>()->addVelocity(_force);
     TetherItem2.getComponent<RigidBodyComponent>()->addVelocity(_force);
 } 
+Vector2f TetherComponent::getPosition()
+{
+    return m_gameObject.getPosition()+orientation/2.f;
+}
 GameObject* TetherComponent::getOtherObj(GameObject collider)
 {
     if (collider.getId() == TetherItem1.getId())

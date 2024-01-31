@@ -36,7 +36,7 @@ public:
     bool init() override;
 
     float CalculateDist();
-    float speed = 1;
+    float speed = 100;
 
 private:
     State       currentState = idle;
