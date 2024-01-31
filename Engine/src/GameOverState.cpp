@@ -1,12 +1,19 @@
 #include "stdafx.h"
+
+#include "InputObject.hpp"
+
 #include "GameOverState.hpp"
 #include "GameState.hpp"
 #include "Game.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
+#include "InputManager.hpp"
+
+using namespace std;
+using namespace sf;
+
 namespace mmt_gd
 {
-using namespace std;
 
 GameOverState::GameOverState(GameStateManager* gameStateManager, Game* game) :
 GameState(gameStateManager, game)
@@ -29,20 +36,24 @@ void GameOverState::init()
         return;
     }
     m_font.setSmooth(false);
-    m_text.setPosition(m_game->getWindow().getView().getCenter());
+    
+    Vector2f ScreenCenter = m_game->getWindow().getView().getCenter();
+    m_text.setPosition(ScreenCenter);
     m_text.setString("Game Over.");
-    m_text.setFillColor(sf::Color::Red);
+    sf::Color color = sf::Color::Red;
+    
     if (won)
     {
         m_text.setString("Victory");
-        m_text.setFillColor(sf::Color::Blue);
+        color = sf::Color::Blue;
     }
-    
+
+    m_text.setFillColor(color);
     m_text.setFont(m_font);
     m_text.setOrigin(m_text.getLocalBounds().width * 0.5F, m_text.getLocalBounds().height * 0.5F);
     m_text.setScale(5, 5);
 
-    m_eggsText.setPosition(m_game->getWindow().getView().getCenter());
+    m_eggsText.setPosition(ScreenCenter);
     m_eggsText.setFillColor(sf::Color::Red);
     if (won)
     {
@@ -53,7 +64,7 @@ void GameOverState::init()
     m_eggsText.setOrigin(m_text.getLocalBounds().width * 0.5F -150, m_text.getLocalBounds().height * 0.5F -120);
     m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
 
-    m_distanceText.setPosition(m_game->getWindow().getView().getCenter());
+    m_distanceText.setPosition(ScreenCenter);
     m_distanceText.setFillColor(sf::Color::Red);
     if (won)
     {
@@ -68,6 +79,10 @@ void GameOverState::init()
     m_view = m_game->getWindow().getView();
 
     m_isInit = true;
+    InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 120),
+                                     {200, 30},
+                                     color);
+    //InputObject::getInstance()->StartListen();
 }
 
 void GameOverState::update(float delta)
@@ -75,6 +90,15 @@ void GameOverState::update(float delta)
     PROFILE_FUNCTION();
     m_view.setSize(1920, 1080);
     m_game->getWindow().setView(m_view);
+    wait += delta;
+    if (wait > 0.1)
+    {
+        InputObject::getInstance()->StartListen();
+    }
+    if (InputManager::getInstance().isKeyPressed("Exit"))
+    {
+        m_gameStateManager->setState("MenuState");
+    }
 }
 
 void GameOverState::draw()
@@ -84,6 +108,9 @@ void GameOverState::draw()
     m_game->getWindow().draw(m_text);
     m_game->getWindow().draw(m_eggsText);
     m_game->getWindow().draw(m_distanceText);
+
+    m_game->getWindow().draw(InputObject::getInstance()->m_rectangle);
+    m_game->getWindow().draw(InputObject::getInstance()->m_text);
 }
 
 void GameOverState::updateStats(IEvent::Ptr event)
@@ -100,7 +127,22 @@ void GameOverState::updateStats(IEvent::Ptr event)
 void GameOverState::exit()
 {
     PROFILE_FUNCTION();
+    {
+        std::string filePath = "../assets/scores.txt";
 
+        std::ofstream outputFile(filePath);
+
+        // Check if the file is open
+        if (outputFile.is_open())
+        {
+            // Write the string to the file
+            outputFile << (InputObject::getInstance()->getText() + " " + to_string((int)distance) + " " + to_string(eggsCollected));
+
+            // Close the file
+            outputFile.close();
+        }
+    }
     GameState::exit();
+    InputObject::getInstance()->shutdown();
 }
 }

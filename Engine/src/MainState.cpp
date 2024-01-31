@@ -17,6 +17,7 @@
 #include "GameObjectEvents.hpp"
 #include "EventBus.hpp"
 
+#include "InputObject.hpp"
 #include <memory>
 #include <thread>
 
@@ -128,5 +129,6 @@ void MainState::exit()
     m_PhysicsManager->shutdown();
     m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
+    InputObject::getInstance()->shutdown();
 }
 } // namespace mmt_gd

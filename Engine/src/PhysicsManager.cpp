@@ -401,5 +401,6 @@ void PhysicsManager::shutdown()
     m_staticcolliders.clear();
     m_triggers.clear();
     delete m_instance;
+    m_instance = nullptr;
 }
 } // namespace mmt_gd

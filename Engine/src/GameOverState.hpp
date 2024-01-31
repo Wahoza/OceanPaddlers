@@ -3,6 +3,7 @@
 #include "GameState.hpp"
 #include "FinalFrontier/dll_export.hpp"
 #include "IEvent.hpp"
+#include "InputObject.hpp"
 namespace mmt_gd
 {
 
@@ -16,6 +17,7 @@ namespace mmt_gd
         void update(float deltaTime) override;
         void draw() override;
         void updateStats(IEvent::Ptr event);
+
     private:
         sf::Text m_text;
         sf::Font m_font;
@@ -25,7 +27,8 @@ namespace mmt_gd
         sf::Text m_eggsText;
         float distance = 0;
         int   eggsCollected = 0;
-        bool  won;
+        bool  won = false;
         bool m_isInit = false;
+        float    wait          = 0;
 	};
 } // namespace mmt_gd

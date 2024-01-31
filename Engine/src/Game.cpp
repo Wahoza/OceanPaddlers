@@ -7,12 +7,24 @@
 #include "MainState.hpp"
 #include "MenuState.hpp"
 #include "GameOverState.hpp"
+#include "InputObject.hpp"
 #include <sstream>
 
 
 namespace mmt_gd
 {
 using namespace std;
+
+sf::RenderWindow Game::m_window;
+
+sf::RenderWindow& Game::getWindow()
+{
+    return m_window;
+}
+sf::RenderWindow* Game::getWindowPtr()
+{
+    return &m_window;
+}
 
 void Game::run()
 {
@@ -43,6 +55,7 @@ void Game::run()
                     return;
                 }
                 m_inputManager->process(event);
+                InputObject::getInstance()->handleEvent(event);
             }
         }
         update();

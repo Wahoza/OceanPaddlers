@@ -144,6 +144,7 @@
     <ClInclude Include="..\src\GameOverState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
+    <ClInclude Include="..\src\InputObject.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
     <ClInclude Include="..\src\MenuState.hpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\GameOverState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
+    <ClCompile Include="..\src\InputObject.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />

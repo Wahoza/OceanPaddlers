@@ -152,5 +152,6 @@ void Hud::shutdown()
 {
     delete text;
     delete m_instance;
+    m_instance = nullptr;
 }
 }
