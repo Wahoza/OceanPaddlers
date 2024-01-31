@@ -32,4 +32,17 @@ void AiManager::setGoalObject(GameObject* _goal)
         AIcomponent->setGoalObject(_goal);
     }
 }
+void AiManager::update()
+{
+    //std::cout << m_instance->m_goal->getPosition().x << std::endl;
+}
+void AiManager::shutdown()
+{
+    AIcontrollers.clear();
+    delete m_instance;
+}
+void AiManager::unregisterAIComponent(AIController* _AIcontroller)
+{
+    AIcontrollers.erase(std::remove(AIcontrollers.begin(), AIcontrollers.end(), _AIcontroller), AIcontrollers.end());
+}
 }

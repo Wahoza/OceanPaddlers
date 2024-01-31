@@ -88,4 +88,9 @@ TetherComponent* RigidBodyComponent::GetTether()
 {
     return m_tether;
 }
+RigidBodyComponent::~RigidBodyComponent()
+{
+    PhysicsManager::getInstance()->UnregisterBody(this);
+}
+
 } // namespace mmt_gd

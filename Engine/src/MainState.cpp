@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "MainState.hpp"
-
+#include "AiManager.hpp"
 #include "CameraRenderComponent.hpp"
 //#include "Hud.hpp"
 #include "PlayerMoveComponent.hpp"
@@ -99,6 +99,7 @@ void MainState::update(const float deltaTime)
     //m_PhysicsManager = PhysicsManager::getInstance();
     m_PhysicsManager->HandleCollisions(deltaTime);
     m_Hud->update(deltaTime);
+    AiManager::getInstance()->update();
 }
 
 void MainState::draw()
@@ -115,5 +116,6 @@ void MainState::exit()
     m_gameObjectManager.shutdown();
     m_PhysicsManager->shutdown();
     m_Hud->shutdown();
+    AiManager::getInstance()->shutdown();
 }
 } // namespace mmt_gd

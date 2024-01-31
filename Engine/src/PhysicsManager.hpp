@@ -18,6 +18,7 @@ public:
     void RegisterTrigger(TriggerComponent* Trigger);
     void RegisterCollectible(CollectibleComponent* Collectible);
 
+    void UnregisterBody(RigidBodyComponent* RigidBody);
     private:
     struct Manifold
     {

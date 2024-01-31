@@ -33,7 +33,8 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
-    bool CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
+    bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
+    void  ApplyForce(Vector2f _force);
     float hurtTime = 0;
 
 private:

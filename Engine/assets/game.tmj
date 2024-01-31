@@ -129,7 +129,7 @@
                         {
                          "name":"Forces",
                          "type":"string",
-                         "value":"0 0"
+                         "value":"4 0"
                         }, 
                         {
                          "name":"Mass",
@@ -1511,7 +1511,7 @@
                  "y":160
                 }, 
                 {
-                 "height":32,
+                 "height":13.5,
                  "id":107,
                  "name":"fish1",
                  "properties":[
@@ -1528,12 +1528,22 @@
                         {
                          "name":"Forces",
                          "type":"string",
-                         "value":"0 10"
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
                         }, 
                         {
                          "name":"Mass",
                          "type":"float",
-                         "value":20
+                         "value":0.5
                         }, 
                         {
                          "name":"Texture",
@@ -1563,31 +1573,14 @@
                         {
                          "name":"VelocityLoss",
                          "type":"float",
-                         "value":1
+                         "value":0.2
                         }],
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":32,
-                 "x":76,
-                 "y":37.5
-                }, 
-                {
-                 "height":11.5417,
-                 "id":108,
-                 "name":"Stone0",
-                 "properties":[
-                        {
-                         "name":"CollisionType",
-                         "type":"string",
-                         "value":"Hard"
-                        }],
-                 "rotation":0,
-                 "type":"Collider",
-                 "visible":true,
-                 "width":14,
-                 "x":146,
-                 "y":133.22915
+                 "width":13.5,
+                 "x":265,
+                 "y":61.5
                 }],
          "opacity":1,
          "type":"objectgroup",

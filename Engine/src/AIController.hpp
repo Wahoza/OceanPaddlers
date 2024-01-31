@@ -26,16 +26,21 @@ public:
 
     void agressiveUpdate(float deltaTime);
     void idleUpdate(float deltaTime);
-    void defensiveUpdate(float deltaTime);
+    void interestedUpdate(float deltaTime);
 
     void moveObj(sf::Vector2f moveVec, float deltaTime);
     void RequestNextState();
-
+    void CompleteSpriteChanges(sf::Vector2f orientation);
     AIController(GameObject& _gameObject);
+    ~AIController();
     bool init() override;
+
+    float CalculateDist();
+    float speed = 1;
 
 private:
     State       currentState = idle;
+
     GameObject* m_goal = nullptr;
     float       elapsedTimeInPhase = 0;
 };

@@ -13,8 +13,11 @@ class AiManager
 {
 public:
     static AiManager* getInstance();
-    void setGoalObject(GameObject* _goal);
+    void              setGoalObject(GameObject* _goal);
+    void              update();
     void registerAIComponent(AIController* _AIcontroller);
+    void              shutdown();
+    void              unregisterAIComponent(AIController* _AIcontroller);
 
 private:
     std::vector<AIController*> AIcontrollers;

@@ -64,6 +64,7 @@ public:
 
         return vecs;
     }
+    ~RigidBodyComponent();
 
 private:
     TetherComponent* m_tether = nullptr;
