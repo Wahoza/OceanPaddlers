@@ -19,7 +19,7 @@ Hud* Hud::getInstance()
     
     return m_instance;
 }
-Hud::Hud()
+Hud::Hud() : EggScore(0), distanceTraveled(0), currentlives(3)
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });

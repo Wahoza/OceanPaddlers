@@ -13,6 +13,7 @@
 #include "PhysicsManager.hpp"
 #include "Hud.hpp"
 #include "AIController.hpp"
+#include "ScoreConverter.hpp"
 
 namespace mmt_gd
 {
@@ -232,6 +233,20 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                                          static_cast<float>(object.getSize().y)},
                                                                         identifier, notification);
 
+    }
+    if (object.getType() == "ScoreConverter")
+    {
+        string path = "";
+        for (const auto* property : object.getProperties().get())
+        {
+            if (property->getName() == "FilePath")
+            {
+                path = std::any_cast<string>(property->getValue());
+            }
+        }
+        auto scoregameObject     = GameObject::create(object.getName());
+        scoregameObject->addComponent<ScoreConverter>(*scoregameObject, spriteManager.getWindow(), path);
+        EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoregameObject));
     }
 
     return {};

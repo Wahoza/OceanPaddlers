@@ -1,1 +1,2 @@
-proud girl 4.479239 0
+scoreTest,20,19
+pepsi,3,19

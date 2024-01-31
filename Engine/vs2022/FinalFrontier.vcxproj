@@ -163,6 +163,8 @@
     <ClInclude Include="..\src\PlayerShootComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
+    <ClInclude Include="..\src\ScoreConverter.hpp" />
+    <ClInclude Include="..\src\ScoreDisplayComponent.hpp" />
     <ClInclude Include="..\src\StaticColliderComponent.hpp" />
     <ClInclude Include="..\src\TetherComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationSmoothFollow.hpp" />
@@ -210,6 +212,8 @@
     <ClCompile Include="..\src\PlayerShootComponent.cpp" />
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\src\ScoreConverter.cpp" />
+    <ClCompile Include="..\src\ScoreDisplayComponent.cpp" />
     <ClCompile Include="..\src\StaticColliderComponent.cpp" />
     <ClCompile Include="..\src\TetherComponent.cpp" />
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp" />

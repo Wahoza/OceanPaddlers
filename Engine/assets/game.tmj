@@ -1725,6 +1725,23 @@
                  "width":13.5,
                  "x":885.583333333333,
                  "y":48.4166666666667
+                }, 
+                {
+                 "height":16,
+                 "id":111,
+                 "name":"ScoreGuy",
+                 "properties":[
+                        {
+                         "name":"FilePath",
+                         "type":"string",
+                         "value":"..\/assets\/scores.txt"
+                        }],
+                 "rotation":0,
+                 "type":"ScoreConverter",
+                 "visible":true,
+                 "width":16,
+                 "x":32,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1733,7 +1750,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":111,
+ "nextobjectid":112,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

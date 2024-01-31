@@ -183,9 +183,6 @@
     <ClInclude Include="..\src\TriggerComponent.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Hud.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\AIController.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
@@ -200,6 +197,18 @@
     </ClInclude>
     <ClInclude Include="..\src\GameOverState.hpp">
       <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\InputObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ScoreConverter.hpp">
+      <Filter>Header Files\Debug\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Hud.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ScoreDisplayComponent.hpp">
+      <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -287,9 +296,6 @@
     <ClCompile Include="..\src\TriggerComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Hud.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\AIController.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
@@ -304,6 +310,18 @@
     </ClCompile>
     <ClCompile Include="..\src\GameOverState.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\InputObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ScoreConverter.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Hud.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ScoreDisplayComponent.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

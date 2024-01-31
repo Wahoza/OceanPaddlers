@@ -15,8 +15,7 @@ using namespace sf;
 namespace mmt_gd
 {
 
-GameOverState::GameOverState(GameStateManager* gameStateManager, Game* game) :
-GameState(gameStateManager, game)
+GameOverState::GameOverState(GameStateManager* gameStateManager, Game* game) : GameState(gameStateManager, game), wait(0)
 {
     EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { updateStats(event); });
 }
@@ -130,16 +129,34 @@ void GameOverState::exit()
     {
         std::string filePath = "../assets/scores.txt";
 
-        std::ofstream outputFile(filePath);
-
-        // Check if the file is open
-        if (outputFile.is_open())
+        // Read the existing file contents
+        std::ifstream inputFile(filePath);
+        if (inputFile.is_open())
         {
-            // Write the string to the file
-            outputFile << (InputObject::getInstance()->getText() + " " + to_string((int)distance) + " " + to_string(eggsCollected));
+            std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+            inputFile.close();
 
-            // Close the file
-            outputFile.close();
+            // Append new data to the existing content
+            fileContent +="\n" + InputObject::getInstance()->getText() + "," + to_string((int)distance) +
+                               "," +
+                               to_string(eggsCollected);
+
+            // Write the updated content back to the file
+            std::ofstream outputFile(filePath);
+            if (outputFile.is_open())
+            {
+                outputFile << fileContent;
+                outputFile.close();
+                std::cout << "File updated successfully." << std::endl;
+            }
+            else
+            {
+                std::cerr << "Error opening file for writing: " << filePath << std::endl;
+            }
+        }
+        else
+        {
+            std::cerr << "Error opening file for reading: " << filePath << std::endl;
         }
     }
     GameState::exit();
