@@ -5,6 +5,7 @@
 #include "PhysicsManager.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
+#include "Hud.hpp"
 namespace mmt_gd
 {
 TriggerComponent::TriggerComponent(FloatRect shape, string identifier, string notification) :
@@ -21,10 +22,11 @@ bool TriggerComponent::init()
 void TriggerComponent::Notify()
 {
     //std::cout << m_notification << std::endl;
-    std::pair<int, std::string> eventData(1, m_notification);
-    IEvent::Ptr                 scoreEvent = std::make_shared<ScoreEvent>(eventData);
-    EventBus::getInstance().fireEvent(scoreEvent);
-
+    if (m_notification == "Goal")
+    {
+        Hud::getInstance()->won = true;
+        Hud::getInstance()->PingGameEnd();
+    }
 }
 Vector2f TriggerComponent::getPosition()
 {

@@ -1501,7 +1501,7 @@
                         {
                          "name":"Notification",
                          "type":"string",
-                         "value":"Current"
+                         "value":"Goal"
                         }],
                  "rotation":0,
                  "type":"Trigger",

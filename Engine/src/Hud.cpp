@@ -57,11 +57,15 @@ void Hud::Notify(IEvent::Ptr event)
         }
         else
         {
-            tuple eventData(distanceTraveled, EggScore, false);
-            IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
-            EventBus::getInstance().fireEvent(GameOver);
+            PingGameEnd();
         }
     }
+}
+void Hud::PingGameEnd()
+{
+    tuple       eventData(distanceTraveled, EggScore, won);
+    IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
+    EventBus::getInstance().fireEvent(GameOver);
 }
 void Hud::CreateHud()
 {

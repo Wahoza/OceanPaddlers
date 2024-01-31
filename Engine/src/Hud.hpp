@@ -16,7 +16,9 @@ public:
     void        shutdown();
     void        CreateHud();
     Hud();
-    void        Notify(IEvent::Ptr event);
+    void Notify(IEvent::Ptr event);
+
+    void PingGameEnd();
     
     //void IEvent::getEventType
     //list<Sprite, Vector2f> spriteList;
@@ -45,6 +47,7 @@ public:
     int EggScore = 0;
     int initlives    = 3;
     int currentlives = initlives;
+    bool won          = false;
 
 private:
     string        m_layerName;
