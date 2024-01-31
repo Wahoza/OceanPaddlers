@@ -45,14 +45,12 @@ void AIController::agressiveUpdate(float deltaTime)
     Vector2f moveVec{};
 
     moveVec = m_goal->getPosition() - m_gameObject.getPosition() - m_gameObject.getComponent<RigidBodyComponent>().get()->m_velocity;
-    std::cout << m_goal->getPosition().x << std::endl;
-    std::cout << m_goal->getPosition().y << std::endl;
 
     //Vector2f moveVec = {0, 1};
 
     moveObj(moveVec, deltaTime);
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
-    CompleteSpriteChanges(moveVec);
+    CompleteSpriteChanges(m_goal->getPosition() - m_gameObject.getPosition());
 }
 
 void AIController::interestedUpdate(float deltaTime)

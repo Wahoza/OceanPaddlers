@@ -12,6 +12,11 @@
 #include "TransformAnimationComponent.hpp"
 #include "TransformAnimationSmoothFollow.hpp"
 #include "AIController.hpp"
+
+#include "IEvent.hpp"
+#include "GameObjectEvents.hpp"
+#include "EventBus.hpp"
+
 #include <memory>
 #include <thread>
 
@@ -21,6 +26,7 @@ MainState::MainState(GameStateManager* gameStateManager, Game* game) :
 GameState(gameStateManager, game),
 m_spriteManager(game->getWindow())
 {
+    EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { ListenforEnd(event); });
 }
 
 void MainState::init()
@@ -107,6 +113,11 @@ void MainState::draw()
     PROFILE_FUNCTION();
     m_spriteManager.draw();
     m_Hud->draw(m_game->getWindow());
+}
+
+void MainState::ListenforEnd(IEvent::Ptr event)
+{
+    m_gameStateManager->setState("GameOverState");
 }
 
 void MainState::exit()

@@ -51,15 +51,21 @@ void Hud::Notify(IEvent::Ptr event)
     }
     if (auto hurtEvent = std::dynamic_pointer_cast<HurtEvent>(event))
     {
-        if (currentlives > 0)
+        if (currentlives > 1)
         {
             currentlives--;
         }
         else
         {
-            //trigger Game Over
+            PingGameEnd();
         }
     }
+}
+void Hud::PingGameEnd()
+{
+    tuple       eventData(distanceTraveled, EggScore, won);
+    IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
+    EventBus::getInstance().fireEvent(GameOver);
 }
 void Hud::CreateHud()
 {
@@ -118,6 +124,9 @@ void Hud::draw(sf::RenderWindow& m_window)
 {
     //std::cout << "Draw" << std::endl;
     {
+        distanceTraveled = m_window.getView().getCenter().x / distancePixeltoM;
+
+
         Vector2f windowTopLeft = m_window.getView().getCenter() -
                                  Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};
         Vector2f TextOffset = {25, 20};

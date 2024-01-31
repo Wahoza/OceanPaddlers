@@ -5,6 +5,8 @@
 #include "SpriteManager.hpp"
 #include "PhysicsManager.hpp"
 #include "Hud.hpp"
+#include "IEvent.hpp"
+
 namespace mmt_gd
 {
 class FINALFRONTIER_API MainState final : public GameState
@@ -17,6 +19,8 @@ public:
 
     void update(float deltaTime) override;
     void draw() override;
+
+    void ListenforEnd(IEvent::Ptr event);
 
 private:
     SpriteManager     m_spriteManager;
