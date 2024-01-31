@@ -2,7 +2,9 @@
 #include "AiManager.hpp"
 #include "AIController.hpp"
 #include "GameObject.hpp"
-#include "RigidBodyComponent.hpp";
+#include "RigidBodyComponent.hpp"
+#include "SpriteRenderComponent.hpp"
+#include "TetherComponent.hpp"
 namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
@@ -24,7 +26,7 @@ void AIController::update(const float deltaTime)
         case interested:
             //std::cout << "def" << std::endl;
 
-            defensiveUpdate(deltaTime);
+            interestedUpdate(deltaTime);
             break;
         case agressive:
             //std::cout << "agr" << std::endl;
@@ -39,67 +41,90 @@ bool AIController::init()
 }
 void AIController::agressiveUpdate(float deltaTime)
 {
-    Vector2f moveVec = m_goal->getPosition() - m_gameObject.getPosition();
+    //error here, but where??
+    Vector2f moveVec{};
+
+    moveVec = m_goal->getPosition() - m_gameObject.getPosition() - m_gameObject.getComponent<RigidBodyComponent>().get()->m_velocity;
+    std::cout << m_goal->getPosition().x << std::endl;
+    std::cout << m_goal->getPosition().y << std::endl;
+
+    //Vector2f moveVec = {0, 1};
 
     moveObj(moveVec, deltaTime);
+    m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
+    CompleteSpriteChanges(moveVec);
 }
-void AIController::defensiveUpdate(float deltaTime)
+
+void AIController::interestedUpdate(float deltaTime)
 {
     Vector2f moveVec{};
-    moveVec.y = m_goal->getPosition().y - m_gameObject.getPosition().y;
-    moveVec.x = 2240 - m_gameObject.getPosition().x;
+    moveVec.x = m_goal->getPosition().x - m_gameObject.getPosition().x;
+    moveVec.y = 0;
 
     moveObj(moveVec, deltaTime);
+    m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
+    CompleteSpriteChanges(moveVec);
 }
 
 void AIController::idleUpdate(float deltaTime)
 {
-    //do nothing, easier for player to win
 }
 void AIController::moveObj(Vector2f moveVec, float deltaTime)
 {
-    moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+    if (!(moveVec.x == 0 && moveVec.y == 0))
+    {
+        moveVec.x = moveVec.x / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+        moveVec.y = moveVec.y / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
+    }
+
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)
     {
-        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec);
+        m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * speed * deltaTime);
     }
     else
     {
-        //note: still needs to be normalized
-        m_gameObject.move(moveVec * deltaTime);
+        m_gameObject.move(moveVec * deltaTime * speed);
     }
 }
 
 
 void AIController::RequestNextState()
 {
-  
-    if (elapsedTimeInPhase >= 4)
+    if (currentState == idle)
     {
-        //std::cout << "new" << std::endl;
-        elapsedTimeInPhase = 0;
-        float Xdist        = (m_goal->getPosition().x - m_gameObject.getPosition().x);
-        float Ydist                 = (m_goal->getPosition().y - m_gameObject.getPosition().y);
-        float DistanceToGoal = sqrt(Xdist * Xdist + Ydist * Ydist);
-        
-        if (std::rand() % 100 < 5)
+        if (CalculateDist() <= 200)
         {
-            currentState = idle;
-            
+            elapsedTimeInPhase = 0;
+            currentState = interested;
         }
-        else
-        {
-            if (DistanceToGoal >= 800 || std::rand() % 100 + 1 < 10)
-            {
-                currentState = interested;
-            }
-            else
-            {
-                currentState = agressive;
-            }
-        }
-
     }
+    else if (currentState == interested)
+    {
+        if (CalculateDist() <= 80)
+        {
+            elapsedTimeInPhase = 0;
+            currentState = agressive;
+        }
+    }
+    else if (currentState == agressive)
+    {
+        if (elapsedTimeInPhase > 4)
+        {
+            m_gameObject.markForDelete();
+        }
+    }
+}
+void AIController::CompleteSpriteChanges(Vector2f orientation)
+{
+    Vector2f NewOrientation           = Vector2f{-orientation.y, orientation.x};
+    auto& sprite          = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
+    float    angle                    = atan2(NewOrientation.y, NewOrientation.x);
+    angle                 = angle * 180.0f / static_cast<float>(3.14);
+    FloatRect gameObjectSize = m_gameObject.getComponent<RigidBodyComponent>().get()->m_shape;
+    Vector2f  spriteOffset   = Vector2f{sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2};
+    sprite.setOrigin(spriteOffset);
+    sprite.setPosition(Vector2f{gameObjectSize.width / 2.f, gameObjectSize.height / 2.f});
+    sprite.setRotation(angle);
 }
 void AIController::setGoalObject(GameObject* _goal)
 {
@@ -108,5 +133,14 @@ void AIController::setGoalObject(GameObject* _goal)
 AIController::AIController(GameObject& m_gameObject) : IComponent(m_gameObject)
 {
     AiManager::getInstance()->registerAIComponent(this);
+}
+AIController::~AIController()
+{
+    AiManager::getInstance()->unregisterAIComponent(this);
+}
+float AIController::CalculateDist()
+{
+    Vector2f DistVec = m_goal->getPosition() - m_gameObject.getPosition();
+    return sqrt(DistVec.x * DistVec.x + DistVec.y * DistVec.y);
 }
 }

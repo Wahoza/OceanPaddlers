@@ -42,7 +42,7 @@ void RigidBodyComponent::addVelocity(Vector2f velocity)
 
     if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= maxSpeed * maxSpeed)
     {  
-        if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= 0)
+        if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y > 0)
         {
            
             m_velocity = m_velocity/sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * maxSpeed;
@@ -88,4 +88,9 @@ TetherComponent* RigidBodyComponent::GetTether()
 {
     return m_tether;
 }
+RigidBodyComponent::~RigidBodyComponent()
+{
+    PhysicsManager::getInstance()->UnregisterBody(this);
+}
+
 } // namespace mmt_gd

@@ -27,6 +27,10 @@ void PhysicsManager::RegisterCollectible(CollectibleComponent* Collectible)
 {
     m_collectibles.push_back(Collectible);
 }
+void PhysicsManager::UnregisterBody(RigidBodyComponent* RigidBody)
+{
+    m_bodies.erase(std::remove(m_bodies.begin(), m_bodies.end(), RigidBody), m_bodies.end());
+}
 PhysicsManager* PhysicsManager::m_instance;
 PhysicsManager* PhysicsManager::getInstance()
 {
@@ -282,7 +286,6 @@ void PhysicsManager::resolveCollisions()
     {
         if (man.m_body1->m_invMass == 0 && man.m_body2->m_invMass == 0)
         {
-            std::cout<< "break";
             return;
         }
         sf::Vector2f rv             = man.m_body1->m_velocity - man.m_body2->m_velocity;
@@ -296,14 +299,19 @@ void PhysicsManager::resolveCollisions()
 
         sf::Vector2f impulse    = j * man.m_normal;
 
+        man.m_body1->m_velocity = man.m_body1->m_velocity + man.m_body1->m_invMass * impulse;
+
+        man.m_body2->m_velocity = man.m_body2->m_velocity + man.m_body2->m_invMass * impulse;
         if (!CheckforTether(man.m_body1, impulse * man.m_penetration * man.m_body1->m_invMass, false))
         {
             man.m_body1->m_velocity = (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse);
         }
         else
         {
-            GameObject* body1Other  = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
-            man.m_body2->m_velocity = (man.m_body2->m_velocity + man.m_body2->m_invMass * impulse * 2.f) + body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
+            //man.m_body1->GetTether()->ApplyForce(impulse * man.m_penetration * man.m_body1->m_invMass);
+
+            //GameObject* body1Other  = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
+            //man.m_body2->m_velocity = () + body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
         }
         if (!CheckforTether(man.m_body2, impulse * man.m_penetration * man.m_body2->m_invMass, false))
         {
@@ -311,9 +319,10 @@ void PhysicsManager::resolveCollisions()
         }
         else
         {
-            GameObject* body1Other = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
-            man.m_body1->m_velocity += (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse * 2.f) +
-                                       body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
+            //man.m_body2->GetTether()->ApplyForce(impulse * man.m_penetration * man.m_body2->m_invMass);
+            //GameObject* body1Other = man.m_body1->GetTether()->getOtherObj(man.m_body1->getGameObject());
+            //man.m_body1->m_velocity += (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse * 2.f) +
+            //                           body1Other->getComponent<RigidBodyComponent>().get()->m_velocity;
         }
 
     }
