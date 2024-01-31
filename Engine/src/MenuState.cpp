@@ -20,7 +20,7 @@ void MenuState::init()
         return;
     }
 
-    if (!m_font.loadFromFile("../assets/arial.ttf"))
+    if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
     {
         sf::err() << "Could not load font\n";
         return;

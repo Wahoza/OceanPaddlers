@@ -198,6 +198,9 @@
     <ClInclude Include="..\src\AiManager.hpp">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\GameOverState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\src\AiManager.cpp">
       <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameOverState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

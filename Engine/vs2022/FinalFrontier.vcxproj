@@ -141,6 +141,7 @@
     <ClInclude Include="..\src\AIController.hpp" />
     <ClInclude Include="..\src\AiManager.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
+    <ClInclude Include="..\src\GameOverState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
+    <ClCompile Include="..\src\GameOverState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />

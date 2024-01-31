@@ -6,7 +6,7 @@
 #include "InputManager.hpp"
 #include "MainState.hpp"
 #include "MenuState.hpp"
-
+#include "GameOverState.hpp"
 #include <sstream>
 
 
@@ -85,6 +85,7 @@ bool Game::init()
     //
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("GameOverState", make_shared<GameOverState>(&m_gameStateManager, this));
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y),

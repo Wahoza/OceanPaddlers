@@ -84,4 +84,17 @@ public:
     }
 };
 
+//GameOverEvent: Distance Traveled, Eggs Collected, reached end
+class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 } // namespace mmt_gd
