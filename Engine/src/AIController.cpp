@@ -50,7 +50,7 @@ void AIController::agressiveUpdate(float deltaTime)
 
     moveObj(moveVec, deltaTime);
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
-    CompleteSpriteChanges(moveVec);
+    CompleteSpriteChanges(m_goal->getPosition() - m_gameObject.getPosition());
 }
 
 void AIController::interestedUpdate(float deltaTime)
