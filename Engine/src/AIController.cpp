@@ -75,7 +75,6 @@ void AIController::moveObj(Vector2f moveVec, float deltaTime)
     {
         moveVec.x = moveVec.x / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
         moveVec.y = moveVec.y / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
-        std::cout << "something" << std::endl;
     }
 
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)

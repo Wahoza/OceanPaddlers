@@ -299,9 +299,9 @@ void PhysicsManager::resolveCollisions()
 
         sf::Vector2f impulse    = j * man.m_normal;
 
-        man.m_body1->m_velocity = -man.m_body1->m_velocity + man.m_body1->m_invMass * impulse;
+        man.m_body1->m_velocity = man.m_body1->m_velocity + man.m_body1->m_invMass * impulse;
 
-        man.m_body2->m_velocity = -man.m_body2->m_velocity + man.m_body2->m_invMass * impulse;
+        man.m_body2->m_velocity = man.m_body2->m_velocity + man.m_body2->m_invMass * impulse;
         if (!CheckforTether(man.m_body1, impulse * man.m_penetration * man.m_body1->m_invMass, false))
         {
             man.m_body1->m_velocity = (man.m_body1->m_velocity - man.m_body1->m_invMass * impulse);
