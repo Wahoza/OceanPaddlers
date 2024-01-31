@@ -34,8 +34,7 @@ void ScoreConverter::CreateScoreLabels(std::string input)
     std::vector<std::string> substrings = splitString(input, 10);
     for (std::string& substring : substrings)
     {
-
-        std::vector<std::string> datastring = splitString(input, 44);
+        std::vector<std::string> datastring = splitString(substring, 44);
 
         try
         {
@@ -43,12 +42,13 @@ void ScoreConverter::CreateScoreLabels(std::string input)
             //create new objects here!!
 
             string inputText = datastring[0] + "\n" + "Eggs: " + datastring[2];
-            Vector2f scorePosition = {-(float)intValue * 30,IComponent::m_gameObject.getPosition().y};
-            std::cout << to_string((float)intValue) << std::endl;
+            Vector2f scorePosition = {(float)intValue * 30,IComponent::m_gameObject.getPosition().y};
+           
             auto scoreObject = GameObject::create("score" + to_string(counter));
 
             scoreObject->addComponent<ScoreDisplayComponent>(*scoreObject, m_renderWindow, inputText, scorePosition);
             EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoreObject));
+            scoreObject->setPosition(scorePosition);
 
             //std::cout << "Parsed integer value: " << intValue << std::endl;
         } catch (const std::invalid_argument& ia)
