@@ -7,10 +7,14 @@
 #include "GameObjectEvents.hpp"
 #include "EventBus.hpp"
 #include "RenderComponentEvents.hpp"
+
+#include <algorithm>
+#include <random>
+
 namespace mmt_gd
 {
 
-ScoreConverter::ScoreConverter(GameObject& gameObject, sf::RenderWindow& renderWindow, std::string filePath) : IComponent(gameObject), IRenderComponent(gameObject, renderWindow)
+ScoreConverter::ScoreConverter(GameObject& gameObject, sf::RenderWindow& renderWindow, std::string filePath, int displayedAmount) : IRenderComponent(gameObject, renderWindow)
 {
     std::ifstream inputFile(filePath);
     if (inputFile.is_open())
@@ -19,22 +23,31 @@ ScoreConverter::ScoreConverter(GameObject& gameObject, sf::RenderWindow& renderW
         std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
         inputFile.close();
 
-        CreateScoreLabels(fileContent);
+        CreateScoreLabels(fileContent, displayedAmount);
     }else{
         std::cerr << "Error opening file: " << filePath << std::endl;
     }
 }
+
 bool ScoreConverter::init()
 {
     return true;
 }
-void ScoreConverter::CreateScoreLabels(std::string input)
+
+void ScoreConverter::CreateScoreLabels(std::string input, int displayedAmount)
 {
     int                      counter    = 0;
     std::vector<std::string> substrings = splitString(input, 10);
-    for (std::string& substring : substrings)
+
+
+
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    std::shuffle(substrings.begin(), substrings.end(), std::default_random_engine(std::rand()));
+
+
+    for (size_t i = 0; i < 5 && i < substrings.size(); ++i)
     {
-        std::vector<std::string> datastring = splitString(substring, 44);
+        std::vector<std::string> datastring = splitString(substrings[i], 44);
 
         try
         {
@@ -42,13 +55,19 @@ void ScoreConverter::CreateScoreLabels(std::string input)
             //create new objects here!!
 
             string inputText = datastring[0] + "\n" + "Eggs: " + datastring[2];
-            Vector2f scorePosition = {(float)intValue * 30,IComponent::m_gameObject.getPosition().y};
+            Vector2f scorePosition = {((float)intValue * 30), m_gameObject.getPosition().y};
            
             auto scoreObject = GameObject::create("score" + to_string(counter));
 
-            scoreObject->addComponent<ScoreDisplayComponent>(*scoreObject, m_renderWindow, inputText, scorePosition);
-            EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoreObject));
             scoreObject->setPosition(scorePosition);
+
+            scoreObject->addComponent<ScoreDisplayComponent>(*scoreObject, m_renderWindow, inputText);
+
+
+
+
+            EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoreObject));
+            
 
             //std::cout << "Parsed integer value: " << intValue << std::endl;
         } catch (const std::invalid_argument& ia)

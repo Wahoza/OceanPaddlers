@@ -10,7 +10,7 @@ using namespace sf;
 using namespace std;
 namespace mmt_gd
 {
-ScoreDisplayComponent::ScoreDisplayComponent(GameObject& gameObject, RenderWindow& renderWindow, string _text, Vector2f position) :
+ScoreDisplayComponent::ScoreDisplayComponent(GameObject& gameObject, RenderWindow& renderWindow, string _text) :
 IRenderComponent(gameObject, renderWindow)
 {
     EventBus::getInstance().fireEvent(std::make_shared<RenderableCreateEvent>("Top", *this));
@@ -27,7 +27,7 @@ IRenderComponent(gameObject, renderWindow)
     m_text.setFillColor(sf::Color::White);
     m_text.setOutlineThickness(1);
     m_text.setOutlineColor(sf::Color::Black);
-    m_text.setOrigin(position);
+    m_text.setPosition(gameObject.getPosition());
 }
 
 bool ScoreDisplayComponent::init()

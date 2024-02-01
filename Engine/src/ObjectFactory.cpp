@@ -237,15 +237,22 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
     if (object.getType() == "ScoreConverter")
     {
         string path = "";
+        int    amount = 0;
         for (const auto* property : object.getProperties().get())
         {
             if (property->getName() == "FilePath")
             {
                 path = std::any_cast<string>(property->getValue());
             }
+            if (property->getName() == "DisplayedScores")
+            {
+                amount = std::any_cast<int>(property->getValue());
+            }
         }
         auto scoregameObject     = GameObject::create(object.getName());
-        scoregameObject->addComponent<ScoreConverter>(*scoregameObject, spriteManager.getWindow(), path);
+        scoregameObject->setPosition(static_cast<float>(object.getPosition().x), static_cast<float>(object.getPosition().y));
+
+        scoregameObject->addComponent<ScoreConverter>(*scoregameObject, spriteManager.getWindow(), path, amount);
         EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoregameObject));
     }
 

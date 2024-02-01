@@ -1732,6 +1732,11 @@
                  "name":"ScoreGuy",
                  "properties":[
                         {
+                         "name":"DisplayedScores",
+                         "type":"int",
+                         "value":5
+                        }, 
+                        {
                          "name":"FilePath",
                          "type":"string",
                          "value":"..\/assets\/scores.txt"

@@ -13,7 +13,7 @@ namespace mmt_gd
 class ScoreDisplayComponent : public IRenderComponent
 {
 public:
-    ScoreDisplayComponent(GameObject& gameObject, RenderWindow& renderWindow, string _text, Vector2f position);
+    ScoreDisplayComponent(GameObject& gameObject, RenderWindow& renderWindow, string _texts);
     bool init() override;
     void update(float deltaTime) override;
     void draw() override;

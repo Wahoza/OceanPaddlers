@@ -98,13 +98,24 @@ void PhysicsManager::findCollisions()
 {
     for (auto& itA = m_bodies.begin(); itA != m_bodies.end(); ++itA)
     {
+        
         auto& body1 = *itA;
+        if (!body1->getGameObject().isActive())
+        {
+            continue;
+        }
+
         for (auto itB = itA; itB != m_bodies.end(); ++itB)
         {
             if (itB == itA)
                 continue;
 
             auto& body2 = *itB;
+            if (!body2->getGameObject().isActive())
+            {
+                continue;
+            }
+
             if (body1->GetTether() != nullptr && body1->GetTether() == body2->GetTether())
                 continue;
             // if both object don't have a mass or body is the same skip
