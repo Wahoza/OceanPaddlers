@@ -26,10 +26,8 @@ public:
         return m_config;
     }
 
-    sf::RenderWindow& getWindow()
-    {
-        return m_window;
-    }
+    static sf::RenderWindow& getWindow();
+    static sf::RenderWindow* getWindowPtr();
 
 
     void run();
@@ -43,7 +41,7 @@ private:
 
     Config m_config;
 
-    sf::RenderWindow m_window;
+    static sf::RenderWindow m_window;
     GameStateManager m_gameStateManager;
 
     InputManager* m_inputManager = nullptr;

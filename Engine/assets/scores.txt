@@ -1,0 +1,16 @@
+scoretest,5,10
+scoretest,10,10
+scoretest,15,10
+scoretest,20,10
+scoretest,25,10
+scoretest,30,10
+scoretest,35,10
+scoretest,40,10
+scoretest,45,10
+scoretest,50,10
+scoretest,55,10
+scoretest,60,10
+scoretest,65,10
+scoretest,70,10
+
+lol1234,61,13

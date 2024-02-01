@@ -23,6 +23,7 @@ public:
      */
     void process(const sf::Event& event);
 
+
     /**
      * \brief Must be called after all events have been processed.
      */
@@ -95,6 +96,7 @@ public:
      * \return Returns true if the button for the given Action has been released.
      */
     bool isKeyReleased(const std::string& action, int playerIdx = 0);
+    
 
     /**
      * \return Returns the current mouse position relative to the window
@@ -107,16 +109,15 @@ public:
     }
 
 private:
+    struct FrameData
+    {
+        bool m_keys[sf::Keyboard::KeyCount];
+    };
     InputManager()  = default;
     ~InputManager() = default;
 
 
     int getKeyForAction(const std::string& action, int playerIdx);
-
-    struct FrameData
-    {
-        bool m_keys[sf::Keyboard::KeyCount];
-    };
 
     FrameData m_lastFrame{};
     FrameData m_currentFrame{};

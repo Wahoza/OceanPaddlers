@@ -13,13 +13,13 @@ Hud* Hud::getInstance()
     if (m_instance == nullptr)
     {  
         m_instance = new Hud();
-        m_instance->CreateHud();
+        //m_instance->CreateHud();
         //auto Notify() = EventBus::EventListener();
     }
     
     return m_instance;
 }
-Hud::Hud()
+Hud::Hud() : EggScore(0), distanceTraveled(0), currentlives(3)
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
@@ -28,36 +28,19 @@ Hud::Hud()
 void Hud::Notify(IEvent::Ptr event)
 {
     //std::cout << "Notification" << std::endl;
-    if (auto scoreEvent = std::dynamic_pointer_cast<ScoreEvent>(event))
-    {
-        int score = scoreEvent->getData().first;
-        //std::cout << score << std::endl;
-        string player = scoreEvent->getData().second;
-        if (player == "Score P1")
-        {
-            scoreP1 += score;
-        }
-        else
-        {
-            scoreP2 += score;
-        }
-        //text->setString("P1 " + to_string(scoreP1) + " - P2 " + to_string(scoreP2));
-    }
     if (auto eggEvent = std::dynamic_pointer_cast<EggEvent>(event))
     {
-        EggScore += eggEvent.get()->getData();
-        std::cout << "eggAlert" << std::endl;
-        text->setString("x" + to_string(EggScore));
+        EggScore += 1;
+        //std::cout << "eggAlert" << std::endl;
+        text.setString("x" + to_string(EggScore));
     }
     if (auto hurtEvent = std::dynamic_pointer_cast<HurtEvent>(event))
     {
-        if (currentlives > 1)
-        {
-            currentlives--;
-        }
-        else
+        currentlives--;
+        if (currentlives == 0)
         {
             PingGameEnd();
+            currentlives = 3;
         }
     }
 }
@@ -71,19 +54,26 @@ void Hud::CreateHud()
 {
     //do stuff for initialization here, currently no sprites, etc.
     {
+        distanceTraveled = 0;
+        EggScore         = 0;
+        currentlives     = 3;
+        std::cout << currentlives << std::endl;
+    }
+    {
         if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
         {
             sf::err() << "Could not load font\n";
         }
         m_font.setSmooth(false);
-        text = new Text();
-        text->setFillColor(sf::Color::Green);
-        text->setFont(m_font);
-        text->setCharacterSize(10);
-        text->setString("x" + to_string(EggScore));
-        text->setFillColor(sf::Color::White);
-        text->setOutlineThickness(1);
-        text->setOutlineColor(sf::Color::Black);
+        
+
+        text.setFillColor(sf::Color::Green);
+        text.setFont(m_font);
+        text.setCharacterSize(10);
+        text.setString("x" + to_string(EggScore));
+        text.setFillColor(sf::Color::White);
+        text.setOutlineThickness(1);
+        text.setOutlineColor(sf::Color::Black);
     }
     {
         sf::Image image;
@@ -130,11 +120,11 @@ void Hud::draw(sf::RenderWindow& m_window)
         Vector2f windowTopLeft = m_window.getView().getCenter() -
                                  Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};
         Vector2f TextOffset = {25, 20};
-        text->setPosition(windowTopLeft + TextOffset);
+        text.setPosition(windowTopLeft + TextOffset);
         Egg.setPosition(windowTopLeft);
 
         m_window.draw(Egg);
-        m_window.draw(*text);
+        m_window.draw(text);
     }
     {
         Vector2f windowTopRight = m_window.getView().getCenter() + Vector2f{m_window.getView().getSize().x / 2, -m_window.getView().getSize().y / 2};
@@ -150,7 +140,7 @@ void Hud::draw(sf::RenderWindow& m_window)
 }
 void Hud::shutdown()
 {
-    delete text;
     delete m_instance;
+    m_instance = nullptr;
 }
 }

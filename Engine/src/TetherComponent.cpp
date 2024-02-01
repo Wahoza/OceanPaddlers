@@ -11,7 +11,10 @@
 #include "AiManager.hpp"
 
 #include "GameObjectEvents.hpp"
+#include "EventBus.hpp"
+
 #include <cmath>
+
 using namespace sf;
 using namespace std;
 
@@ -30,7 +33,8 @@ IComponent(gameObject),
 movePercentage(_movePercentage),
 length(shape.width / 2),
 TetherItem1(createNewTetheredObject("tethered1")),
-TetherItem2(createNewTetheredObject("tethered2"))
+TetherItem2(createNewTetheredObject("tethered2")),
+hurtTime(0)
 {
     if (gameObject.getId() == "Player0")
     {
@@ -74,6 +78,7 @@ TetherItem2(createNewTetheredObject("tethered2"))
     TetherItem2.setPosition(pos2);
     //m_gameObject.setOrigin(shape.width / 2, shape.height / 2);
     //std::cout << "something" << std::endl;
+    hurtTime = 0;
 }
 void TetherComponent::update(const float deltaTime)
 {
@@ -205,6 +210,7 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
             IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
             EventBus::getInstance().fireEvent(Hurt);
             hurtTime = 5;
+
         }
         return true;
     }

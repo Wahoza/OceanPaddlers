@@ -40,6 +40,7 @@ void AiManager::shutdown()
 {
     AIcontrollers.clear();
     delete m_instance;
+    m_instance = nullptr;
 }
 void AiManager::unregisterAIComponent(AIController* _AIcontroller)
 {

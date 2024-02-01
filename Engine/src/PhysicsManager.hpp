@@ -19,6 +19,7 @@ public:
     void RegisterCollectible(CollectibleComponent* Collectible);
 
     void UnregisterBody(RigidBodyComponent* RigidBody);
+
     private:
     struct Manifold
     {

@@ -144,6 +144,7 @@
     <ClInclude Include="..\src\GameOverState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
+    <ClInclude Include="..\src\InputObject.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\MainState.hpp" />
     <ClInclude Include="..\src\MenuState.hpp" />
@@ -162,6 +163,8 @@
     <ClInclude Include="..\src\PlayerShootComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
+    <ClInclude Include="..\src\ScoreConverter.hpp" />
+    <ClInclude Include="..\src\ScoreDisplayComponent.hpp" />
     <ClInclude Include="..\src\StaticColliderComponent.hpp" />
     <ClInclude Include="..\src\TetherComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationSmoothFollow.hpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\GameOverState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
+    <ClCompile Include="..\src\InputObject.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />
@@ -208,6 +212,8 @@
     <ClCompile Include="..\src\PlayerShootComponent.cpp" />
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\src\ScoreConverter.cpp" />
+    <ClCompile Include="..\src\ScoreDisplayComponent.cpp" />
     <ClCompile Include="..\src\StaticColliderComponent.cpp" />
     <ClCompile Include="..\src\TetherComponent.cpp" />
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp" />
