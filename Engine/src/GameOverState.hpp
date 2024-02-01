@@ -29,7 +29,6 @@ namespace mmt_gd
         float distance = 0;
         int   eggsCollected = 0;
         bool  won = false;
-        bool m_isInit = false;
         float    wait          = 0;
 	};
 } // namespace mmt_gd

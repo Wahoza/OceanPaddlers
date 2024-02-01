@@ -25,10 +25,7 @@ void GameOverState::init()
 {
     PROFILE_FUNCTION();
 
-    if (m_isInit)
-    {
-        return;
-    }
+
 
     if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
     {
@@ -81,7 +78,6 @@ void GameOverState::init()
                                      {200, 30},
                                      color);
 
-    m_isInit = true;
     //InputObject::getInstance()->StartListen();
 }
 
@@ -91,7 +87,7 @@ void GameOverState::update(float delta)
     m_view.setSize(1920, 1080);
     m_game->getWindow().setView(m_view);
     wait += delta;
-    if (wait > 0.1)
+    if (wait > 0.3)
     {
         InputObject::getInstance()->StartListen();
     }
@@ -163,7 +159,7 @@ void GameOverState::exit()
     }
 
     GameState::exit();
-    InputObject::getInstance()->shutdown();
+    //InputObject::getInstance()->shutdown();
     //m_gameObjectManager.shutdown();
     //m_PhysicsManager->shutdown();
     //m_Hud->shutdown();
