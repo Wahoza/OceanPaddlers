@@ -5,7 +5,7 @@
 #include "RigidBodyComponent.hpp"
 #include "DebugDraw.hpp"
 #include "TetherComponent.hpp"
-
+#include "AIController.hpp"
 using namespace sf;
 using namespace std;
 
@@ -141,6 +141,15 @@ void PhysicsManager::findCollisions()
                 manifold.m_penetration = penetration;
 
                 m_manifolds.push_back(manifold);
+
+                if (body1->getGameObject().getComponent<AIController>() != nullptr)
+                {
+                    body1->getGameObject().getComponent<AIController>()->CollisionEvent();
+                }
+                else if (body2->getGameObject().getComponent<AIController>() != nullptr)
+                {
+                    body2->getGameObject().getComponent<AIController>()->CollisionEvent();
+                }
             }
         }
         doStaticCollisions(body1);

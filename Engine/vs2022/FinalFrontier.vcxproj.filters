@@ -165,9 +165,6 @@
     <ClInclude Include="..\src\IAnimationComponent.hpp">
       <Filter>Header Files\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\PlayerShootComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ObjectFactory.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -209,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ScoreDisplayComponent.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SoundManager.hpp">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +278,6 @@
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp">
       <Filter>Source Files\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\PlayerShootComponent.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ObjectFactory.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -322,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="..\src\ScoreDisplayComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SoundManager.cpp">
+      <Filter>Source Files\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

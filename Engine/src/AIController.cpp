@@ -6,6 +6,7 @@
 #include "SpriteRenderComponent.hpp"
 #include "TetherComponent.hpp"
 #include "PhysicsManager.hpp"
+#include "GameObjectEvents.hpp"
 namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
@@ -143,5 +144,10 @@ float AIController::CalculateDist()
 {
     Vector2f DistVec = m_goal->getPosition() - m_gameObject.getPosition();
     return sqrt(DistVec.x * DistVec.x + DistVec.y * DistVec.y);
+}
+void AIController::CollisionEvent()
+{
+    IEvent::Ptr FishColl = std::make_shared<FishCollisionEvent>(1);
+    EventBus::getInstance().fireEvent(FishColl);
 }
 }

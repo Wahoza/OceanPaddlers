@@ -5,6 +5,8 @@
 #include "PhysicsManager.hpp"
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
+#include "SoundManager.hpp"
+
 using namespace sf;
 using namespace std;
 namespace mmt_gd
@@ -34,7 +36,7 @@ void CollectibleComponent::CollissionMessage()
     int eventData(1);
     IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
     EventBus::getInstance().fireEvent(eggEvent);
-
+    SoundManager::getInstance().playSound("StoneBonk");
     m_gameObject.setActive(false);
     //hides game Object
     //m_gameObject.setPosition(0, 1000);

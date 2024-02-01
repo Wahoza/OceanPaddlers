@@ -18,6 +18,7 @@
 #include "EventBus.hpp"
 
 #include "InputObject.hpp"
+#include "SoundManager.hpp"
 #include <memory>
 #include <thread>
 
@@ -33,7 +34,7 @@ m_spriteManager(game->getWindow())
 void MainState::init()
 {
     PROFILE_FUNCTION();
-
+    m_soundManager.init();
     m_gameObjectManager.init();
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
@@ -90,6 +91,7 @@ void MainState::init()
 
     // Define layer order manually here. Could come from custom file settings.
     m_spriteManager.setLayerOrder({"Floor", "Background", "Objects", "GameObjects", "Top"});
+    m_soundManager.playMusic("Music");
 }
 
 void MainState::update(const float deltaTime)
@@ -100,7 +102,6 @@ void MainState::update(const float deltaTime)
         m_gameStateManager->setState("MenuState");
         return;
     }
-
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
 

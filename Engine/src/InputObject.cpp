@@ -2,7 +2,8 @@
 #include "Game.hpp"
 #include "InputObject.hpp"
 #include "InputManager.hpp"
-
+#include "EventBus.hpp"
+#include "GameObjectEvents.hpp"
 
 namespace mmt_gd
 {
@@ -39,16 +40,20 @@ void InputObject::handleEvent(sf::Event &event)
             if (event.text.unicode == '\b' && !m_inputString.empty())
             {
                 m_inputString.pop_back();
+                IEvent::Ptr inputEvent = std::make_shared<InputEvent>(event.text.unicode);
+                EventBus::getInstance().fireEvent(inputEvent);
             }
             else if (event.text.unicode != '\b' && event.text.unicode != 10 && event.text.unicode != 13 &&
                      event.text.unicode != ',' &&
                      m_inputString.size() <= maxSize)
             {
                 m_inputString += static_cast<char>(event.text.unicode);
+                IEvent::Ptr inputEvent = std::make_shared<InputEvent>(event.text.unicode);
+                EventBus::getInstance().fireEvent(inputEvent);
             }
             updateText();
         }
-        std::cout << m_inputString << std::endl;
+        //std::cout << m_inputString << std::endl;
     }
 }
 void InputObject::StartListen()

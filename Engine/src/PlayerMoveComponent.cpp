@@ -7,7 +7,6 @@
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include <cmath>
-
 using namespace sf;
 using namespace std;
 namespace mmt_gd

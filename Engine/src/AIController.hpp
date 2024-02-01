@@ -36,6 +36,7 @@ public:
     bool init() override;
 
     float CalculateDist();
+    void  CollisionEvent();
     float speed = 100;
 
 private:
