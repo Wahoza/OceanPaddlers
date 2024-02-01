@@ -97,4 +97,28 @@ public:
         return Type;
     }
 };
+class FishCollisionEvent final : public BasicDataEvent<std::tuple<bool>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class InputEvent final : public BasicDataEvent<char>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 } // namespace mmt_gd

@@ -8,7 +8,7 @@
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "InputManager.hpp"
-
+#include "SoundManager.hpp"
 
 using namespace std;
 using namespace sf;
@@ -24,7 +24,6 @@ GameOverState::GameOverState(GameStateManager* gameStateManager, Game* game) : G
 void GameOverState::init()
 {
     PROFILE_FUNCTION();
-
 
 
     if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
