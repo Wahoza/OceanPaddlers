@@ -26,17 +26,7 @@ bool CollectibleComponent::init()
 {
     return true;
 }
-Vector2f CollectibleComponent::getPosition()
-{
-    if (!m_gameObject.isMarkedForDelete())
-    {   
-        return m_gameObject.getPosition();
-    }
-    else
-    {
-        return {0, 0};
-    }
-}
+
 void CollectibleComponent::CollissionMessage()
 {
 	//send event later
@@ -44,7 +34,10 @@ void CollectibleComponent::CollissionMessage()
     int eventData(1);
     IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
     EventBus::getInstance().fireEvent(eggEvent);
-    m_gameObject.markForDelete();
+
+    m_gameObject.setActive(false);
+    //hides game Object
+    //m_gameObject.setPosition(0, 1000);
     //delete &m_gameObject;
 }
 }

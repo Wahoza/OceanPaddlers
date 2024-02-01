@@ -41,7 +41,8 @@ void InputObject::handleEvent(sf::Event &event)
             {
                 m_inputString.pop_back();
             }
-            else if (event.text.unicode != '\b' && event.text.unicode != ',' && m_inputString.size() <= maxSize)
+            else if (event.text.unicode != '\b' && event.text.unicode != '\n' && event.text.unicode != ',' &&
+                     m_inputString.size() <= maxSize)
             {
                 m_inputString += static_cast<char>(event.text.unicode);
             }

@@ -78,7 +78,10 @@ void GameOverState::init()
     m_view = m_game->getWindow().getView();
 
     m_isInit = true;
-    InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 120),
+    m_name.setFont(m_font);
+    m_name.setOrigin(m_text.getLocalBounds().width * 0.5F - 400, m_text.getLocalBounds().height * 0.5F + 160);
+    m_name.setString("Name: ");
+    InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 160),
                                      {200, 30},
                                      color);
     //InputObject::getInstance()->StartListen();

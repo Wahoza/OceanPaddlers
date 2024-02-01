@@ -9,7 +9,10 @@
 #include "GameOverState.hpp"
 #include "InputObject.hpp"
 #include <sstream>
-
+#include "GameObjectManager.hpp"
+#include "Hud.hpp"
+#include "PhysicsManager.hpp"
+#include "AiManager.hpp"
 
 namespace mmt_gd
 {
@@ -152,5 +155,9 @@ void Game::draw()
 void Game::shutdown() const
 {
     m_gameStateManager.shutdown();
+    PhysicsManager::getInstance()->shutdown();
+    Hud::getInstance()->shutdown();
+    AiManager::getInstance()->shutdown();
+    InputObject::getInstance()->shutdown();
 }
 } // namespace mmt_gd

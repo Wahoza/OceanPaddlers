@@ -253,30 +253,26 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
 }
 void PhysicsManager::doCollectibleCollisions(RigidBodyComponent* body1)
 {
-    int ctr = 0;
     for (auto& itB : m_collectibles)
     {
         if (body1->getGameObject().getId().find(itB->m_identifier) == std::string::npos)
         {
             continue;
         }
-
-        auto removeIterator = std::remove_if(m_collectibles.begin(),m_collectibles.end(),[&](const auto& body2)
+        if (!itB->getGameObject().isActive())
         {
-            Transform body1Transform;
-            body1Transform.translate(body1->getGameObject().getPosition());
-            Transform body2Transform;
-            body2Transform.translate(body2->getPosition());
-            Vector2f normal;
-            float    penetration;
-            if (aabbVsAabb(body1Transform.transformRect(body1->m_shape),
-                body2Transform.transformRect(body2->m_shape),normal, penetration)){
-                body2->CollissionMessage();
-                return true; // Mark the element for removal
-            }
-                return false; // Element should not be removed
-        });
-        m_collectibles.erase(removeIterator, m_collectibles.end());
+            continue;
+        }
+        Transform body1Transform;
+        body1Transform.translate(body1->getGameObject().getPosition());
+        Transform body2Transform;
+        body2Transform.translate(itB->getGameObject().getPosition());
+        Vector2f normal;
+        float    penetration;
+        if (aabbVsAabb(body1Transform.transformRect(body1->m_shape), body2Transform.transformRect(itB->m_shape), normal, penetration))
+        {
+            itB->CollissionMessage();
+        }
 
     }
 }

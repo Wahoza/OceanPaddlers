@@ -31,7 +31,6 @@ public:
     virtual void exit()
     {
     }
-
     virtual void update(float delta) = 0;
     virtual void draw()              = 0;
 

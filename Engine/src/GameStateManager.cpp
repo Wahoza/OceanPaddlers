@@ -37,6 +37,7 @@ void GameStateManager::changeState(GameState* stateName)
         {
             m_currentState->init();
         }
+
     }
 }
 

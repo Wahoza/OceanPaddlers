@@ -38,6 +38,7 @@ void MainState::init()
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
     m_Hud            = Hud::getInstance();
+    m_Hud->CreateHud();
 
     // load tile map/level
     {
@@ -130,5 +131,7 @@ void MainState::exit()
     m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
+    GameState::exit();
 }
+
 } // namespace mmt_gd

@@ -46,7 +46,7 @@ public:
 
     int EggScore = 0;
     int initlives    = 3;
-    int currentlives = initlives;
+    int currentlives = 3;
     bool won          = false;
 
 private:

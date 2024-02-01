@@ -23,6 +23,7 @@ namespace mmt_gd
         sf::Font m_font;
         sf::View m_view;
 
+        sf::Text m_name;
         sf::Text m_distanceText;
         sf::Text m_eggsText;
         float distance = 0;

@@ -5,6 +5,7 @@
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "TetherComponent.hpp"
+#include "PhysicsManager.hpp"
 namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
@@ -108,7 +109,9 @@ void AIController::RequestNextState()
     {
         if (elapsedTimeInPhase > 4)
         {
-            m_gameObject.markForDelete();
+            m_gameObject.setActive(false); 
+            //PhysicsManager::getInstance()->UnregisterBody(m_gameObject.getComponent<RigidBodyComponent>().get());
+            //m_gameObject.markForDelete();
         }
     }
 }

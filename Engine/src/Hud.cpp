@@ -13,7 +13,7 @@ Hud* Hud::getInstance()
     if (m_instance == nullptr)
     {  
         m_instance = new Hud();
-        m_instance->CreateHud();
+        //m_instance->CreateHud();
         //auto Notify() = EventBus::EventListener();
     }
     
@@ -70,6 +70,11 @@ void Hud::PingGameEnd()
 void Hud::CreateHud()
 {
     //do stuff for initialization here, currently no sprites, etc.
+    {
+        distanceTraveled = 0;
+        EggScore         = 0;
+        currentlives     = 3;
+    }
     {
         if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
         {
