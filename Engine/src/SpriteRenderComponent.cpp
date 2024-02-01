@@ -50,6 +50,7 @@ bool SpriteRenderComponent::init()
     }
     //image.createMaskFromColor(sf::Color::Black);
     m_texture.loadFromImage(image);
+    m_texture.setSmooth(false);
     m_sprite.setTexture(m_texture);
 
     return true;
