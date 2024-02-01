@@ -15,7 +15,9 @@ public:
     bool init() override;
     void update(float deltaTime) override;
     sf::Vector2i toSpriteOffset(int value, int inputIdx);
+    
     private:
+    void calculateSpriteOffset(sf::Vector2f input, int index);
     bool rigidControll;
     int m_playerIndex;
 };
