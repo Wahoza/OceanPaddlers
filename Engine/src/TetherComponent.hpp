@@ -36,6 +36,7 @@ public:
     bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
     void     ApplyForce(Vector2f _force);
     Vector2f getPosition();
+
     float hurtTime = 0;
 
 private:

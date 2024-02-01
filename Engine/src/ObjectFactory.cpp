@@ -4,7 +4,6 @@
 
 #include "GameObjectEvents.hpp"
 #include "PlayerMoveComponent.hpp"
-#include "PlayerShootComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "Tileson.hpp"
 #include "RigidBodyComponent.hpp"
@@ -13,6 +12,7 @@
 #include "PhysicsManager.hpp"
 #include "Hud.hpp"
 #include "AIController.hpp"
+#include "ScoreConverter.hpp"
 
 namespace mmt_gd
 {
@@ -30,7 +30,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     textureRect.width  = object.getSize().x;
     textureRect.height = object.getSize().y;
     fs::path spriteTexture;
-    fs::path bulletTexture;
     auto     input     = false;
     auto     playerIdx = 0;
     
@@ -40,10 +39,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         if (auto name = property->getName(); name == "Texture")
         {
             spriteTexture = resourcePath / std::any_cast<std::string>(property->getValue());
-        }
-        else if (name == "BulletTexture")
-        {
-            bulletTexture = resourcePath / std::any_cast<std::string>(property->getValue());
         }
         else if (name == "TextureRectLeft")
         {
@@ -146,20 +141,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         renderComp->getSprite().setScale(scale);
     }
 
-    if (bulletTexture.string().length() > 0)
-    {
-        gameObject->addComponent<PlayerShootComponent>(*gameObject,
-                                                       5,
-                                                       spriteManager.getWindow(),
-                                                       bulletTexture.string(),
-                                                       textureRect,
-                                                       sf::FloatRect{0, 0, 49, 22},
-                                                       0.1F,
-                                                       layer);
-
-    }
-
-
 
     if (input)
     {
@@ -232,6 +213,27 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                                          static_cast<float>(object.getSize().y)},
                                                                         identifier, notification);
 
+    }
+    if (object.getType() == "ScoreConverter")
+    {
+        string path = "";
+        int    amount = 0;
+        for (const auto* property : object.getProperties().get())
+        {
+            if (property->getName() == "FilePath")
+            {
+                path = std::any_cast<string>(property->getValue());
+            }
+            if (property->getName() == "DisplayedScores")
+            {
+                amount = std::any_cast<int>(property->getValue());
+            }
+        }
+        auto scoregameObject     = GameObject::create(object.getName());
+        scoregameObject->setPosition(static_cast<float>(object.getPosition().x), static_cast<float>(object.getPosition().y));
+
+        scoregameObject->addComponent<ScoreConverter>(*scoregameObject, spriteManager.getWindow(), path, amount);
+        EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(scoregameObject));
     }
 
     return {};

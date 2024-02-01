@@ -12,6 +12,13 @@
 #include "TransformAnimationComponent.hpp"
 #include "TransformAnimationSmoothFollow.hpp"
 #include "AIController.hpp"
+
+#include "IEvent.hpp"
+#include "GameObjectEvents.hpp"
+#include "EventBus.hpp"
+
+#include "InputObject.hpp"
+#include "SoundManager.hpp"
 #include <memory>
 #include <thread>
 
@@ -21,16 +28,18 @@ MainState::MainState(GameStateManager* gameStateManager, Game* game) :
 GameState(gameStateManager, game),
 m_spriteManager(game->getWindow())
 {
+    EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { ListenforEnd(event); });
 }
 
 void MainState::init()
 {
     PROFILE_FUNCTION();
-
+    m_soundManager.init();
     m_gameObjectManager.init();
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
     m_Hud            = Hud::getInstance();
+    m_Hud->CreateHud();
 
     // load tile map/level
     {
@@ -82,6 +91,7 @@ void MainState::init()
 
     // Define layer order manually here. Could come from custom file settings.
     m_spriteManager.setLayerOrder({"Floor", "Background", "Objects", "GameObjects", "Top"});
+    m_soundManager.playMusic("Music");
 }
 
 void MainState::update(const float deltaTime)
@@ -92,7 +102,6 @@ void MainState::update(const float deltaTime)
         m_gameStateManager->setState("MenuState");
         return;
     }
-
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
 
@@ -109,13 +118,21 @@ void MainState::draw()
     m_Hud->draw(m_game->getWindow());
 }
 
+void MainState::ListenforEnd(IEvent::Ptr event)
+{
+    m_gameStateManager->setState("GameOverState");
+}
+
 void MainState::exit()
 {
     PROFILE_FUNCTION();
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
     m_PhysicsManager->shutdown();
-    m_Hud->shutdown();
+    //m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
+    InputObject::getInstance()->shutdown();
+    GameState::exit();
 }
+
 } // namespace mmt_gd

@@ -5,6 +5,8 @@
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "TetherComponent.hpp"
+#include "PhysicsManager.hpp"
+#include "GameObjectEvents.hpp"
 namespace mmt_gd
 {
 void AIController::update(const float deltaTime)
@@ -45,14 +47,12 @@ void AIController::agressiveUpdate(float deltaTime)
     Vector2f moveVec{};
 
     moveVec = m_goal->getPosition() - m_gameObject.getPosition() - m_gameObject.getComponent<RigidBodyComponent>().get()->m_velocity;
-    std::cout << m_goal->getPosition().x << std::endl;
-    std::cout << m_goal->getPosition().y << std::endl;
 
     //Vector2f moveVec = {0, 1};
 
     moveObj(moveVec, deltaTime);
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
-    CompleteSpriteChanges(moveVec);
+    CompleteSpriteChanges(m_goal->getPosition() - m_gameObject.getPosition());
 }
 
 void AIController::interestedUpdate(float deltaTime)
@@ -110,7 +110,9 @@ void AIController::RequestNextState()
     {
         if (elapsedTimeInPhase > 4)
         {
-            m_gameObject.markForDelete();
+            m_gameObject.setActive(false); 
+            //PhysicsManager::getInstance()->UnregisterBody(m_gameObject.getComponent<RigidBodyComponent>().get());
+            //m_gameObject.markForDelete();
         }
     }
 }
@@ -142,5 +144,10 @@ float AIController::CalculateDist()
 {
     Vector2f DistVec = m_goal->getPosition() - m_gameObject.getPosition();
     return sqrt(DistVec.x * DistVec.x + DistVec.y * DistVec.y);
+}
+void AIController::CollisionEvent()
+{
+    IEvent::Ptr FishColl = std::make_shared<FishCollisionEvent>(1);
+    EventBus::getInstance().fireEvent(FishColl);
 }
 }

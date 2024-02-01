@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-
+#include "IEvent.hpp"
 namespace mmt_gd
 {
 class GameStateManager
@@ -29,6 +29,7 @@ public:
 private:
     GameState* findState(const std::string& stateName);
     void       changeState(GameState* stateName);
+    //void    listenForGameOver(IEvent::Ptr event);
 
     std::unordered_map<std::string, GameState::Ptr> m_states;
     GameState*                                      m_currentState = nullptr;

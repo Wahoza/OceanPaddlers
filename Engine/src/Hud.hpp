@@ -3,6 +3,7 @@
 //Idea: i can alway put it in the render /update after all the game object/sprites consistantly
 #include "stdafx.h"
 #include "EventBus.hpp"
+
 using namespace sf;
 using namespace std;
 
@@ -15,7 +16,9 @@ public:
     void        shutdown();
     void        CreateHud();
     Hud();
-    void        Notify(IEvent::Ptr event);
+    void Notify(IEvent::Ptr event);
+
+    void PingGameEnd();
     
     //void IEvent::getEventType
     //list<Sprite, Vector2f> spriteList;
@@ -32,7 +35,7 @@ public:
     string mainText = "Score: P1 - P2";
     Vector2f offset   = {-400, -400};
 
-    Text* text;
+    Text text;
     Font m_font;
 
     Texture m_texture_egg;
@@ -43,10 +46,13 @@ public:
 
     int EggScore = 0;
     int initlives    = 3;
-    int currentlives = initlives;
+    int currentlives = 3;
+    bool won          = false;
 
 private:
     string        m_layerName;
     static Hud* m_instance;
+    float         distanceTraveled = 0;
+    float         distancePixeltoM = 30;
 };
 } // namespace mmt_gd

@@ -6,13 +6,28 @@
 #include "InputManager.hpp"
 #include "MainState.hpp"
 #include "MenuState.hpp"
-
+#include "GameOverState.hpp"
+#include "InputObject.hpp"
 #include <sstream>
-
+#include "GameObjectManager.hpp"
+#include "Hud.hpp"
+#include "PhysicsManager.hpp"
+#include "AiManager.hpp"
 
 namespace mmt_gd
 {
 using namespace std;
+
+sf::RenderWindow Game::m_window;
+
+sf::RenderWindow& Game::getWindow()
+{
+    return m_window;
+}
+sf::RenderWindow* Game::getWindowPtr()
+{
+    return &m_window;
+}
 
 void Game::run()
 {
@@ -43,6 +58,7 @@ void Game::run()
                     return;
                 }
                 m_inputManager->process(event);
+                InputObject::getInstance()->handleEvent(event);
             }
         }
         update();
@@ -58,6 +74,7 @@ void Game::initInputManager()
 
     m_inputManager->bind("Exit", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
+    m_inputManager->bind("Continue", sf::Keyboard::Enter);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);
@@ -85,6 +102,7 @@ bool Game::init()
     //
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this));
     m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("GameOverState", make_shared<GameOverState>(&m_gameStateManager, this));
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y),
@@ -138,5 +156,9 @@ void Game::draw()
 void Game::shutdown() const
 {
     m_gameStateManager.shutdown();
+    PhysicsManager::getInstance()->shutdown();
+    Hud::getInstance()->shutdown();
+    AiManager::getInstance()->shutdown();
+    InputObject::getInstance()->shutdown();
 }
 } // namespace mmt_gd

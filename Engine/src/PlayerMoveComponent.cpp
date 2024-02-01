@@ -7,7 +7,8 @@
 #include "RigidBodyComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include <cmath>
-
+using namespace sf;
+using namespace std;
 namespace mmt_gd
 {
 PlayerMoveComponent::PlayerMoveComponent(GameObject& gameObject,  const int playerIndex, bool rigidControll) :
@@ -33,43 +34,82 @@ sf::Vector2i PlayerMoveComponent::toSpriteOffset(int value, int playerIdx)
     }
 }
 
+void PlayerMoveComponent::calculateSpriteOffset(Vector2f input, int index)
+{
+
+    Vector2i SpriteOffset = Vector2i{0, 0};
+
+
+    if (abs(input.x) - abs(input.y)*0.3 > abs(input.y))
+    {
+        //std::cout << abs(input.x) <<std::endl;
+        SpriteOffset = toSpriteOffset(3, index);
+    }
+    else
+    {
+        if ((input.y) > 0)
+        {
+            SpriteOffset = toSpriteOffset(1, index);
+        }
+        else if ((input.y) < 0)
+        {
+            SpriteOffset = toSpriteOffset(2, index);
+        }
+
+    }
+   
+
+    m_gameObject.getComponent<RigidBodyComponent>()
+        .get()
+        ->GetTether()
+        ->getGameObject()
+        .getComponent<SpriteRenderComponent>()
+        .get()
+        ->IncrementOffset(SpriteOffset);
+
+}
+
 void PlayerMoveComponent::update(const float deltaTime)
 {
     const auto   speed = 1.0F; // pixels/second
     sf::Vector2f translation{};
-    Vector2i     SpriteOffset = {0, 0};
+    float        xAxis        = sf::Joystick::getAxisPosition(m_playerIndex, sf::Joystick::X);
+    float        yAxis        = sf::Joystick::getAxisPosition(m_playerIndex, sf::Joystick::Y);
+
+    // Threshold to avoid small accidental movements
+    if (std::abs(xAxis) > 20.0f)
+    {
+        translation.x += speed * xAxis * deltaTime / 100.0f;
+    }
+    float additionalYweight = 3;
+    if (std::abs(yAxis) > 20.0f)
+    {
+        translation.y += speed * yAxis * deltaTime / 100.0f * additionalYweight;
+    }
+
         if (InputManager::getInstance().isKeyDown("right", m_playerIndex))
         {
             translation.x += 1;
-            SpriteOffset += toSpriteOffset(0, m_playerIndex);
+            
         }
         if (InputManager::getInstance().isKeyDown("left", m_playerIndex))
         {
             translation.x -= 1;
-            SpriteOffset += toSpriteOffset(0, m_playerIndex);
         }
 
         if (InputManager::getInstance().isKeyDown("up", m_playerIndex))
         {
             translation.y -= 1;
-            SpriteOffset += toSpriteOffset(2, m_playerIndex);
         }
         if (InputManager::getInstance().isKeyDown("down", m_playerIndex))
         {
             translation.y += 1;
-            SpriteOffset += toSpriteOffset(1, m_playerIndex);
         }
-        if (m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether() != nullptr)
-        {
-            m_gameObject.getComponent<RigidBodyComponent>()
-                .get()
-                ->GetTether()
-                ->getGameObject()
-                .getComponent<SpriteRenderComponent>()
-                .get()
-                ->IncrementOffset(SpriteOffset);
-        }
-    Vector2f moveVec = translation;
+        
+        calculateSpriteOffset(translation, m_playerIndex);
+        
+
+        Vector2f moveVec = translation;
         if (moveVec.x != 0 && moveVec.y != 0)
         {
             moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
@@ -84,11 +124,11 @@ void PlayerMoveComponent::update(const float deltaTime)
                 float    angle = std::atan2(Y.y, Y.x);
 
                 Vector2f T = Vector2f(-std::sin(angle), std::cos(angle));
-                moveVec = T * moveVec.y + Y * moveVec.x;
+                translation = T * translation.y + Y * translation.x;
                
                 //moveVec = T * moveVec.y;
             }
-           
+        //change this to translation later
         m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * speed * deltaTime);
     }
     else

@@ -3,7 +3,6 @@
 #include "GameObject.hpp"
 #include "PhysicsManager.hpp"
 #include "StaticColliderComponent.hpp"
-
 namespace mmt_gd
 {
 StaticColliderComponent::StaticColliderComponent(FloatRect shape, string type) :
