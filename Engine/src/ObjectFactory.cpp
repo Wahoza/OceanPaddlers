@@ -4,7 +4,6 @@
 
 #include "GameObjectEvents.hpp"
 #include "PlayerMoveComponent.hpp"
-#include "PlayerShootComponent.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "Tileson.hpp"
 #include "RigidBodyComponent.hpp"
@@ -31,7 +30,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     textureRect.width  = object.getSize().x;
     textureRect.height = object.getSize().y;
     fs::path spriteTexture;
-    fs::path bulletTexture;
     auto     input     = false;
     auto     playerIdx = 0;
     
@@ -41,10 +39,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         if (auto name = property->getName(); name == "Texture")
         {
             spriteTexture = resourcePath / std::any_cast<std::string>(property->getValue());
-        }
-        else if (name == "BulletTexture")
-        {
-            bulletTexture = resourcePath / std::any_cast<std::string>(property->getValue());
         }
         else if (name == "TextureRectLeft")
         {
@@ -146,20 +140,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         Vector2f scale  = {scaleX, scaleY};
         renderComp->getSprite().setScale(scale);
     }
-
-    if (bulletTexture.string().length() > 0)
-    {
-        gameObject->addComponent<PlayerShootComponent>(*gameObject,
-                                                       5,
-                                                       spriteManager.getWindow(),
-                                                       bulletTexture.string(),
-                                                       textureRect,
-                                                       sf::FloatRect{0, 0, 49, 22},
-                                                       0.1F,
-                                                       layer);
-
-    }
-
 
 
     if (input)

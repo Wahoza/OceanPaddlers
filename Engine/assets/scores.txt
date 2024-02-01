@@ -14,3 +14,4 @@ scoretest,65,10
 scoretest,70,10
 
 lol1234,61,13
+,7,0

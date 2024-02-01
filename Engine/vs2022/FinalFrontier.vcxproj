@@ -160,7 +160,6 @@
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\ObjectFactory.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
-    <ClInclude Include="..\src\PlayerShootComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
     <ClInclude Include="..\src\ScoreConverter.hpp" />
@@ -209,7 +208,6 @@
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />
     <ClCompile Include="..\src\CameraRenderComponent.cpp" />
-    <ClCompile Include="..\src\PlayerShootComponent.cpp" />
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
     <ClCompile Include="..\src\ScoreConverter.cpp" />
