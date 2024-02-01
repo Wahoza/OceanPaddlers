@@ -35,7 +35,7 @@ public:
     string mainText = "Score: P1 - P2";
     Vector2f offset   = {-400, -400};
 
-    Text* text;
+    Text text;
     Font m_font;
 
     Texture m_texture_egg;

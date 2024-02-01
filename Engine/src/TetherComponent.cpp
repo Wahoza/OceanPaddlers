@@ -101,7 +101,6 @@ void TetherComponent::update(const float deltaTime)
 
     if (hurtTime > 0)
     {
-        std::cout << hurtTime << std::endl;
         hurtTime -= deltaTime;
         if (((int)(hurtTime * 3)) % 2 == 0 && hurtTime >0.3)
         {
@@ -211,7 +210,7 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
             IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
             EventBus::getInstance().fireEvent(Hurt);
             hurtTime = 5;
-            std::cout << hurtTime << std::endl;
+
         }
         return true;
     }

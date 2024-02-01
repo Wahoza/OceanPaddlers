@@ -9,6 +9,7 @@
 #include "GameObjectEvents.hpp"
 #include "InputManager.hpp"
 
+
 using namespace std;
 using namespace sf;
 
@@ -53,22 +54,14 @@ void GameOverState::init()
     m_text.setScale(5, 5);
 
     m_eggsText.setPosition(ScreenCenter);
-    m_eggsText.setFillColor(sf::Color::Red);
-    if (won)
-    {
-        m_eggsText.setFillColor(sf::Color::Blue);
-    }
+    m_eggsText.setFillColor(color);
 
     m_eggsText.setFont(m_font);
     m_eggsText.setOrigin(m_text.getLocalBounds().width * 0.5F -150, m_text.getLocalBounds().height * 0.5F -120);
     m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
 
     m_distanceText.setPosition(ScreenCenter);
-    m_distanceText.setFillColor(sf::Color::Red);
-    if (won)
-    {
-        m_distanceText.setFillColor(sf::Color::Blue);
-    }
+    m_distanceText.setFillColor(color);
 
     m_distanceText.setFont(m_font);
     m_distanceText.setOrigin(m_text.getLocalBounds().width * 0.5F - 150, m_text.getLocalBounds().height * 0.5F - 160);
@@ -77,13 +70,18 @@ void GameOverState::init()
 
     m_view = m_game->getWindow().getView();
 
-    m_isInit = true;
+    
+    m_name.setPosition(ScreenCenter);
+    m_name.setFillColor(color);
     m_name.setFont(m_font);
-    m_name.setOrigin(m_text.getLocalBounds().width * 0.5F - 400, m_text.getLocalBounds().height * 0.5F + 160);
+    m_name.setOrigin(m_text.getLocalBounds().width * 0.5F + 300, m_text.getLocalBounds().height * 0.5F - 120);
     m_name.setString("Name: ");
+
     InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 160),
                                      {200, 30},
                                      color);
+
+    m_isInit = true;
     //InputObject::getInstance()->StartListen();
 }
 
@@ -97,7 +95,7 @@ void GameOverState::update(float delta)
     {
         InputObject::getInstance()->StartListen();
     }
-    if (InputManager::getInstance().isKeyPressed("Exit"))
+    if (InputManager::getInstance().isKeyPressed("Exit") || InputManager::getInstance().isKeyPressed("Continue"))
     {
         m_gameStateManager->setState("MenuState");
     }
@@ -110,6 +108,7 @@ void GameOverState::draw()
     m_game->getWindow().draw(m_text);
     m_game->getWindow().draw(m_eggsText);
     m_game->getWindow().draw(m_distanceText);
+    m_game->getWindow().draw(m_name);
 
     m_game->getWindow().draw(InputObject::getInstance()->m_rectangle);
     m_game->getWindow().draw(InputObject::getInstance()->m_text);
@@ -162,7 +161,13 @@ void GameOverState::exit()
             std::cerr << "Error opening file for reading: " << filePath << std::endl;
         }
     }
+
     GameState::exit();
     InputObject::getInstance()->shutdown();
+    //m_gameObjectManager.shutdown();
+    //m_PhysicsManager->shutdown();
+    //m_Hud->shutdown();
+    //AiManager::getInstance()->shutdown();
+    //InputObject::getInstance()->shutdown();
 }
 }

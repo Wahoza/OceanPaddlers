@@ -31,10 +31,10 @@ private:
     InputObject();
 
     static InputObject* m_instance;
-    int                 maxSize = 10;
+    int            maxSize = 10;
     void           updateText();
     bool           listening = false;
-    string         m_inputString;
+    string m_inputString = "";
     Font           m_font;
 
 };

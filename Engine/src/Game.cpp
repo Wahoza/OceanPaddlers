@@ -74,6 +74,7 @@ void Game::initInputManager()
 
     m_inputManager->bind("Exit", sf::Keyboard::Escape);
     m_inputManager->bind("Select", sf::Keyboard::Space);
+    m_inputManager->bind("Continue", sf::Keyboard::Enter);
 
     // May move to view later on
     m_inputManager->bind("up", sf::Keyboard::W, 0);

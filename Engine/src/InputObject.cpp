@@ -13,7 +13,6 @@ InputObject::InputObject() : m_rectangle()
 
 void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
 {
-    m_rectangle = RectangleShape{};
     m_rectangle.setSize(size);
     m_rectangle.setPosition(position);
     m_rectangle.setFillColor(sf::Color::White);
@@ -41,7 +40,8 @@ void InputObject::handleEvent(sf::Event &event)
             {
                 m_inputString.pop_back();
             }
-            else if (event.text.unicode != '\b' && event.text.unicode != '\n' && event.text.unicode != ',' &&
+            else if (event.text.unicode != '\b' && event.text.unicode != 10 && event.text.unicode != 13 &&
+                     event.text.unicode != ',' &&
                      m_inputString.size() <= maxSize)
             {
                 m_inputString += static_cast<char>(event.text.unicode);

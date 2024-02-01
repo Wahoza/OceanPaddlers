@@ -128,7 +128,7 @@ void MainState::exit()
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
     m_PhysicsManager->shutdown();
-    m_Hud->shutdown();
+    //m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
     GameState::exit();
