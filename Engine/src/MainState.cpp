@@ -46,7 +46,6 @@ void MainState::init()
         PROFILE_SCOPE("Load Tile Map");
         const auto resourcePath = fs::path{"../"} / "assets";
         const auto mapPath      = resourcePath / "game.tmj";
-
         tson::Tileson t;
         if (const std::unique_ptr<tson::Map> map = t.parse(mapPath); map->getStatus() == tson::ParseStatus::OK)
         {
@@ -133,6 +132,7 @@ void MainState::exit()
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
     GameState::exit();
+    m_soundManager.stopMusic("Music");
 }
 
 } // namespace mmt_gd

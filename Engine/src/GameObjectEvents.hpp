@@ -121,4 +121,28 @@ public:
         return Type;
     }
 };
+class VictorySoundEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class WaveSoundEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 } // namespace mmt_gd

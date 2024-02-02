@@ -250,25 +250,13 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
             
              if (body2->m_notification == "Current")
              {
-                body1->addVelocity({0.01, 0});
+                body1->addVelocity({0.07, 0});
              }
                 
-                
-            //only trigger on inital collision
-            if (body2->collided == false)
-            {
-                body2->Notify();
-            }
-            body2->collided = true;
-
-            //std::cout << body2->collided << std::endl;
-
+             body2->Notify();
 
         }
-        else
-        {
-            body2->collided = false;
-        }
+       
     }
 }
 void PhysicsManager::doCollectibleCollisions(RigidBodyComponent* body1)
