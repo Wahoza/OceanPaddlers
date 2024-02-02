@@ -35,7 +35,7 @@ void MenuState::init()
     m_view = m_game->getWindow().getView();
 
     m_backgroundTexture;
-    if (!m_backgroundTexture.loadFromFile("../assets/Test.jpg"))
+    if (!m_backgroundTexture.loadFromFile("../assets/Test.png"))
     {
         sf::err() << "Could not load font\n";
         return;
