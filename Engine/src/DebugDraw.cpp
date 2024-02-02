@@ -7,7 +7,7 @@
 
 namespace mmt_gd
 {
-DebugDraw::DebugDraw() : m_enabled(true)
+DebugDraw::DebugDraw() : m_enabled(false)
 {
     if (!m_font.loadFromFile("../assets/consolab.ttf"))
     {
