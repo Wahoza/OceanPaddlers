@@ -189,6 +189,7 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                                              static_cast<float>(object.getSize().y)},
                                                                             type);
         }
+
         
     }
     if (object.getType() == "Trigger")
@@ -212,7 +213,6 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                                          static_cast<float>(object.getSize().x),
                                                                          static_cast<float>(object.getSize().y)},
                                                                         identifier, notification);
-
     }
     if (object.getType() == "ScoreConverter")
     {
