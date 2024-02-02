@@ -124,36 +124,39 @@ void GameOverState::exit()
 {
     PROFILE_FUNCTION();
     {
-        std::string filePath = "../assets/scores.txt";
-
-        // Read the existing file contents
-        std::ifstream inputFile(filePath);
-        if (inputFile.is_open())
+        if (InputObject::getInstance()->getText() != "")
         {
-            std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-            inputFile.close();
 
-            // Append new data to the existing content
-            fileContent +="\n" + InputObject::getInstance()->getText() + "," + to_string((int)distance) +
-                               "," +
+            std::string filePath = "../assets/scores.txt";
+
+            // Read the existing file contents
+            std::ifstream inputFile(filePath);
+            if (inputFile.is_open())
+            {
+                std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+                inputFile.close();
+
+                // Append new data to the existing content
+                fileContent += "\n" + InputObject::getInstance()->getText() + "," + to_string((int)distance) + "," +
                                to_string(eggsCollected);
 
-            // Write the updated content back to the file
-            std::ofstream outputFile(filePath);
-            if (outputFile.is_open())
-            {
-                outputFile << fileContent;
-                outputFile.close();
-                std::cout << "File updated successfully." << std::endl;
+                // Write the updated content back to the file
+                std::ofstream outputFile(filePath);
+                if (outputFile.is_open())
+                {
+                    outputFile << fileContent;
+                    outputFile.close();
+                    std::cout << "File updated successfully." << std::endl;
+                }
+                else
+                {
+                    std::cerr << "Error opening file for writing: " << filePath << std::endl;
+                }
             }
             else
             {
-                std::cerr << "Error opening file for writing: " << filePath << std::endl;
+                std::cerr << "Error opening file for reading: " << filePath << std::endl;
             }
-        }
-        else
-        {
-            std::cerr << "Error opening file for reading: " << filePath << std::endl;
         }
     }
 

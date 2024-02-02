@@ -13,6 +13,7 @@ m_shape(shape),
 m_identifier(identifier),
 m_notification(notification)
 {
+ 
     PhysicsManager::getInstance()->RegisterTrigger(this);
 }
 bool TriggerComponent::init()
@@ -22,11 +23,23 @@ bool TriggerComponent::init()
 void TriggerComponent::Notify()
 {
     //std::cout << m_notification << std::endl;
-    if (m_notification == "Goal")
-    {
-        Hud::getInstance()->won = true;
-        Hud::getInstance()->PingGameEnd();
-    }
+    
+        if (m_notification == "Goal")
+        {
+            Hud::getInstance()->won = true;
+            Hud::getInstance()->PingGameEnd();
+        }
+        if (m_notification == "Victory")
+        {
+            IEvent::Ptr Victory = std::make_shared<VictorySoundEvent>(true);
+            EventBus::getInstance().fireEvent(Victory);
+        }
+        if (m_notification == "Current")
+        {
+            IEvent::Ptr Wave = std::make_shared<WaveSoundEvent>(true);
+            EventBus::getInstance().fireEvent(Wave);
+        }
+    
 }
 Vector2f TriggerComponent::getPosition()
 {

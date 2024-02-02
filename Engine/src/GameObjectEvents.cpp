@@ -10,3 +10,5 @@ constexpr mmt_gd::IEvent::EventType mmt_gd::HurtEvent::Type               = 0x22
 constexpr mmt_gd::IEvent::EventType mmt_gd::GameOverEvent::Type              = 0x32345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::FishCollisionEvent::Type           = 0x42345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::InputEvent::Type         = 0x52345679;
+constexpr mmt_gd::IEvent::EventType mmt_gd::VictorySoundEvent::Type                   = 0x62345679;
+constexpr mmt_gd::IEvent::EventType mmt_gd::WaveSoundEvent::Type               = 0x63345679;
