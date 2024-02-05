@@ -59,6 +59,12 @@ void SpriteRenderComponent::HideSprite()
 {
     show = false;
 }
+void SpriteRenderComponent::setSpriteOpacity(float opacity)
+{
+    auto spriteColor = m_sprite.getColor();
+    spriteColor.a    = opacity;
+    m_sprite.setColor(spriteColor);
+}
 void SpriteRenderComponent::ShowSprite()
 {
     show = true;

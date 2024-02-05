@@ -35,11 +35,25 @@ void AIController::update(const float deltaTime)
 
             agressiveUpdate(deltaTime);
             break;
+        case disolve:
+            disolveUpdate(deltaTime);
+            break;
     }
 }
 bool AIController::init()
 {
     return true;
+}
+void AIController::disolveUpdate(float deltaTime)
+{
+    //disolve on frame 6, 5 frame animation
+    int animationFrame = (int)(elapsedTimeInPhase * 5) % 7;
+    m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({animationFrame, 1});
+
+    if (animationFrame == 6)
+    {
+        m_gameObject.setActive(false);
+    }
 }
 void AIController::agressiveUpdate(float deltaTime)
 {
@@ -61,14 +75,20 @@ void AIController::interestedUpdate(float deltaTime)
     moveVec.x = m_goal->getPosition().x - m_gameObject.getPosition().x;
     moveVec.y = 0;
 
+
     moveObj(moveVec, deltaTime);
+
+
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
     CompleteSpriteChanges(moveVec);
 }
 
 void AIController::idleUpdate(float deltaTime)
 {
+    //do nothing, idle
 }
+
+
 void AIController::moveObj(Vector2f moveVec, float deltaTime)
 {
     if (!(moveVec.x == 0 && moveVec.y == 0))
@@ -108,22 +128,31 @@ void AIController::RequestNextState()
     }
     else if (currentState == agressive)
     {
-        if (elapsedTimeInPhase > 4)
+        if (elapsedTimeInPhase > 2)
         {
-            m_gameObject.setActive(false); 
-            //PhysicsManager::getInstance()->UnregisterBody(m_gameObject.getComponent<RigidBodyComponent>().get());
-            //m_gameObject.markForDelete();
+            elapsedTimeInPhase = 0;
+            currentState = disolve;
+
         }
+    }
+    else if (currentState == disolve)
+    {
+        //m_gameObject.setActive(false); 
+        m_gameObject.getComponent<RigidBodyComponent>()->setVelocity({0, 0});
     }
 }
 void AIController::CompleteSpriteChanges(Vector2f orientation)
 {
-    Vector2f NewOrientation           = Vector2f{-orientation.y, orientation.x};
-    auto& sprite          = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
-    float    angle                    = atan2(NewOrientation.y, NewOrientation.x);
-    angle                 = angle * 180.0f / static_cast<float>(3.14);
+    Vector2f NewOrientation = Vector2f{-orientation.y, orientation.x};
+    auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
+    float angle = atan2(NewOrientation.y, NewOrientation.x);
+    angle = angle * 180.0f / static_cast<float>(3.14);
+
+
     FloatRect gameObjectSize = m_gameObject.getComponent<RigidBodyComponent>().get()->m_shape;
     Vector2f  spriteOffset   = Vector2f{sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2};
+
+
     sprite.setOrigin(spriteOffset);
     sprite.setPosition(Vector2f{gameObjectSize.width / 2.f, gameObjectSize.height / 2.f});
     sprite.setRotation(angle);

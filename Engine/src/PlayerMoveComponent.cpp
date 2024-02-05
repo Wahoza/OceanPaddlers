@@ -72,6 +72,8 @@ void PlayerMoveComponent::calculateSpriteOffset(Vector2f input, int index)
 void PlayerMoveComponent::update(const float deltaTime)
 {
     const auto   speed = 1.0F; // pixels/second
+    float      additionalYweight = 3;
+
     sf::Vector2f translation{};
     float        xAxis        = sf::Joystick::getAxisPosition(m_playerIndex, sf::Joystick::X);
     float        yAxis        = sf::Joystick::getAxisPosition(m_playerIndex, sf::Joystick::Y);
@@ -81,11 +83,17 @@ void PlayerMoveComponent::update(const float deltaTime)
     {
         translation.x += speed * xAxis * deltaTime / 100.0f;
     }
-    float additionalYweight = 3;
+
+
     if (std::abs(yAxis) > 20.0f)
     {
         translation.y += speed * yAxis * deltaTime / 100.0f * additionalYweight;
+
+        //note: this is required for Controller, Reason: Perfectly holding up doesnt impact the movement of player enough
+        translation.x += 0.1 * deltaTime / 100.0f;
     }
+
+
 
         if (InputManager::getInstance().isKeyDown("right", m_playerIndex))
         {
@@ -110,25 +118,32 @@ void PlayerMoveComponent::update(const float deltaTime)
         
 
         Vector2f moveVec = translation;
+
         if (moveVec.x != 0 && moveVec.y != 0)
         {
             moveVec = moveVec / sqrt(moveVec.x * moveVec.x + moveVec.y * moveVec.y);
         }
+        
 
     if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr && rigidControll)
     {
             if (m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether() != nullptr)
             {
+                //Note: Slowing-> holding backwards was considered OP during playtesting, so:
+            if (moveVec.x < 0)
+            {
+                moveVec.x = moveVec.x / 3;
+            }
+
                 Vector2f Y = m_gameObject.getComponent<RigidBodyComponent>().get()->GetTether()->orientation;
                 
                 float    angle = std::atan2(Y.y, Y.x);
 
                 Vector2f T = Vector2f(-std::sin(angle), std::cos(angle));
-                translation = T * translation.y + Y * translation.x;
+                moveVec = T * moveVec.y + Y * moveVec.x;
                
                 //moveVec = T * moveVec.y;
             }
-        //change this to translation later
         m_gameObject.getComponent<RigidBodyComponent>()->addVelocity(moveVec * speed * deltaTime);
     }
     else

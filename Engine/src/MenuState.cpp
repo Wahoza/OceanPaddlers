@@ -6,7 +6,7 @@
 #include "GameStateManager.hpp"
 #include "InputManager.hpp"
 
-
+#include "InputObject.hpp"
 namespace mmt_gd
 {
 using namespace std;
@@ -65,6 +65,7 @@ void MenuState::update(float delta)
     {
         m_gameStateManager->setState("MainState");
     }
+    InputObject::getInstance()->StopListen();
 }
 
 void MenuState::draw()
