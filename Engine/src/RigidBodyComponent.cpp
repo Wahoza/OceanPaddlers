@@ -82,7 +82,6 @@ void RigidBodyComponent::calculateOffset()
 void RigidBodyComponent::SetTether(TetherComponent* Tether)
 {
     m_tether = Tether;
-    std::cout << "Tether updated!" << std::endl;
 }
 TetherComponent* RigidBodyComponent::GetTether()
 {
