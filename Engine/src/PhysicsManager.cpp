@@ -250,7 +250,7 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
             
              if (body2->m_notification == "Current")
              {
-                body1->addVelocity({0.07, 0});
+                body1->addVelocity({0.03, 0});
              }
                 
              body2->Notify();

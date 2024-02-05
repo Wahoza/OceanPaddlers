@@ -17,7 +17,8 @@ public:
     {
         interested,
         agressive,
-        idle
+        idle,
+        disolve
     };
 
     void setGoalObject(GameObject* _goal);
@@ -27,13 +28,16 @@ public:
     void agressiveUpdate(float deltaTime);
     void idleUpdate(float deltaTime);
     void interestedUpdate(float deltaTime);
+    void disolveUpdate(float deltaTime);
 
     void moveObj(sf::Vector2f moveVec, float deltaTime);
     void RequestNextState();
     void CompleteSpriteChanges(sf::Vector2f orientation);
+
     AIController(GameObject& _gameObject);
     ~AIController();
     bool init() override;
+
 
     float CalculateDist();
     void  CollisionEvent();

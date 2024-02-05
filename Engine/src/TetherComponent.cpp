@@ -104,11 +104,11 @@ void TetherComponent::update(const float deltaTime)
         hurtTime -= deltaTime;
         if (((int)(hurtTime * 3)) % 2 == 0 && hurtTime >0.3)
         {
-            m_gameObject.getComponent<SpriteRenderComponent>().get()->HideSprite();
+            m_gameObject.getComponent<SpriteRenderComponent>().get()->setSpriteOpacity(100);
         }
         else
         {
-            m_gameObject.getComponent<SpriteRenderComponent>().get()->ShowSprite();
+            m_gameObject.getComponent<SpriteRenderComponent>().get()->setSpriteOpacity(255);
         }
     }
 }

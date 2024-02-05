@@ -31,6 +31,7 @@ public:
     void IncrementOffset(sf::Vector2i increment);
 
     void HideSprite();
+    void setSpriteOpacity(float opacity);
     void ShowSprite();
 
 private:
