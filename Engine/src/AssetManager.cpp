@@ -25,7 +25,6 @@ void AssetManager::addTexture(std::string filePath, std::string textureName)
 
     if (!texture->loadFromFile(filePath)){
 
-        std::cout << "Error loading file" << std::endl;
         return;
     }
     m_textures[textureName] = texture;

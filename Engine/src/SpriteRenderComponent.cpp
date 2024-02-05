@@ -43,7 +43,7 @@ void SpriteRenderComponent::IncrementOffset(sf::Vector2i increment)
 bool SpriteRenderComponent::init()
 {
     AssetManager& assetManager = mmt_gd::AssetManager::getInstance();
-    //assetManager.init();
+
     m_sprite.setTexture(assetManager.getTexture(m_textureFile));
 
     return true;
