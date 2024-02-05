@@ -24,8 +24,6 @@ ScoreConverter::ScoreConverter(GameObject& gameObject, sf::RenderWindow& renderW
         inputFile.close();
 
         CreateScoreLabels(fileContent, displayedAmount);
-    }else{
-        std::cerr << "Error opening file: " << filePath << std::endl;
     }
 }
 
@@ -72,10 +70,8 @@ void ScoreConverter::CreateScoreLabels(std::string input, int displayedAmount)
             //std::cout << "Parsed integer value: " << intValue << std::endl;
         } catch (const std::invalid_argument& ia)
         {
-            std::cerr << "Invalid argument: " << ia.what() << std::endl;
         } catch (const std::out_of_range& oor)
         {
-            std::cerr << "Out of range error: " << oor.what() << std::endl;
         }
         counter++;
     }

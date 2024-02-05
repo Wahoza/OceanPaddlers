@@ -146,17 +146,9 @@ void GameOverState::exit()
                 {
                     outputFile << fileContent;
                     outputFile.close();
-                    std::cout << "File updated successfully." << std::endl;
-                }
-                else
-                {
-                    std::cerr << "Error opening file for writing: " << filePath << std::endl;
                 }
             }
-            else
-            {
-                std::cerr << "Error opening file for reading: " << filePath << std::endl;
-            }
+
         }
     }
 

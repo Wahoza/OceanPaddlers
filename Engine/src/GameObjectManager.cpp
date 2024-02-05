@@ -19,7 +19,6 @@ void GameObjectManager::init()
                                   {
                                       const auto goCreateEvent = std::static_pointer_cast<GameObjectCreateEvent>(event);
                                       this->addGameObject(goCreateEvent->getData());
-                                      std::cout << goCreateEvent->getData().get()->getId() << std::endl;
                                   });
         m_listeners.push_back(id);
     }

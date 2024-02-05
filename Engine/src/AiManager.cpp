@@ -19,7 +19,6 @@ void AiManager::registerAIComponent(AIController* _AIcontroller)
 {
     _AIcontroller->setGoalObject(m_instance->m_goal);
     m_instance->AIcontrollers.push_back(_AIcontroller);
-    std::cout << "Added AI to Manager" << std::endl;
 }
 void AiManager::setGoalObject(GameObject* _goal)
 {

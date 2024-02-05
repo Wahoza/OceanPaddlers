@@ -57,12 +57,10 @@ void Hud::CreateHud()
         distanceTraveled = 0;
         EggScore         = 0;
         currentlives     = 3;
-        std::cout << currentlives << std::endl;
     }
     {
         if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))
         {
-            sf::err() << "Could not load font\n";
         }
         m_font.setSmooth(false);
         

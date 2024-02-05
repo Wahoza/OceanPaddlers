@@ -184,7 +184,6 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
             if (body2->m_coll == StaticColliderComponent::Event)
             {
-                std::cout << "Event" << std::endl;
                 continue;
             }
 
