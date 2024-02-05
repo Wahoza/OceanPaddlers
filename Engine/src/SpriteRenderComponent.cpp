@@ -53,6 +53,8 @@ bool SpriteRenderComponent::init()
     m_texture.setSmooth(false);
     m_sprite.setTexture(m_texture);
 
+    ShowSprite();
+
     return true;
 }
 void SpriteRenderComponent::HideSprite()
