@@ -15,7 +15,7 @@ class ObjectFactory
 public:
     static GameObject::Ptr processTsonObject(tson::Object&        object,
                                              const tson::Layer&   layer,
-                                             const fs::path&      path,
+                                             const std::string&      textureName,
                                              const SpriteManager& spriteManager);
 };
 } //namespace mmt_gd

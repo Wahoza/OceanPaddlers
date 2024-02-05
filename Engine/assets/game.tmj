@@ -160,7 +160,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"turtles.png"
+                         "value":"Turtles"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -798,7 +798,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"pushfish.png"
+                         "value":"Fish"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -870,7 +870,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"pushfish.png"
+                         "value":"Fish"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1311,7 +1311,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1353,7 +1353,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1395,7 +1395,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1437,7 +1437,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1479,7 +1479,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1521,7 +1521,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1563,7 +1563,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1605,7 +1605,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1647,7 +1647,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1689,7 +1689,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1731,7 +1731,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1773,7 +1773,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1815,7 +1815,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1857,7 +1857,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1899,7 +1899,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1941,7 +1941,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -1983,7 +1983,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2025,7 +2025,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2067,7 +2067,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2185,7 +2185,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"pushfish.png"
+                         "value":"Fish"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2257,7 +2257,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"pushfish.png"
+                         "value":"Fish"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2440,7 +2440,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2661,7 +2661,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"Anleitung2.png"
+                         "value":"Anleitung"
                         }, 
                         {
                          "name":"TextureRectHeight",
@@ -2687,8 +2687,8 @@
                  "type":"Sprite",
                  "visible":true,
                  "width":201.979,
-                 "x":440,
-                 "y":83
+                 "x":464,
+                 "y":89
                 }, 
                 {
                  "height":13.5,
@@ -2728,7 +2728,7 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"pushfish.png"
+                         "value":"Fish"
                         }, 
                         {
                          "name":"TextureRectHeight",

@@ -18,7 +18,7 @@ namespace mmt_gd
 {
 static GameObject::Ptr loadSprite(tson::Object&        object,
                                   const std::string&   layer,
-                                  const fs::path&      resourcePath,
+                                  const std::string&      textureName,
                                   const SpriteManager& spriteManager)
 {
     auto gameObject = GameObject::create(object.getName());
@@ -38,7 +38,8 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     {
         if (auto name = property->getName(); name == "Texture")
         {
-            spriteTexture = resourcePath / std::any_cast<std::string>(property->getValue());
+            spriteTexture = std::any_cast<std::string>(property->getValue());
+            //spriteTexture = resourcePath / std::any_cast<std::string>(property->getValue());
         }
         else if (name == "TextureRectLeft")
         {
@@ -168,12 +169,12 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
 
 GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                  const tson::Layer&   layer,
-                                                 const fs::path&      path,
+                                                 const std::string& textureName,
                                                  const SpriteManager& spriteManager)
 {
     if (object.getType() == "Sprite")
     {
-        auto sprite = loadSprite(object, layer.getName(), path, spriteManager);
+        auto sprite = loadSprite(object, layer.getName(), textureName, spriteManager);
     }
     if (object.getType() == "Collider")
     {

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "SpriteRenderComponent.hpp"
-
+#include "AssetManager.hpp"
 #include "EventBus.hpp"
 #include "GameObject.hpp"
 #include "RenderComponentEvents.hpp"
@@ -12,10 +12,10 @@ namespace mmt_gd
 {
 SpriteRenderComponent::SpriteRenderComponent(GameObject&       gameObject,
                                              sf::RenderWindow& renderWindow,
-                                             std::string       textureFile,
+                                             std::string       textureName,
                                              std::string       layerName) :
 IRenderComponent(gameObject, renderWindow),
-m_textureFile(std::move(textureFile)),
+m_textureFile(std::move(textureName)),
 m_layerName(std::move(layerName))
 {
     EventBus::getInstance().fireEvent(std::make_shared<RenderableCreateEvent>(m_layerName, *this));
@@ -42,16 +42,9 @@ void SpriteRenderComponent::IncrementOffset(sf::Vector2i increment)
 }
 bool SpriteRenderComponent::init()
 {
-    sf::Image image;
-    if (!image.loadFromFile(m_textureFile))
-    {
-        sf::err() << "Could not load texture from " << m_textureFile << std::endl;
-        return false;
-    }
-    //image.createMaskFromColor(sf::Color::Black);
-    m_texture.loadFromImage(image);
-    m_texture.setSmooth(false);
-    m_sprite.setTexture(m_texture);
+    AssetManager& assetManager = mmt_gd::AssetManager::getInstance();
+    //assetManager.init();
+    m_sprite.setTexture(assetManager.getTexture(m_textureFile));
 
     return true;
 }

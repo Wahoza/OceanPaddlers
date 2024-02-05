@@ -37,7 +37,6 @@ void MenuState::init()
     m_backgroundTexture;
     if (!m_backgroundTexture.loadFromFile("../assets/Test.png"))
     {
-        sf::err() << "Could not load font\n";
         return;
     }
     m_background.setOrigin(static_cast<float>(m_backgroundTexture.getSize().x) / 2,

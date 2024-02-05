@@ -148,7 +148,7 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map,
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {
-            ObjectFactory::processTsonObject(object, layer, resourcePath, spriteManager);
+            ObjectFactory::processTsonObject(object, layer, resourcePath.string(), spriteManager);
             
         }
     }

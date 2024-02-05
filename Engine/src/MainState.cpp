@@ -19,6 +19,7 @@
 
 #include "InputObject.hpp"
 #include "SoundManager.hpp"
+#include "AssetManager.hpp"
 #include <memory>
 #include <thread>
 
@@ -40,6 +41,10 @@ void MainState::init()
     m_PhysicsManager = PhysicsManager::getInstance();
     m_Hud            = Hud::getInstance();
     m_Hud->CreateHud();
+
+    //init b4 loading TileMap
+    AssetManager& assetManager = mmt_gd::AssetManager::getInstance();
+    assetManager.init();
 
     // load tile map/level
     {
