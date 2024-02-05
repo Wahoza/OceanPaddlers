@@ -46,6 +46,9 @@ bool SpriteRenderComponent::init()
 
     m_sprite.setTexture(assetManager.getTexture(m_textureFile));
 
+    //note: Some sprites are initialized hidden, wtf??
+    ShowSprite();
+
     return true;
 }
 void SpriteRenderComponent::HideSprite()
