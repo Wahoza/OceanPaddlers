@@ -12,7 +12,7 @@
 
 #include "GameObjectEvents.hpp"
 #include "EventBus.hpp"
-
+#include "PlayerComponent.hpp"
 #include <cmath>
 
 using namespace sf;
@@ -33,13 +33,8 @@ IComponent(gameObject),
 movePercentage(_movePercentage),
 length(shape.width / 2),
 TetherItem1(createNewTetheredObject("tethered1")),
-TetherItem2(createNewTetheredObject("tethered2")),
-hurtTime(0)
+TetherItem2(createNewTetheredObject("tethered2"))
 {
-    if (gameObject.getId() == "Player0")
-    {
-        AiManager::getInstance()->setGoalObject(&gameObject);
-    }
     float scaleFactor = 0.6;
     length = shape.width / 2 * scaleFactor;
     float height = shape.height*scaleFactor;
@@ -76,9 +71,6 @@ hurtTime(0)
 
     Vector2f pos2 = (orientation / 2.f + m_gameObject.getPosition()) * length;
     TetherItem2.setPosition(pos2);
-    //m_gameObject.setOrigin(shape.width / 2, shape.height / 2);
-    //std::cout << "something" << std::endl;
-    hurtTime = 0;
 }
 void TetherComponent::update(const float deltaTime)
 {
@@ -88,28 +80,20 @@ void TetherComponent::update(const float deltaTime)
     GetForce(deltaTime);
     CalculateEffect();
     RepositionBodies();
-    //note: rotate sprite later
+
+
     if (m_gameObject.getComponent<SpriteRenderComponent>() != nullptr)
     {
         auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
         float angle  = atan2(orientation.y, orientation.x);
+
+
         angle        = angle * 180.0f / static_cast<float>(3.14);
         Vector2f spriteOffset = {sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2};
+
+
         sprite.setOrigin(spriteOffset);
         sprite.setRotation(angle);
-    }
-
-    if (hurtTime > 0)
-    {
-        hurtTime -= deltaTime;
-        if (((int)(hurtTime * 3)) % 2 == 0 && hurtTime >0.3)
-        {
-            m_gameObject.getComponent<SpriteRenderComponent>().get()->setSpriteOpacity(100);
-        }
-        else
-        {
-            m_gameObject.getComponent<SpriteRenderComponent>().get()->setSpriteOpacity(255);
-        }
     }
 }
 
@@ -191,31 +175,15 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
 
     Vector2f otherVelocity = other->getComponent<RigidBodyComponent>()->getVelocity();
     Vector2f colliderVelocity = collider->getComponent<RigidBodyComponent>()->getVelocity();
+
     float otherSpeed = sqrt(otherVelocity.x * otherVelocity.x + otherVelocity.y * otherVelocity.y);
     float angle = std::atan2(orientation.y, orientation.x);
 
     Vector2f result = Vector2f(-std::sin(angle), std::cos(angle));
 
     collider->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
-    other->getComponent<RigidBodyComponent>().get()->setVelocity(
-        -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
-
-
-    if (m_gameObject.getId() == "Player0")
-    {
-        
-        if (!(hurtTime > 0) && damage)
-        {
-            int         eventData(1);
-            IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
-            EventBus::getInstance().fireEvent(Hurt);
-            hurtTime = 5;
-
-        }
-        return true;
-    }
-
-    return false;
+    other->getComponent<RigidBodyComponent>().get()->setVelocity(-result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    return true;
 }
 void TetherComponent::ApplyForce(Vector2f _force)
 {

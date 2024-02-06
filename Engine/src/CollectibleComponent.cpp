@@ -6,7 +6,7 @@
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "SoundManager.hpp"
-
+#include "PlayerComponent.hpp"
 using namespace sf;
 using namespace std;
 namespace mmt_gd
@@ -29,17 +29,14 @@ bool CollectibleComponent::init()
     return true;
 }
 
-void CollectibleComponent::CollissionMessage()
+void CollectibleComponent::CollissionMessage(GameObject& CollObject)
 {
 	//send event later
     //std::cout << type << std::endl;
-    int eventData(1);
-    IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
-    EventBus::getInstance().fireEvent(eggEvent);
-    SoundManager::getInstance().playSound("StoneBonk");
-    m_gameObject.setActive(false);
-    //hides game Object
-    //m_gameObject.setPosition(0, 1000);
-    //delete &m_gameObject;
+    if (CollObject.getComponent<PlayerComponent>() != nullptr)
+    {
+        CollObject.getComponent<PlayerComponent>().get()->CollectibleCollision();
+        m_gameObject.setActive(false);
+    }
 }
 }

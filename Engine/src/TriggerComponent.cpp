@@ -6,6 +6,7 @@
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "Hud.hpp"
+#include "PlayerComponent.hpp"
 namespace mmt_gd
 {
 TriggerComponent::TriggerComponent(FloatRect shape, string identifier, string notification) :
@@ -20,14 +21,17 @@ bool TriggerComponent::init()
 {
     return true;
 }
-void TriggerComponent::Notify()
+void TriggerComponent::Notify(GameObject& gameObject)
 {
     //std::cout << m_notification << std::endl;
-    
+    //
         if (m_notification == "Goal")
         {
-            Hud::getInstance()->won = true;
-            Hud::getInstance()->PingGameEnd();
+            if (PlayerComponent* comp = gameObject.getComponent<PlayerComponent>().get(); comp != nullptr)
+            {
+                comp->Victory();
+            }
+            //Hud::getInstance()->won = true;
         }
         if (m_notification == "Victory")
         {

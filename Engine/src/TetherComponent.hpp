@@ -37,8 +37,6 @@ public:
     void     ApplyForce(Vector2f _force);
     Vector2f getPosition();
 
-    float hurtTime = 0;
-
 private:
     //orientation should be normalized, then multiplied with length
     //position is in the center -> actual vec of orientation = pos + orientation - 1/2 orientation

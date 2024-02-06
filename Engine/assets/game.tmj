@@ -188,7 +188,7 @@
                          "value":1
                         }],
                  "rotation":0,
-                 "type":"Sprite",
+                 "type":"Player",
                  "visible":true,
                  "width":64,
                  "x":512,

@@ -16,10 +16,7 @@ public:
     void        shutdown();
     void        CreateHud();
     Hud();
-    void Notify(IEvent::Ptr event);
-
-    void PingGameEnd();
-    
+    void Notify(IEvent::Ptr event);    
     //void IEvent::getEventType
     //list<Sprite, Vector2f> spriteList;
 
@@ -52,7 +49,5 @@ public:
 private:
     string        m_layerName;
     static Hud* m_instance;
-    float         distanceTraveled = 0;
-    float         distancePixeltoM = 30;
 };
 } // namespace mmt_gd
