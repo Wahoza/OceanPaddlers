@@ -13,7 +13,7 @@
 #include "Hud.hpp"
 #include "AIController.hpp"
 #include "ScoreConverter.hpp"
-
+#include "PlayerComponent.hpp"
 namespace mmt_gd
 {
 static GameObject::Ptr loadSprite(tson::Object&        object,
@@ -33,6 +33,11 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     auto     input     = false;
     auto     playerIdx = 0;
     
+    if (object.getType() == "Player")
+    {
+        gameObject->addComponent<PlayerComponent>(*gameObject);
+        std::cout << "banana" << std::endl;
+    }
 
     for (const auto* property : object.getProperties().get())
     {
@@ -172,6 +177,10 @@ GameObject::Ptr ObjectFactory::processTsonObject(tson::Object&        object,
                                                  const SpriteManager& spriteManager)
 {
     if (object.getType() == "Sprite")
+    {
+        auto sprite = loadSprite(object, layer.getName(), path, spriteManager);
+    }
+    if (object.getType() == "Player")
     {
         auto sprite = loadSprite(object, layer.getName(), path, spriteManager);
     }

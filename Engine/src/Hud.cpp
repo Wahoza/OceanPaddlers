@@ -19,7 +19,7 @@ Hud* Hud::getInstance()
     
     return m_instance;
 }
-Hud::Hud() : EggScore(0), distanceTraveled(0), currentlives(3)
+Hud::Hud() : EggScore(0), currentlives(3)
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
@@ -30,31 +30,20 @@ void Hud::Notify(IEvent::Ptr event)
     //std::cout << "Notification" << std::endl;
     if (auto eggEvent = std::dynamic_pointer_cast<EggEvent>(event))
     {
-        EggScore += 1;
+        EggScore = eggEvent.get()->getData();
         //std::cout << "eggAlert" << std::endl;
         text.setString("x" + to_string(EggScore));
     }
     if (auto hurtEvent = std::dynamic_pointer_cast<HurtEvent>(event))
     {
-        currentlives--;
-        if (currentlives == 0)
-        {
-            PingGameEnd();
-            currentlives = 3;
-        }
+        currentlives = hurtEvent.get()->getData();
     }
 }
-void Hud::PingGameEnd()
-{
-    tuple       eventData(distanceTraveled, EggScore, won);
-    IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
-    EventBus::getInstance().fireEvent(GameOver);
-}
+
 void Hud::CreateHud()
 {
     //do stuff for initialization here, currently no sprites, etc.
     {
-        distanceTraveled = 0;
         EggScore         = 0;
         currentlives     = 3;
     }
@@ -112,8 +101,6 @@ void Hud::draw(sf::RenderWindow& m_window)
 {
     //std::cout << "Draw" << std::endl;
     {
-        distanceTraveled = m_window.getView().getCenter().x / distancePixeltoM;
-
 
         Vector2f windowTopLeft = m_window.getView().getCenter() -
                                  Vector2f{m_window.getView().getSize().x / 2, m_window.getView().getSize().y / 2};

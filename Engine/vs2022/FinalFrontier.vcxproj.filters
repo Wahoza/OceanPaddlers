@@ -210,6 +210,9 @@
     <ClInclude Include="..\src\SoundManager.hpp">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\PlayerComponent.hpp">
+      <Filter>Header Files\Debug\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -322,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="..\src\SoundManager.cpp">
       <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PlayerComponent.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

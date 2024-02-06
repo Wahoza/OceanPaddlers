@@ -16,7 +16,7 @@ public:
 
     CollectibleComponent(GameObject& gameObject, string _type, float width, float height);
     void update(float deltaTime) override;
-    void CollissionMessage();
+    void CollissionMessage(GameObject& CollObject);
     //Vector2f  getPosition();
     bool      init();
     FloatRect m_shape = {0, 0, 0, 0};

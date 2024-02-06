@@ -29,8 +29,7 @@ public:
 
     bool init();
     //later: use design pattern, for now just output
-    void   Notify();
-    //bool     collided = false;
+    void     Notify(GameObject& gameObject);
     string m_notification;
     string m_identifier;
     Vector2f getPosition();
