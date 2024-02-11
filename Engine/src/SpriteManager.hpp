@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton, manages Sprites
+//License: LICENSE.txt
 #pragma once
     
 #include "EventBus.hpp"

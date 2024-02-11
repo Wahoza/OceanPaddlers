@@ -1,5 +1,6 @@
-// Game.cpp : Defines the entry point for the console application.
-
+//Author: Kilian Kolb
+//Description: Singelton, handles Physics for all Objects with colliders. Does not calculate tehter behaviour.
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "PhysicsManager.hpp"
 #include "RigidBodyComponent.hpp"

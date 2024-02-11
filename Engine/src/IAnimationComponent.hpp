@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Would-be animation component, currently does nothing
+//License: LICENSE.txt
 #pragma once
 
 #include "IComponent.hpp"

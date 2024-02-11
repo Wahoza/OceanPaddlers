@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton that Manages Inputs and maps keys to strings
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "InputManager.hpp"

@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Is used for colliders that only cause an event on collision and has no solid collider.
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 

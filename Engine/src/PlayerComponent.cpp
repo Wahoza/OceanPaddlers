@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Handles Player status and notifies objects with Events
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "PlayerComponent.hpp"
 #include "GameObjectEvents.hpp"
@@ -9,7 +12,6 @@ namespace mmt_gd
 PlayerComponent::PlayerComponent(GameObject& gameObject) : IComponent(gameObject)
 {
     AiManager::getInstance()->setGoalObject(&gameObject);
-    std::cout << "banana" << std::endl;
 }
 void PlayerComponent::CollectibleCollision()
 {

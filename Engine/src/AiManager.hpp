@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Manages AIs and  their goals as a Singelton.
+//License: LICENSE.txt
 #pragma once
 
 #include "stdafx.h"

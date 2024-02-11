@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton, that manages the current Game State.
+//License: LICENSE.txt
 #pragma once
 
 #include "GameState.hpp"

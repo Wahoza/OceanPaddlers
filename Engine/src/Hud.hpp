@@ -5,6 +5,9 @@
 #include "EventBus.hpp"
 
 using namespace sf;
+//Author: Kilian Kolb
+//Description: Singelton, that displayes Player information on the screen (health, Collectibles collected). Note: This HUD is hardcoded
+//License: LICENSE.txt
 using namespace std;
 
 namespace mmt_gd

@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: This is for Colliders that dont move and are solid
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "GameObject.hpp"

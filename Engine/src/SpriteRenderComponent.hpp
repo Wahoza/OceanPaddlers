@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb
+//Description: Sprite Component, that allows modification of itself. Note: offset for texturerect input is only uints.
+//License: LICENSE.txt
 #pragma once
 
 #include "IRenderComponent.hpp"

@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton, that manages the current Game State.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "GameStateManager.hpp"

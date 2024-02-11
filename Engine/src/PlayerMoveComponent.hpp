@@ -1,3 +1,6 @@
+//Author:Radomir Dinic, modified by Kilian Kolb
+//Description: Changes Position of a Game Object based on Inputs. Also supports Controller circle pad inputs.
+//License: LICENSE.txt
 #pragma once
 
 #include "IComponent.hpp"

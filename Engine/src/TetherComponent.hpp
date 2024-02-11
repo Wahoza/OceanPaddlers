@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Tether that takes Rigidbody component values and creates two indipendent Rigidbody Gameobjects. These behave as if they were attached to eachother on one point.
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 

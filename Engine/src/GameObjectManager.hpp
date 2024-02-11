@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton, that manages the GameObjects and listens to their Create Event to add them to a GameObjectMap.
+//License: LICENSE.txt
 #pragma once
 
 #include "EventBus.hpp"

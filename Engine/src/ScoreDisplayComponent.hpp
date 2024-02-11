@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Displays Score-string using RenderComponent
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 

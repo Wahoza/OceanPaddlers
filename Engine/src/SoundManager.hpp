@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Plays a sound upon recieving Event, Sounds are mapped to a string
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 #include <unordered_map>

@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Object Factory that processes all Objects from the json map file.
+//License: LICENSE.txt
 #pragma once
 #include "GameObject.hpp"
 #include "SpriteManager.hpp"

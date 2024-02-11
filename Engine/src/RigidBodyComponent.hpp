@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: RigidBody Component for Physics.
+//License: LICENSE.txt
 #pragma once
 
 #include "stdafx.h"

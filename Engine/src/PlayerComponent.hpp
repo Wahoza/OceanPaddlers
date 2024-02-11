@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Handles Player status and notifies objects with Events
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 

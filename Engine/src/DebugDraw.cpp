@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Debug Draw is used for debug drawing rects, text, etc. and can be enabled/disabled with f1 while running the program.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "DebugDraw.hpp"

@@ -1,3 +1,6 @@
+//Author:Radomir Dinic
+//Description: Creation/Destroy events for Renderable Components
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "RenderComponentEvents.hpp"

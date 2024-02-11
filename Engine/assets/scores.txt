@@ -5,3 +5,5 @@ Xani,113,17
 apple,21,0
 Ez W,113,20
 aaaa,8,13
+Cool,5,10
+Ded guy,6,0

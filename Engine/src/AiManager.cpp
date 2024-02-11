@@ -1,3 +1,7 @@
+//Author: Kilian Kolb
+//Description: Manages AIs and  their goals as a Singelton. Note: Only manipulates fish ai
+//License: LICENSE.txt
+
 #include "stdafx.h"
 #include "AiManager.hpp"
 #include "AIController.hpp"

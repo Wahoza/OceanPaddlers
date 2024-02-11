@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Base Component for Components that can be drawn
+//License: LICENSE.txt
 #pragma once
 
 #include "IComponent.hpp"
