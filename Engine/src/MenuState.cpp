@@ -34,10 +34,9 @@ void MenuState::init()
 
     m_view = m_game->getWindow().getView();
 
-    m_backgroundTexture;
     if (!m_backgroundTexture.loadFromFile("../assets/Test.png"))
     {
-        sf::err() << "Could not load font\n";
+        sf::err() << "Could not load background\n";
         return;
     }
     m_background.setOrigin(static_cast<float>(m_backgroundTexture.getSize().x) / 2,
@@ -45,14 +44,20 @@ void MenuState::init()
 
     m_background.setScale(m_game->getWindow().getSize().x / static_cast<float>(m_backgroundTexture.getSize().x),
                           m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
-    
-    //m_background.setPosition((m_game->getWindow().getSize().x - m_backgroundTexture.getSize().x) / 2.f,
-    //                        (m_game->getWindow().getSize().y - m_backgroundTexture.getSize().y) / 2.f);
     m_background.setPosition(m_game->getWindow().getView().getCenter());
 
     m_background.setTexture(m_backgroundTexture);
-    m_isInit = true;
 
+    if (!m_logoTexture.loadFromFile("../assets/MMTicon.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_logo.setTexture(m_logoTexture);
+    m_logo.setScale(m_game->getWindow().getSize().x / static_cast<float>(m_backgroundTexture.getSize().x),
+                          m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
+    m_logo.setScale(m_logo.getScale() / 4.f);
+    m_isInit = true;
 }
 
 void MenuState::update(float delta)
@@ -74,6 +79,7 @@ void MenuState::draw()
     m_game->getWindow().clear();
     m_game->getWindow().draw(m_background);
     m_game->getWindow().draw(m_text);
+    m_game->getWindow().draw(m_logo);
     m_game->getWindow().display();
 }
 

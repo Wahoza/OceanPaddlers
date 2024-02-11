@@ -22,7 +22,9 @@ private:
     sf::Font m_font;
     sf::View m_view;
     sf::Sprite m_background;
-    sf::Texture m_backgroundTexture; 
+    sf::Texture m_backgroundTexture;
+    sf::Sprite  m_logo;
+    sf::Texture m_logoTexture;
     bool m_isInit = false;
 };
 } // namespace mmt_gd
