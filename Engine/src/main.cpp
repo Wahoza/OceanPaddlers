@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: main for the Program. starts and runs the game.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "Game.hpp"

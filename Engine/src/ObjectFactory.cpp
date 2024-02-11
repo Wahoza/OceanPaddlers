@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb & Ema Selmanovic
+//Description: Object Factory that processes all Objects from the json map file.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "ObjectFactory.hpp"

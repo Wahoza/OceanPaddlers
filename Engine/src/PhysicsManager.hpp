@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Singelton, handles Physics for all Objects with colliders. Does not calculate tehter behaviour.
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 #include "RigidBodyComponent.hpp"

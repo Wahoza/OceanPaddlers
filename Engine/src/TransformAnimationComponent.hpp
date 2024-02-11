@@ -1,3 +1,5 @@
+//Author:Radomir Dinic
+//License: LICENSE.txt
 #pragma once
 
 #include "IAnimationComponent.hpp"

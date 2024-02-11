@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Plays a sound upon recieving Event, Sounds are mapped to a string
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "SoundManager.hpp"
 #include "EventBus.hpp"

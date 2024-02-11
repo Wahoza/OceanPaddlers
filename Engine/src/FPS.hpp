@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Class for FPS
+//License: LICENSE.txt
 #pragma once
 #include <SFML/System.hpp>
 

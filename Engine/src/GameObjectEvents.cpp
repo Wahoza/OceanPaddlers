@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb
+//Description: All Event types in the Game.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "GameObjectEvents.hpp"

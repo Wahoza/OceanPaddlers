@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Singelton that reads keyboard inputs and writes them into a box. does not listen to return or comma inputs
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "Game.hpp"
 #include "InputObject.hpp"

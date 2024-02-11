@@ -1,3 +1,5 @@
+//Author: Radomir Dinic
+//License: LICENSE.txt
 #pragma once
 
 #if _DEBUG && false ///< Set true for leak detection with file names and line numbers

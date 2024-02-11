@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: RigidBody Component for Physics.
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "RigidBodyComponent.hpp"
 #include "GameObject.hpp"
@@ -18,7 +21,6 @@ Loss(loss)
 {
     m_shape.top = gameObject.getPosition().y;
     m_shape.left = gameObject.getPosition().x;
-    //std::cout << gameObject.getId() + "lol" << std::endl;
     PhysicsManager::getInstance()->RegisterBody(this);
 
 }

@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Game State for the End of the Game. Contains posibility for victory screen or game over Screen. utilizes InputObject.
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 #include "GameState.hpp"

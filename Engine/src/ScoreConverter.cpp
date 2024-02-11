@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Converts stored scores from given filepath to scores shown ingame. formating required is (name,distance,eggs/n)
+//License: LICENSE.txt
 #include "stdafx.h"
 #include "ScoreConverter.hpp"
 #include "ScoreDisplayComponent.hpp"

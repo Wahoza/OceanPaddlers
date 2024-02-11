@@ -1,3 +1,6 @@
+//Author:Radomir Dinic, modified by Kilian Kolb
+//Description: Is used for an Object to smoothly follow another along the x axis, in this use case it is the Camera that follows the player.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "TransformAnimationSmoothFollow.hpp"

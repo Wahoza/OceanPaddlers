@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb & Ema Selmanovic
+//Description: MenuState for the Game. Is also first state initialized
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "MenuState.hpp"

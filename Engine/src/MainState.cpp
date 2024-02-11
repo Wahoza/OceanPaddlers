@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb & Ema Selmanovic
+//Description: MainState for the Game. Note: Camera is not generated from TileMap.
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "MainState.hpp"

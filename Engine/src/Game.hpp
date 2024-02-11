@@ -1,3 +1,6 @@
+//Author: Radomir Dinic, modified by Kilian Kolb
+//Description: Managing State for the Game, can switch Gamestate.
+//License: LICENSE.txt
 #pragma once
 
 #include "FPS.hpp"

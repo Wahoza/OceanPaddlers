@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton used for firing events to listeners. Events must be IEvent. An Eventlistener can be any func of a class, as long as its added properly
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "EventBus.hpp"

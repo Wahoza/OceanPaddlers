@@ -1,4 +1,6 @@
-
+//Author: Kilian Kolb
+//Description: AI behaviour of the Fish enemy
+//License: LICENSE.txt
 
 
 #include "stdafx.h"

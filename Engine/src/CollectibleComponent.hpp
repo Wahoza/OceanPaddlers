@@ -1,3 +1,6 @@
+//Author: Kilian Kolb
+//Description: Gives gameobjects Collectible type and allows them to trigger unique interactions upon collision.
+//License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
 

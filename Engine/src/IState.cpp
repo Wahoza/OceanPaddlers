@@ -1,3 +1,5 @@
+//Author: Radomir Dinic
+//License: LICENSE.txt
 // FinalFrontier.cpp : Defines the entry point for the console application.
 //
 

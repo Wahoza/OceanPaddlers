@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Camera Component for a GameObject, manages View. Used in MainState.
+//License: LICENSE.txt
 #pragma once
 
 #include "IRenderComponent.hpp"

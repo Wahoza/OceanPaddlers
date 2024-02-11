@@ -1,3 +1,5 @@
+//Author: Radomir Dinic
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "TileMapLoader.hpp"

@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Base Class for all Game States (Menu, Main, GameOver).
+//License: LICENSE.txt
 #pragma once
 
 #include "FinalFrontier/dll_export.hpp"

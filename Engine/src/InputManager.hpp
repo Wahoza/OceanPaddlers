@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Singelton that Manages Inputs and maps keys to strings
+//License: LICENSE.txt
 #pragma once
 
 #include "SFML/Window.hpp"

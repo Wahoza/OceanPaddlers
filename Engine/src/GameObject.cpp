@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Base Class for a GameObject. GameObjects consist of multiple Components (IComponent/IRenderComponent).
+//License: LICENSE.txt
 #include "stdafx.h"
 
 #include "GameObject.hpp"

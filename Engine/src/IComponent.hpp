@@ -1,3 +1,6 @@
+//Author: Radomir Dinic
+//Description: Base Component class
+//License: LICENSE.txt
 #pragma once
 
 #include <memory>
