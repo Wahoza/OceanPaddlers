@@ -92,6 +92,7 @@ void GameOverState::update(float delta)
     if (wait > 0.3)
     {
         InputObject::getInstance()->StartListen();
+        InputObject::getInstance()->update(delta);
     }
     if (InputManager::getInstance().isKeyPressed("Exit") || InputManager::getInstance().isKeyPressed("Continue"))
     {
@@ -108,8 +109,9 @@ void GameOverState::draw()
     m_game->getWindow().draw(m_distanceText);
     m_game->getWindow().draw(m_name);
 
-    m_game->getWindow().draw(InputObject::getInstance()->m_rectangle);
-    m_game->getWindow().draw(InputObject::getInstance()->m_text);
+    InputObject::getInstance()->draw(m_game->getWindow());
+    //m_game->getWindow().draw(InputObject::getInstance()->m_rectangle);
+    //m_game->getWindow().draw(InputObject::getInstance()->m_text);
 }
 
 void GameOverState::updateStats(IEvent::Ptr event)

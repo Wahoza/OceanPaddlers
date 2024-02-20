@@ -21,7 +21,11 @@ public:
 
     void handleEvent(sf::Event &event);
 
-    void draw();
+    void handleController(float deltaTime);
+    void updateStringChar(int position, int direction);
+
+    void handleText(sf::Event& event);
+    void draw(RenderWindow& window);
 
 
     RectangleShape  m_rectangle;
@@ -40,5 +44,16 @@ private:
     string m_inputString = "";
     Font           m_font;
 
+    //controller related
+    float currentxAxis = 0;
+    float currentyAxis = 0;
+    float lastxAxis    = 0;
+    float lastyAxis    = 0;
+    float timeHeld     = 0;
+    float bufferTime   = 0;
+    //note:easier use of special characters, requires initialization
+    int currentCharPos = 1;
+    int maxCharInt = 0;
+    std::unordered_map<int, char> m_IntCharMap;
 };
 }

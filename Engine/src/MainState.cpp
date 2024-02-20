@@ -101,7 +101,7 @@ void MainState::update(const float deltaTime)
     PROFILE_FUNCTION();
     if (InputManager::getInstance().isKeyPressed("Exit"))
     {
-        m_gameStateManager->setState("MenuState");
+        m_gameStateManager->setState("GameOverState");
         return;
     }
     EventBus::getInstance().processEvents(deltaTime);

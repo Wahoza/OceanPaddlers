@@ -27,17 +27,131 @@ void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
     m_text.setCharacterSize(20);
     m_text.setFillColor(color);
     m_text.setPosition(position.x + 5.f, position.y + 5.f);
+
+    for (int i = 0; i <= 25; i++)
+    {
+        m_IntCharMap[i] = char(i + 65);
+    }
+    for (int i = 0; i <= 9; i++)
+    {
+        m_IntCharMap[i+26] = char(i + 48);
+    }
+    int AddedVals = 36; //Magic number for chars in alphabelt + numbers
+    
+    m_IntCharMap[0 + AddedVals] = '(';
+    m_IntCharMap[1 + AddedVals] = ')';
+    m_IntCharMap[2 + AddedVals] = ';';
+    m_IntCharMap[3 + AddedVals] = ':';
+    m_IntCharMap[4 + AddedVals] = '.';
+    m_IntCharMap[5 + AddedVals] = '&';
+    m_IntCharMap[6 + AddedVals] = '%';
+    m_IntCharMap[7 + AddedVals] = '=';
+    m_IntCharMap[8 + AddedVals] = '!';
+    m_IntCharMap[9 + AddedVals] = '?';
+    m_IntCharMap[10 + AddedVals] = ' ';
+
+    maxCharInt = AddedVals + 10;
+    //test output
 }
 
 void InputObject::update(float deltaTime)
 {
-    //auto& data = InputManager::getInstance().getEventData();
-    //data.
+    handleController(deltaTime);
 }
-void InputObject::handleEvent(sf::Event &event)
+void InputObject::handleEvent(sf::Event& event)
+{
+    handleText(event);
+}
+
+void InputObject::handleController(float deltaTime)
+{
+    currentyAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+    currentxAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+
+    //todo: for holding direction: if held long enough switch to next, decrease waittime for next switch->itterate through many letters with ease
+    if (abs(currentxAxis) >= 90 && abs(lastxAxis) <= 90)
+    {
+        //use to select next or previous char
+        int direction = int(currentxAxis / abs(currentxAxis));
+        currentCharPos  += direction;
+        if (currentCharPos >= maxSize)
+        {
+            currentCharPos = 1;
+        }
+        if (currentCharPos < 1)
+        {
+            currentCharPos = maxSize;
+        }
+    }
+
+
+    if (abs(currentyAxis) >= 90 && abs(lastyAxis) <= 90)
+    {
+        //use to iterate through chars
+        bufferTime = 1; // only required here
+        updateStringChar(currentCharPos, -1 * int(currentyAxis / abs(currentyAxis)));
+    }
+    else if (abs(currentyAxis) >= 90 )
+    {
+        timeHeld += deltaTime;
+
+        if (timeHeld > bufferTime)
+        {
+            bufferTime = bufferTime * 0.5;
+            if (bufferTime < 0.1)
+            {
+                bufferTime = 0.1;
+            }
+            timeHeld   = 0;
+
+            updateStringChar(currentCharPos, -1 * int(currentyAxis / abs(currentyAxis)));
+        }
+    }
+
+    lastxAxis = currentxAxis;
+    lastyAxis = currentyAxis;
+}
+void InputObject::updateStringChar(int position, int direction)
+{
+    if (position >= m_inputString.size())
+    {
+        m_inputString.resize(position + 1, ' '); // Fill new positions with space
+    } 
+    auto charIterator = std::find_if(m_IntCharMap.begin(),
+                                     m_IntCharMap.end(),
+                                     [currentChar = m_inputString[position]](const auto& pair)
+                                     { return pair.second == currentChar; });
+    int currentChar = 0;
+    if (charIterator == m_IntCharMap.end())
+    {
+        m_inputString[position] = ' '; //contained within map
+        currentChar             = maxCharInt;
+    }
+    else
+    {
+        currentChar = charIterator->first;
+    }
+
+    currentChar += direction;
+    if (currentChar > maxCharInt)
+    {
+        currentChar = 0;
+    }
+    if (currentChar < 0)
+    {
+        currentChar = maxCharInt;
+    }
+
+    m_inputString[position] = m_IntCharMap[currentChar];
+    updateText();
+
+    IEvent::Ptr inputEvent = std::make_shared<InputEvent>(m_IntCharMap[currentChar]);
+    EventBus::getInstance().fireEvent(inputEvent);
+}
+void InputObject::handleText(sf::Event& event)
 {
     if (event.type == sf::Event::TextEntered)
-    {   
+    {
         if (listening && event.text.unicode < 128)
         {
             if (event.text.unicode == '\b' && !m_inputString.empty())
@@ -47,8 +161,7 @@ void InputObject::handleEvent(sf::Event &event)
                 EventBus::getInstance().fireEvent(inputEvent);
             }
             else if (event.text.unicode != '\b' && event.text.unicode != 10 && event.text.unicode != 13 &&
-                     event.text.unicode != ',' &&
-                     m_inputString.size() <= maxSize)
+                     event.text.unicode != ',' && m_inputString.size() <= maxSize)
             {
                 m_inputString += static_cast<char>(event.text.unicode);
                 IEvent::Ptr inputEvent = std::make_shared<InputEvent>(event.text.unicode);
@@ -59,9 +172,15 @@ void InputObject::handleEvent(sf::Event &event)
         //std::cout << m_inputString << std::endl;
     }
 }
+
 void InputObject::StartListen()
 {
     listening = true;
+}
+void InputObject::draw(RenderWindow& window)
+{
+    window.draw(m_rectangle);
+    window.draw(m_text);
 }
 void InputObject::StopListen()
 {
