@@ -77,7 +77,7 @@ void GameOverState::init()
     m_name.setString("Name: ");
 
     InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 160),
-                                     {200, 30},
+                                     {500, 70},
                                      color);
 
     //InputObject::getInstance()->StartListen();

@@ -29,6 +29,7 @@ public:
 
 
     RectangleShape  m_rectangle;
+    RectangleShape  m_CurrentCharIndicator;
     Text            m_text;
     void            StartListen();
     void            StopListen();
@@ -38,7 +39,7 @@ private:
     InputObject();
 
     static InputObject* m_instance;
-    int            maxSize = 10;
+    int            maxSize = 8;
     void           updateText();
     bool           listening = false;
     string m_inputString = "";
@@ -52,7 +53,7 @@ private:
     float timeHeld     = 0;
     float bufferTime   = 0;
     //note:easier use of special characters, requires initialization
-    int currentCharPos = 1;
+    int currentCharPos = 0;
     int maxCharInt = 0;
     std::unordered_map<int, char> m_IntCharMap;
 };

@@ -17,16 +17,34 @@ InputObject::InputObject() : m_rectangle()
 
 void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
 {
-    m_rectangle.setSize(size);
+    float spacing = 1.0;
+    int   spaceSize     = size.x / maxSize / 6 * spacing;
+    int   characterSize = (size.x / maxSize - spaceSize);
+    
+    size.x = maxSize * characterSize + maxSize * spaceSize;
+    //note: the size.x is now no longer the original size but fairly close and ligns up with the closest possible character size.
+
+    m_rectangle.setSize({size.x, size.y});
     m_rectangle.setPosition(position);
     m_rectangle.setFillColor(sf::Color::White);
     m_rectangle.setOutlineThickness(2.f);
     m_rectangle.setOutlineColor(color);
 
+
+    sf::Color IndicatorColor = color;
+    IndicatorColor.a         = 100;
+    m_CurrentCharIndicator.setSize({(size.x / (maxSize)), size.y});
+    m_CurrentCharIndicator.setPosition({position.x, position.y});
+    m_CurrentCharIndicator.setFillColor(IndicatorColor);
+    m_CurrentCharIndicator.setOutlineThickness(0.f);
+
+    m_font.setSmooth(false);
     m_text.setFont(m_font);
-    m_text.setCharacterSize(20);
+
+    m_text.setCharacterSize(characterSize);
     m_text.setFillColor(color);
-    m_text.setPosition(position.x + 5.f, position.y + 5.f);
+    m_text.setPosition(position.x + spaceSize/2, position.y + size.y / 10);
+    m_text.setLetterSpacing(spacing); //note: spacing works as a pixel value scaled up with character size
 
     for (int i = 0; i <= 25; i++)
     {
@@ -76,12 +94,17 @@ void InputObject::handleController(float deltaTime)
         currentCharPos  += direction;
         if (currentCharPos >= maxSize)
         {
-            currentCharPos = 1;
+            currentCharPos = 0;
         }
-        if (currentCharPos < 1)
+        if (currentCharPos < 0)
         {
-            currentCharPos = maxSize;
+            currentCharPos = maxSize-1;
         }
+
+        Vector2f RectPos = m_rectangle.getPosition();
+        Vector2f NewCharIndikatorPos =
+            {(RectPos.x + (m_CurrentCharIndicator.getSize().x) * currentCharPos), RectPos.y};
+        m_CurrentCharIndicator.setPosition(NewCharIndikatorPos);
     }
 
 
@@ -161,7 +184,7 @@ void InputObject::handleText(sf::Event& event)
                 EventBus::getInstance().fireEvent(inputEvent);
             }
             else if (event.text.unicode != '\b' && event.text.unicode != 10 && event.text.unicode != 13 &&
-                     event.text.unicode != ',' && m_inputString.size() <= maxSize)
+                     event.text.unicode != ',' && event.text.unicode != '\t' && m_inputString.size() <= maxSize - 1)
             {
                 m_inputString += static_cast<char>(event.text.unicode);
                 IEvent::Ptr inputEvent = std::make_shared<InputEvent>(event.text.unicode);
@@ -180,6 +203,7 @@ void InputObject::StartListen()
 void InputObject::draw(RenderWindow& window)
 {
     window.draw(m_rectangle);
+    window.draw(m_CurrentCharIndicator);
     window.draw(m_text);
 }
 void InputObject::StopListen()
