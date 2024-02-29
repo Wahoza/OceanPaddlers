@@ -30,7 +30,6 @@ void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
     m_rectangle.setOutlineThickness(2.f);
     m_rectangle.setOutlineColor(color);
 
-
     sf::Color IndicatorColor = color;
     IndicatorColor.a         = 100;
     m_CurrentCharIndicator.setSize({(size.x / (maxSize)), size.y});
@@ -69,7 +68,16 @@ void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
     m_IntCharMap[10 + AddedVals] = ' ';
 
     maxCharInt = AddedVals + 10;
-    //test output
+    
+    if (!m_InputTexture.loadFromFile("../assets/selectButton.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_InputSprite.setTexture(m_InputTexture);
+    m_InputSprite.setScale(size.y / m_InputTexture.getSize().y, size.y / m_InputTexture.getSize().y);
+    m_InputSprite.setPosition(position.x + size.x + 5, position.y);
+    m_InputSprite.setTextureRect({0, 0, int(m_InputTexture.getSize().x / 2), int(m_InputTexture.getSize().y)});
 }
 
 void InputObject::update(float deltaTime)
@@ -89,6 +97,8 @@ void InputObject::handleController(float deltaTime)
     //todo: for holding direction: if held long enough switch to next, decrease waittime for next switch->itterate through many letters with ease
     if (abs(currentxAxis) >= 90 && abs(lastxAxis) <= 90)
     {
+        m_InputSprite.setTextureRect({0, 0, int(m_InputTexture.getSize().x / 2), int(m_InputTexture.getSize().y)});
+
         //use to select next or previous char
         int direction = int(currentxAxis / abs(currentxAxis));
         currentCharPos  += direction;
@@ -189,6 +199,11 @@ void InputObject::handleText(sf::Event& event)
                 m_inputString += static_cast<char>(event.text.unicode);
                 IEvent::Ptr inputEvent = std::make_shared<InputEvent>(event.text.unicode);
                 EventBus::getInstance().fireEvent(inputEvent);
+
+                 m_InputSprite.setTextureRect({int(m_InputTexture.getSize().x / 2),
+                                              0,
+                                              int(m_InputTexture.getSize().x / 2),
+                                              int(m_InputTexture.getSize().y)});
             }
             updateText();
         }
@@ -205,6 +220,7 @@ void InputObject::draw(RenderWindow& window)
     window.draw(m_rectangle);
     window.draw(m_CurrentCharIndicator);
     window.draw(m_text);
+    window.draw(m_InputSprite);
 }
 void InputObject::StopListen()
 {

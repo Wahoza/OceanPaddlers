@@ -69,7 +69,8 @@ void MenuState::update(float delta)
 
     m_game->getWindow().setView(m_view);
 
-    if (InputManager::getInstance().isKeyPressed("Select"))
+    if (InputManager::getInstance().isKeyPressed("Select") || sf::Joystick::isButtonPressed(0, 0) ||
+        sf::Joystick::isButtonPressed(1, 0))
     {
         m_gameStateManager->setState("MainState");
     }

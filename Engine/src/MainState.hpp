@@ -10,6 +10,8 @@
 #include "SoundManager.hpp"
 #include "Hud.hpp"
 #include "IEvent.hpp"
+#include "LevelGenerator.hpp"
+
 namespace mmt_gd
 {
 class FINALFRONTIER_API MainState final : public GameState
@@ -30,5 +32,6 @@ private:
     SoundManager      m_soundManager;
     PhysicsManager*   m_PhysicsManager;
     Hud*              m_Hud;
+    LevelGenerator    m_gen;
 };
 } // namespace mmt_gd

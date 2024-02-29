@@ -48,12 +48,13 @@ void MainState::init()
     {
         PROFILE_SCOPE("Load Tile Map");
         const auto resourcePath = fs::path{"../"} / "assets";
-        const auto mapPath      = resourcePath / "game.tmj";
+        const auto mapPath      = resourcePath / "gameEndless.tmj";
         tson::Tileson t;
         if (const std::unique_ptr<tson::Map> map = t.parse(mapPath); map->getStatus() == tson::ParseStatus::OK)
         {
             TileMapLoader::loadTileLayers(map, resourcePath, m_spriteManager);
             TileMapLoader::loadObjectLayers(map, resourcePath, m_spriteManager);
+            m_gen.Initialize(map, resourcePath, m_spriteManager);
         }
         else
         {
@@ -106,7 +107,7 @@ void MainState::update(const float deltaTime)
     }
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
-
+    m_gen.update(deltaTime);
     //m_PhysicsManager = PhysicsManager::getInstance();
     m_PhysicsManager->HandleCollisions(deltaTime);
     m_Hud->update(deltaTime);
@@ -116,7 +117,8 @@ void MainState::update(const float deltaTime)
 void MainState::draw()
 {
     PROFILE_FUNCTION();
-    m_spriteManager.draw();
+    m_gen.draw(m_game->getWindow());
+    //m_spriteManager.draw();
     m_Hud->draw(m_game->getWindow());
 }
 

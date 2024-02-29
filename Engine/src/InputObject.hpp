@@ -31,6 +31,8 @@ public:
     RectangleShape  m_rectangle;
     RectangleShape  m_CurrentCharIndicator;
     Text            m_text;
+    Sprite          m_InputSprite;
+    Texture         m_InputTexture;
     void            StartListen();
     void            StopListen();
     string          getText();

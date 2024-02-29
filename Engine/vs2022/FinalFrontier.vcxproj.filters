@@ -213,6 +213,12 @@
     <ClInclude Include="..\src\PlayerComponent.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -328,6 +334,12 @@
     </ClCompile>
     <ClCompile Include="..\src\PlayerComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EndlessBackgroundGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

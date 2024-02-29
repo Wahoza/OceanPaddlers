@@ -700,25 +700,8 @@
                  "rotation":0,
                  "type":"Collider",
                  "visible":true,
-                 "width":1471.55555555556,
-                 "x":-119.777777777778,
-                 "y":214.666666666667
-                }, 
-                {
-                 "height":57.3333333333333,
-                 "id":82,
-                 "name":"BottomWall2",
-                 "properties":[
-                        {
-                         "name":"CollisionType",
-                         "type":"string",
-                         "value":"Wall"
-                        }],
-                 "rotation":0,
-                 "type":"Collider",
-                 "visible":true,
-                 "width":2299.77777777778,
-                 "x":1060.22222222222,
+                 "width":3360,
+                 "x":0,
                  "y":214.666666666667
                 }, 
                 {
@@ -734,8 +717,8 @@
                  "rotation":0,
                  "type":"Collider",
                  "visible":true,
-                 "width":3710,
-                 "x":-350,
+                 "width":3360,
+                 "x":0,
                  "y":0
                 }, 
                 {

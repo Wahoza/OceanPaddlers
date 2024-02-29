@@ -50,33 +50,31 @@ void GameOverState::init()
     m_text.setFillColor(color);
     m_text.setFont(m_font);
     m_text.setOrigin(m_text.getLocalBounds().width * 0.5F, m_text.getLocalBounds().height * 0.5F);
+    m_text.setPosition(ScreenCenter.x, ScreenCenter.y - 100);
     m_text.setScale(5, 5);
 
-    m_eggsText.setPosition(ScreenCenter);
+    m_eggsText.setPosition(ScreenCenter.x, ScreenCenter.y+100);
     m_eggsText.setFillColor(color);
 
     m_eggsText.setFont(m_font);
-    m_eggsText.setOrigin(m_text.getLocalBounds().width * 0.5F -150, m_text.getLocalBounds().height * 0.5F -120);
     m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
 
-    m_distanceText.setPosition(ScreenCenter);
+    m_distanceText.setPosition(ScreenCenter.x, ScreenCenter.y+150);
     m_distanceText.setFillColor(color);
 
     m_distanceText.setFont(m_font);
-    m_distanceText.setOrigin(m_text.getLocalBounds().width * 0.5F - 150, m_text.getLocalBounds().height * 0.5F - 160);
     m_distanceText.setString("Distance traveled: " + to_string((int)distance) + "m");
 
 
     m_view = m_game->getWindow().getView();
 
     
-    m_name.setPosition(ScreenCenter);
+    m_name.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 100);
     m_name.setFillColor(color);
     m_name.setFont(m_font);
-    m_name.setOrigin(m_text.getLocalBounds().width * 0.5F + 300, m_text.getLocalBounds().height * 0.5F - 120);
-    m_name.setString("Name: ");
+    m_name.setString("Name:");
 
-    InputObject::getInstance()->init(ScreenCenter + Vector2f(-400, 160),
+    InputObject::getInstance()->init(ScreenCenter + Vector2f(-700, 150),
                                      {500, 70},
                                      color);
 
@@ -94,7 +92,8 @@ void GameOverState::update(float delta)
         InputObject::getInstance()->StartListen();
         InputObject::getInstance()->update(delta);
     }
-    if (InputManager::getInstance().isKeyPressed("Exit") || InputManager::getInstance().isKeyPressed("Continue"))
+    if (InputManager::getInstance().isKeyPressed("Exit") || InputManager::getInstance().isKeyPressed("Continue") ||
+        sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(1, 0))
     {
         m_gameStateManager->setState("MenuState");
     }
