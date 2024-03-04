@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "EndlessBackgroundGenerator.hpp"
+#include "BackGroundDetailGen.hpp"
+
 #include "Tileson.hpp"
 #include "SpriteManager.hpp"
 namespace mmt_gd
@@ -99,6 +101,14 @@ void EndlessBackgroundGenerator::loadTileLayers(const std::unique_ptr<tson::Map>
     }
 
     Organize();
+
+    sf::Texture m_texture;
+    if (!m_texture.loadFromFile("../assets/noiseAssets.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_DetailGen.init(m_texture, sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
 }
 void EndlessBackgroundGenerator::Organize()
 {
@@ -141,7 +151,7 @@ void EndlessBackgroundGenerator::update(float deltaTime)
         //          << std::endl;
         //std::cout << std::to_string(m_lastWindowRect.left) + " window" << std::endl;
     }
-
+    m_DetailGen.update(deltaTime, m_lastWindowRect);
 }
 void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
 {
@@ -158,8 +168,6 @@ void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
             window.draw(*Tile);
         }
     }
-    for (auto& sprite : sprites)
-    {
-    }
+    m_DetailGen.draw(window);
 }
 } // namespace mmt_gd

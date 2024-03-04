@@ -2,6 +2,9 @@
 #include "stdafx.h"
 #include "SpriteManager.hpp"
 #include "Tileson.hpp"
+
+#include "BackGroundDetailGen.hpp"
+
 namespace mmt_gd
 {
 class EndlessBackgroundGenerator
@@ -32,5 +35,6 @@ private:
     std::vector<std::vector<sf::Sprite*>>    OrganizedSprites;
     sf::FloatRect                        m_lastWindowRect;
     TileSetMap                               m_tileSets;
+    BackgroundDetailGen                      m_DetailGen;
 };
 }

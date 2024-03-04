@@ -140,8 +140,10 @@
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\AIController.hpp" />
     <ClInclude Include="..\src\AiManager.hpp" />
+    <ClInclude Include="..\src\BackGroundDetailGen.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
     <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp" />
+    <ClInclude Include="..\src\FastNoiseLite.h" />
     <ClInclude Include="..\src\GameOverState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="../src/InputManager.cpp" />
     <ClCompile Include="..\src\AIController.cpp" />
     <ClCompile Include="..\src\AiManager.cpp" />
+    <ClCompile Include="..\src\BackgroundDetailGen.cpp" />
     <ClCompile Include="..\src\CollectibleComponent.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EndlessBackgroundGenerator.cpp" />
