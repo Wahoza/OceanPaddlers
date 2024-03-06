@@ -102,13 +102,7 @@ void EndlessBackgroundGenerator::loadTileLayers(const std::unique_ptr<tson::Map>
 
     Organize();
 
-    sf::Texture m_texture;
-    if (!m_texture.loadFromFile("../assets/noiseAssets.png"))
-    {
-        sf::err() << "Could not load icon\n";
-        return;
-    }
-    m_DetailGen.init(m_texture, sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
+    m_DetailGen.init(sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
 }
 void EndlessBackgroundGenerator::Organize()
 {
