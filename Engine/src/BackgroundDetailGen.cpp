@@ -50,6 +50,8 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
     initSpriteMap(m_SpriteMapForrest, "ForrestAssets.png");
     initSpriteMap(m_SpriteMapMines, "MineAssets.png");
     initSpriteMap(m_SpriteMapVillage, "VillageAssets.png");
+
+    //m_IslandTiles.push_back({30*16,5*16 });
 }
 void BackgroundDetailGen::update(float deltaTime, sf::FloatRect windowRect)
 {
@@ -67,6 +69,13 @@ void BackgroundDetailGen::update(float deltaTime, sf::FloatRect windowRect)
 
         m_NoisePosVals.insert(m_NoisePosVals.begin(), SubVector);
     }
+    for (sf::Vector2f tile : m_IslandTiles)
+    {
+        if (tile.x + TileLength < windowRect.left)
+        {
+            m_IslandTiles.erase(std::remove(m_IslandTiles.begin(), m_IslandTiles.end(), tile), m_IslandTiles.end());
+        }
+    }
 }
 void BackgroundDetailGen::draw(sf::RenderWindow& window)
 {
@@ -75,7 +84,14 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
         for (NoisePositionValue& NPV : obj)
         {
             if (NPV.pos.y > 2 * 16 && NPV.pos.y < 14 * 16)
-                continue;
+            {
+                auto it = std::find(m_IslandTiles.begin(), m_IslandTiles.end(), NPV.pos);
+                if (it == m_IslandTiles.end())
+                {
+                    continue;
+                }  
+            }
+                
 
             ////note: this is for testing, will be changed later with adjusted values for each structure type
             //m_SpriteMap[int((NPV.noise+1)*NoiseToMapSprite)]->setPosition(NPV.pos);

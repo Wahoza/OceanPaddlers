@@ -36,9 +36,12 @@ private:
     sf::Texture                                           m_texture;
     std::vector<std::vector<NoisePositionValue>> m_NoisePosVals;
     std::vector<std::shared_ptr<sf::Texture>>              m_textures;
+
     float scaleVal         = 4;
     float TileLength       = 0;
 
     std::string FolderName = "SegmentedTiles/";
+
+    std::vector<sf::Vector2f> m_IslandTiles;
 };
 } // namespace mmt_gd

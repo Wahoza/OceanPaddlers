@@ -137,6 +137,7 @@ void MainState::exit()
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
     GameState::exit();
+    m_gen.shutdown();
     m_soundManager.stopMusic("Music");
 }
 

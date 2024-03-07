@@ -29,6 +29,7 @@ public:
     void Organize();
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
+    void shutdown();
 
 private:
     std::vector<std::shared_ptr<sf::Sprite>> sprites;

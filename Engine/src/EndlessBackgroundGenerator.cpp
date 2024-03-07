@@ -164,4 +164,9 @@ void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
     }
     m_DetailGen.draw(window);
 }
+void EndlessBackgroundGenerator::shutdown()
+{
+    OrganizedSprites = {};
+    sprites          = {};
+}
 } // namespace mmt_gd

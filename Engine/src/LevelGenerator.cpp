@@ -14,4 +14,8 @@ void LevelGenerator::draw(sf::RenderWindow& window)
 {
     BackgroundGen.draw(window);
 }
+void LevelGenerator::shutdown()
+{
+    BackgroundGen.shutdown();
+}
 } // namespace mmt_gd
