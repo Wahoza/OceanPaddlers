@@ -33,6 +33,11 @@ void PhysicsManager::UnregisterBody(RigidBodyComponent* RigidBody)
 {
     m_bodies.erase(std::remove(m_bodies.begin(), m_bodies.end(), RigidBody), m_bodies.end());
 }
+void PhysicsManager::UnregisterStaticCollider(StaticColliderComponent* Collider)
+{
+    m_staticcolliders.erase(std::remove(m_staticcolliders.begin(), m_staticcolliders.end(), Collider),
+                            m_staticcolliders.end());
+}
 PhysicsManager* PhysicsManager::m_instance;
 PhysicsManager* PhysicsManager::getInstance()
 {

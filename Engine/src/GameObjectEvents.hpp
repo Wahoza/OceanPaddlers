@@ -148,4 +148,17 @@ public:
         return Type;
     }
 };
+class IslandTileGenEvent final : public BasicDataEvent <std::vector<bool>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+
 } // namespace mmt_gd

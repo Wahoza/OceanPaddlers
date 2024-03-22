@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "IEvent.hpp"
 namespace mmt_gd
 {
 class BackgroundDetailGen
@@ -7,21 +8,23 @@ class BackgroundDetailGen
 public:
     struct NoisePositionValue
     {
-        float    noise;
-        float        localNoise;
-        sf::Vector2f pos;
+        float    noise = -1;
+        float        localNoise = -1;
+        sf::Vector2f pos  = {0, 0};
+        bool         draw = false;
     };
-
-    void init(sf::IntRect _TextureRect, sf::Vector2i Area);
-    void update(float deltaTime, sf::FloatRect windowRect);
-    void draw(sf::RenderWindow& window);
-
     void initSpriteMap(std::unordered_map<int, std::shared_ptr<sf::Sprite>>& map, std::string FileName);
+    void init(sf::IntRect _TextureRect, sf::Vector2i Area, int m_seed);
+    void update(float deltaTime, sf::FloatRect windowRect);
+    void IslandGenListener(IEvent::Ptr event);
+    void draw(sf::RenderWindow& window);
 
     int NoiseToInt(int TotalSize, float noiseVal);
 
+    void shutdown();
+
 private:
-    int seed = 420;
+    int m_seed = 420;
 
     FastNoiseLite noise;
     FastNoiseLite                                        noiseLocal;

@@ -73,7 +73,7 @@ void EndlessBackgroundGenerator::createTileSprite(
 
     sprites.push_back(sprite);
 }
-void EndlessBackgroundGenerator::loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
+void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
 {
     std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
               << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;
@@ -101,8 +101,8 @@ void EndlessBackgroundGenerator::loadTileLayers(const std::unique_ptr<tson::Map>
     }
 
     Organize();
-
-    m_DetailGen.init(sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
+    tileSize = sprites[0]->getTextureRect().getSize().x;
+    //m_DetailGen.init(sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
 }
 void EndlessBackgroundGenerator::Organize()
 {
@@ -122,8 +122,9 @@ void EndlessBackgroundGenerator::Organize()
         OrganizedSprites.push_back(subVector);
     }
 }
-void EndlessBackgroundGenerator::update(float deltaTime)
+void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindowRect)
 {
+    m_lastWindowRect = lastWindowRect;
     if (OrganizedSprites[OrganizedSprites.size() - 1][0]->getPosition().x <
         m_lastWindowRect.left - OrganizedSprites[OrganizedSprites.size() - 1][0]->getTextureRect().width)
     {
@@ -135,7 +136,7 @@ void EndlessBackgroundGenerator::update(float deltaTime)
 
         for (auto& tile : poppedElement)
         {
-            tile->setPosition(OrganizedSprites[1][0]->getPosition().x + tile->getTextureRect().getSize().x,
+            tile->setPosition(OrganizedSprites[1][0]->getPosition().x + tileSize,
                               tile->getPosition().y);
         }
         // Insert the popped element at the beginning
@@ -145,16 +146,10 @@ void EndlessBackgroundGenerator::update(float deltaTime)
         //          << std::endl;
         //std::cout << std::to_string(m_lastWindowRect.left) + " window" << std::endl;
     }
-    m_DetailGen.update(deltaTime, m_lastWindowRect);
+    //m_DetailGen.update(deltaTime, m_lastWindowRect);
 }
 void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
 {
-    m_lastWindowRect = {
-        window.getView().getCenter().x - window.getView().getSize().x/2,
-        window.getView().getCenter().y - window.getView().getSize().y / 2,
-        window.getView().getSize().x,
-        window.getView().getSize().y
-    };
     for (auto& TileY : OrganizedSprites)
     {
         for (auto& Tile : TileY)
@@ -162,11 +157,19 @@ void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
             window.draw(*Tile);
         }
     }
-    m_DetailGen.draw(window);
+    //m_DetailGen.draw(window);
 }
 void EndlessBackgroundGenerator::shutdown()
 {
     OrganizedSprites = {};
     sprites          = {};
 }
+sf::Vector2i EndlessBackgroundGenerator::GetTotalSize()
+{
+    return {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())};
+}
+sf::Vector2i EndlessBackgroundGenerator::GetTileSize()
+{
+    return {int(sprites[0]->getTextureRect().width), int(sprites[0]->getTextureRect().height)};
+    }
 } // namespace mmt_gd

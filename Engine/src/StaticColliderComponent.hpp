@@ -47,6 +47,7 @@ public:
 
     Vector2f    getPosition();
     void        ChangePosition(Vector2f changePos);
+    void        removeSelf();
     const CollisionType ConvertToCollType(string input)
     {
         if (collisionTypeMap.find(input) != collisionTypeMap.end())

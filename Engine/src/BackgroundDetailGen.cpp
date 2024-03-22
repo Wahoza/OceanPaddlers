@@ -1,19 +1,29 @@
 #include "stdafx.h"
 #include "BackGroundDetailGen.hpp"
+#include "EventBus.hpp"
+#include "IEvent.hpp"
+#include "GameObjectEvents.hpp"
+
 namespace mmt_gd
 {
-void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Area)
+void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed)
 {
+    TileLength = _TextureRect.width;
+
+    m_seed = seed;
+
+    EventBus::getInstance().addListener(IslandTileGenEvent::Type, [this](IEvent::Ptr event) { IslandGenListener(event); });
+
     if (!m_texture.loadFromFile("../assets/noiseAssets.png"))
     {
         sf::err() << "Could not load icon\n";
         return;
     }
 
-    noise.SetSeed(seed);
+    noise.SetSeed(m_seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
-    noiseLocal.SetSeed(seed);
+    noiseLocal.SetSeed(m_seed);
     noiseLocal.SetNoiseType(FastNoiseLite::NoiseType_Value);
 
     for (int i = 0; i < m_texture.getSize().x / 16; i++)
@@ -35,7 +45,14 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
             NPV.noise                   = noise.GetNoise(float(x * scaleVal), float(y * scaleVal));
             NPV.localNoise = noiseLocal.GetNoise(float(x * scaleVal*20), float(y * scaleVal*20));
             NPV.pos   = {float(x * 16), float(y * 16)};
-
+            if (NPV.pos.y / TileLength < 14 && NPV.pos.y / TileLength > 2)
+            {
+                NPV.draw = false;
+            }
+            else
+            {
+                NPV.draw = true;
+            }
             SubVector.push_back(NPV);
             /*std::cout << "noise: " + std::to_string(NPV.noise) + " pos: " + std::to_string(NPV.pos.x) + " " +
                              std::to_string(NPV.pos.y)
@@ -44,8 +61,6 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
         m_NoisePosVals.push_back(SubVector);
     }
     
-    TileLength       = m_SpriteMap[0]->getTextureRect().width;
-
     initSpriteMap(m_SpriteMapField, "FieldAssets.png");
     initSpriteMap(m_SpriteMapForrest, "ForrestAssets.png");
     initSpriteMap(m_SpriteMapMines, "MineAssets.png");
@@ -62,9 +77,18 @@ void BackgroundDetailGen::update(float deltaTime, sf::FloatRect windowRect)
         std::vector<NoisePositionValue> SubVector = m_NoisePosVals[1];
         for (auto& NPV : SubVector)
         {
-            NPV.pos.x += TileLength;
+            NPV.pos.x += TileLength * 2;
             NPV.noise = noise.GetNoise(NPV.pos.x / TileLength * scaleVal, NPV.pos.y / TileLength * scaleVal);
             NPV.localNoise = noiseLocal.GetNoise(NPV.pos.x / TileLength * scaleVal * 20, NPV.pos.y / TileLength * scaleVal * 20);
+
+            if (NPV.pos.y / TileLength < 14 && NPV.pos.y / TileLength > 2)
+            {
+                NPV.draw = false;
+            }
+            else
+            {
+                NPV.draw = true;
+            }
         }
 
         m_NoisePosVals.insert(m_NoisePosVals.begin(), SubVector);
@@ -83,36 +107,62 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
     {
         for (NoisePositionValue& NPV : obj)
         {
-            if (NPV.pos.y > 2 * 16 && NPV.pos.y < 14 * 16)
+            if (!NPV.draw)
             {
-                auto it = std::find(m_IslandTiles.begin(), m_IslandTiles.end(), NPV.pos);
-                if (it == m_IslandTiles.end())
-                {
-                    continue;
-                }  
+                continue;
             }
-                
 
-            ////note: this is for testing, will be changed later with adjusted values for each structure type
-            //m_SpriteMap[int((NPV.noise+1)*NoiseToMapSprite)]->setPosition(NPV.pos);
-            //window.draw(*m_SpriteMap[int((NPV.noise+1)*NoiseToMapSprite)]);
-
-            //note: No switch statement here due to floating point values
+            //note: these are values tuned by testing
             sf::Sprite t_sprite;
+            if (NPV.pos.y > 16 * 3 && NPV.pos.y < 16 * 13)
+            {
+                if (int(NPV.localNoise * 100) % 5 == 0) {
+                    t_sprite = *m_SpriteMapVillage[NoiseToInt(m_SpriteMapVillage.size(), float(NPV.localNoise))];
+                }else{
+                    t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
+                }
+                t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -6});
+                
+                window.draw(t_sprite);
+
+                continue;
+            }
+
+            //Conditionals for drawing on land
             if (NPV.noise < -0.3)
             {
                 t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
             }
             else if (NPV.noise < -0.1)
             {
+                if (int(NPV.localNoise * 100) % 3 > 1)
+                {
+                    continue;
+                }
                 t_sprite = *m_SpriteMapField[NoiseToInt(m_SpriteMapField.size(), float(NPV.localNoise))];
             }
             else if (NPV.noise < 0.1)
             {
-                t_sprite = *m_SpriteMapVillage[NoiseToInt(m_SpriteMapVillage.size(), float(NPV.localNoise))];
+                if (int(NPV.localNoise * 100) % 3 != 0)
+                {
+                    if (int(NPV.localNoise * 100) % 3 > 1)
+                    {
+                        continue;
+                    }
+
+                    t_sprite = *m_SpriteMapField[NoiseToInt(m_SpriteMapField.size(), float(NPV.localNoise))];
+                }
+                else
+                {
+                    t_sprite = *m_SpriteMapVillage[NoiseToInt(m_SpriteMapVillage.size(), float(NPV.localNoise))];
+                }
             }
-            else if (NPV.noise < 0.7)
+            else if (NPV.noise < 0.8)
             {
+                if (int(NPV.localNoise * 100) % 3 > 1)
+                {
+                    continue;
+                }
                 t_sprite = *m_SpriteMapField[NoiseToInt(m_SpriteMapField.size(), float(NPV.localNoise))];
             }
             else if (NPV.noise <= 1)
@@ -125,6 +175,29 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
         }
     }
 }
+void BackgroundDetailGen::IslandGenListener(IEvent::Ptr event)
+{
+    if (auto IslandEvent = std::dynamic_pointer_cast<IslandTileGenEvent>(event))
+    {
+        auto& Islands = IslandEvent.get()->getData();
+
+        for (int i = 4; i < m_NoisePosVals[1].size()-4; i++)
+        {
+            if (!(i < Islands.size() || i>0))
+            {
+                break;
+            }
+            else
+            {
+                if (!m_NoisePosVals[0][i].draw)
+                {
+                    m_NoisePosVals[0][i].draw = Islands[i];
+                    //m_NoisePosVals[0][i].pos -= {0, 1};
+                }
+            }
+        }
+    }
+}
 void BackgroundDetailGen::initSpriteMap(std::unordered_map<int, std::shared_ptr<sf::Sprite>>& map, std::string FileName)
 {
     //note: these tiles can Overlap for larger tiles (eg. the windmill.) this is why the origin of the sprite will be recentered. SpriteSheets ALWAYS need to be two tiles high.
@@ -134,6 +207,7 @@ void BackgroundDetailGen::initSpriteMap(std::unordered_map<int, std::shared_ptr<
         sf::err() << "Could not load File\n";
         return;
     }
+
     m_textures.push_back(texture);
     int size = texture->getSize().x / 16;
 
@@ -153,5 +227,9 @@ int BackgroundDetailGen::NoiseToInt(int TotalSize, float noiseVal)
     noiseVal   = (noiseVal + 1) / 2; //Noise now is between 0 and 1;
     
     return int(almostmaxVal * noiseVal);
+}
+void BackgroundDetailGen::shutdown()
+{
+    m_NoisePosVals = {};
 }
 } // namespace mmt_gd

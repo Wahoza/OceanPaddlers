@@ -1,6 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "EndlessBackgroundGenerator.hpp"
+#include "BackGroundDetailGen.hpp"
+#include "ObstacleGenerator.hpp"
+
 namespace mmt_gd
 {
 class LevelGenerator
@@ -13,5 +16,9 @@ public:
 
 private:
     EndlessBackgroundGenerator BackgroundGen;
+    ObstacleGenerator          ObstacleGen;
+    BackgroundDetailGen        DetailGen;
+
+    sf::FloatRect m_lastWindowRect;
 };
 }

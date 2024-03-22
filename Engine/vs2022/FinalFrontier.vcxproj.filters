@@ -225,6 +225,9 @@
     <ClInclude Include="..\src\BackGroundDetailGen.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ObstacleGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -348,6 +351,9 @@
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\BackgroundDetailGen.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ObstacleGenerator.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,6 +22,10 @@ void StaticColliderComponent::ChangePosition(Vector2f changePos)
 {
 
 }
+void StaticColliderComponent::removeSelf()
+{
+    PhysicsManager::getInstance()->UnregisterStaticCollider(this);
+}
 bool StaticColliderComponent::init()
 {
     return true;

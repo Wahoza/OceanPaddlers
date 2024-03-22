@@ -25,17 +25,21 @@ public:
                           int                               i,
                           const unsigned                    gid);
 
-    void loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
+    void init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
     void Organize();
-    void update(float deltaTime);
+    void update(float deltaTime, sf::FloatRect lastWindowRect);
     void draw(sf::RenderWindow& window);
     void shutdown();
+    
+    sf::Vector2i GetTotalSize();
+    sf::Vector2i GetTileSize();
 
 private:
     std::vector<std::shared_ptr<sf::Sprite>> sprites;
     std::vector<std::vector<sf::Sprite*>>    OrganizedSprites;
     sf::FloatRect                        m_lastWindowRect;
     TileSetMap                               m_tileSets;
-    BackgroundDetailGen                      m_DetailGen;
+    int                                      tileSize;
+    //BackgroundDetailGen                      m_DetailGen;
 };
 }

@@ -25,7 +25,7 @@ public:
                                  unsigned                          gid,
                                  SpriteManager spriteManager);
 
-    static void loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
+    static void init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
 
     static void loadObjectLayers(const std::unique_ptr<tson::Map>& map,
                                  const fs::path&                   resourcePath,

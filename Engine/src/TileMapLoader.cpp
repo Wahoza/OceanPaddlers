@@ -82,7 +82,7 @@ void TileMapLoader::createTileSprite(
     tileLayers[layerIdx].m_tiles.push_back({i, sprite});
 }
 
-void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
+void TileMapLoader::init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
 {
     std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
               << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;

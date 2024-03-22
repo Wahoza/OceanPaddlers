@@ -39,7 +39,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     if (object.getType() == "Player")
     {
         gameObject->addComponent<PlayerComponent>(*gameObject);
-        std::cout << "banana" << std::endl;
     }
 
     for (const auto* property : object.getProperties().get())

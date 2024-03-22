@@ -52,7 +52,7 @@ void MainState::init()
         tson::Tileson t;
         if (const std::unique_ptr<tson::Map> map = t.parse(mapPath); map->getStatus() == tson::ParseStatus::OK)
         {
-            TileMapLoader::loadTileLayers(map, resourcePath, m_spriteManager);
+            TileMapLoader::init(map, resourcePath, m_spriteManager);
             TileMapLoader::loadObjectLayers(map, resourcePath, m_spriteManager);
             m_gen.Initialize(map, resourcePath, m_spriteManager);
         }

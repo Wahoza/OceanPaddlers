@@ -22,7 +22,7 @@ public:
     void RegisterCollectible(CollectibleComponent* Collectible);
 
     void UnregisterBody(RigidBodyComponent* RigidBody);
-
+    void UnregisterStaticCollider(StaticColliderComponent* Collider);
     private:
     struct Manifold
     {
