@@ -17,7 +17,7 @@ void LevelGenerator::Initialize(const std::unique_ptr<tson::Map>& map, const fs:
 
     DetailGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y}, BackgroundGen.GetTotalSize(), seed);
 
-    ObstacleGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y}, BackgroundGen.GetTotalSize(), seed);
+    ObstacleGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y}, BackgroundGen.GetTotalSize(), seed, spriteManager.getWindow());
 }
 
 void LevelGenerator::update(float deltaTime)
@@ -32,7 +32,8 @@ void LevelGenerator::draw(sf::RenderWindow& window)
     m_lastWindowRect = {window.getView().getCenter().x - window.getView().getSize().x / 2,
      window.getView().getCenter().y - window.getView().getSize().y / 2,
      window.getView().getSize().x,
-     window.getView().getSize().y};
+     window.getView().getSize().y
+    };
 
     BackgroundGen.draw(window);
     ObstacleGen.draw(window);

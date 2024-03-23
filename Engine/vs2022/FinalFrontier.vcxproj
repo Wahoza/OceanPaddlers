@@ -163,7 +163,9 @@
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\ObjectFactory.hpp" />
+    <ClInclude Include="..\src\ObjectSpawner.hpp" />
     <ClInclude Include="..\src\ObstacleGenerator.hpp" />
+    <ClInclude Include="..\src\PathGenerator.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
     <ClInclude Include="..\src\PlayerComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
@@ -215,7 +217,9 @@
     <ClCompile Include="..\src\InputObject.cpp" />
     <ClCompile Include="..\src\LevelGenerator.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
+    <ClCompile Include="..\src\ObjectSpawner.cpp" />
     <ClCompile Include="..\src\ObstacleGenerator.cpp" />
+    <ClCompile Include="..\src\PathGenerator.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerComponent.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />

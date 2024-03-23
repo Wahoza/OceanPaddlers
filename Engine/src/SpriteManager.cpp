@@ -103,6 +103,7 @@ void SpriteManager::draw()
         ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
 
             auto& layer = m_layerToComp[order];
+        
         for (auto* comp : layer)
         {
             if (comp->getGameObject().isActive())

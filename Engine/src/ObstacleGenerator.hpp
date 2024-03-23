@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "FastNoiseLite.h"
 
+#include "PathGenerator.hpp"
 #include "StaticColliderComponent.hpp"
+#include "ObjectSpawner.hpp"
+
 #include <random>;
 namespace mmt_gd
 {
@@ -27,7 +30,7 @@ public:
         Vector2i LeftTop;
     };
 
-    void init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed);
+    void init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window);
     void update(float deltaTime, sf::FloatRect windowRect);
     void draw(sf::RenderWindow& window);
 
@@ -37,6 +40,7 @@ private:
 
     void generateNextSprite();
     void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
+    
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -57,9 +61,15 @@ private:
     Sprite  m_dockPrinter;
     Texture m_dockTexture;
 
+    
     int                                          _seed = 0;
     float                                        threshold = 0.2;
     float                                        scaleVal = 30;
     int                                          TileLength = 0;
+
+    PathGenerator PathGen;
+    ObjectSpawner ObjSpawner;
+    //void spawnCollectible(Vector2f pos);
+    int  collectibleCount = 0;
 };
 }

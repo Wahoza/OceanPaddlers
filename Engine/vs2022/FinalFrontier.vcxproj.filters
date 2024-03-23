@@ -228,6 +228,12 @@
     <ClInclude Include="..\src\ObstacleGenerator.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\PathGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ObjectSpawner.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -354,6 +360,12 @@
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ObstacleGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PathGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ObjectSpawner.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>

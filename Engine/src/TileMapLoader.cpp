@@ -147,6 +147,10 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map,
     // go through all object layers
     for (auto& layer : map->getLayers())
     {
+        if (!(layer.getName() == "GameObjects" || layer.getName() == "Objects")) 
+        {
+            continue;
+        }
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {

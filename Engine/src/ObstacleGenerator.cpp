@@ -14,8 +14,11 @@
 
 namespace mmt_gd
 {
-void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed)
+void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window)
 {
+    PathGen.init(seed, {-1,8}, Area);
+    ObjSpawner.init(TileLength, &window);
+
     _seed = seed;
     noise.SetSeed(seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
@@ -75,23 +78,41 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
+        PathGen.GetPath(NPVs[0][1].pos.x / TileLength);
+
     if (NPVs[NPVs.size() - 1][0].pos.x < windowRect.left - TileLength)
     {
         NPVs.pop_back();
 
         std::vector<NoisePositionValue> SubVector = NPVs[1];
-        for (auto& NPV : SubVector)
+        std::vector<float>              PathVals  = PathGen.GetPath(SubVector[0].pos.x / TileLength);
+        for (int i = 0; i < SubVector.size(); i++)
         {
-            NPV.pos.x += TileLength * 2;
+            SubVector[i].pos.x += TileLength * 2;
             if (!waiting)
             {
-                NPV.noise = noise.GetNoise(NPV.pos.x / TileLength * scaleVal, NPV.pos.y / TileLength * scaleVal);
+                SubVector[i].noise = noise.GetNoise(SubVector[i].pos.x / TileLength * scaleVal,
+                                                    SubVector[i].pos.y / TileLength * scaleVal);
             }
             else
             {
-                NPV.noise = -1;
+                SubVector[i].noise = -1;
+            }
+            if (i < PathVals.size())
+            {
+                SubVector[i].noise += PathVals[i];
+                if (PathVals[i] < 0)
+                {
+                    static std::mt19937 genCollectible(_seed + windowRect.left);
+                    static std::uniform_int_distribution<> collectibleSpread(0, 100);
+                    if (collectibleSpread(genCollectible) == 1)
+                    {
+                        ObjSpawner.createCollectible(SubVector[i].pos);
+                    }
+                }
             }
         }
+
 
         NPVs.insert(NPVs.begin(), SubVector);
 
@@ -128,6 +149,11 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                     DockColliders.back()->removeSelf();
                     delete DockColliders.back();
                     DockColliders.pop_back();
+                }
+
+                if (DockTileVector.empty())
+                {
+                    break;
                 }
             }
         }
@@ -422,10 +448,10 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
 
 void ObstacleGenerator::shutdown()
 {
-    //Colliders = {};
     NPVs      = {};
     ObstacleSpriteMap = {};
     DockTileVector    = {};
     DockColliders     = {};
+    PathGen.shutdown();
 }
 } // namespace mmt_gd
