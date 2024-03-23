@@ -10,10 +10,13 @@
 #include "GameObjectEvents.hpp"
 #include "IEvent.hpp"
 
+#include <random>
+
 namespace mmt_gd
 {
 void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed)
 {
+    _seed = seed;
     noise.SetSeed(seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
@@ -24,6 +27,15 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     }
     m_printer.setTexture(m_texture);
     m_printer.setTextureRect(_TextureRect);
+
+    if (!m_dockTexture.loadFromFile("../assets/SegmentedTiles/dockTiles2.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_dockPrinter.setTexture(m_dockTexture);
+    m_dockPrinter.setTextureRect(_TextureRect);
+
     TileLength  = _TextureRect.width;
     waitingDist = Area.x * TileLength;
     
@@ -31,6 +43,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
         {
             std::vector<NoisePositionValue> SubVector;
             std::vector<ObstacleTiles> TileVec;
+
         for (int y = 0; y <= Area.y; y++)
         {
             NoisePositionValue NPV;
@@ -41,19 +54,16 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
             SubVector.push_back(NPV);
 
             ObstacleTiles tile;
-            tile.endTile = true;
             tile.pos     = {float(x * 16), float(y * 16)};
 
             TileVec.push_back(tile);
-            /*std::cout << "noise: " + std::to_string(NPV.noise) + " pos: " + std::to_string(NPV.pos.x) + " " +
-                             std::to_string(NPV.pos.y)
-                      << std::endl;*/
         }
-        NPVs.push_back(SubVector);
-        ObstacleSpriteMap.push_back(TileVec);
-        std::vector<StaticColliderComponent> SubColliderVector;
-        Colliders.push_back(SubColliderVector);
-    }
+
+            NPVs.push_back(SubVector);
+            ObstacleSpriteMap.push_back(TileVec);
+            std::vector<StaticColliderComponent> SubColliderVector;
+            Colliders.push_back(SubColliderVector);
+        }
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
@@ -82,7 +92,6 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
         for (auto& Tile : SubTileVec)
         {
             Tile.LeftTop = {0, 0};
-            Tile.endTile = false;
             Tile.pos.x += TileLength * 2;
             Tile.print = false;
             Tile.noise = noise.GetNoise(Tile.pos.x / TileLength * scaleVal, Tile.pos.y / TileLength * scaleVal);
@@ -90,15 +99,26 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
         ObstacleSpriteMap.insert(ObstacleSpriteMap.begin(), SubTileVec);
 
         
+        //Collider Removing Logic
+        auto& SubColliderVec = Colliders.back();
+        Colliders.pop_back();
+        for (auto& Collider : SubColliderVec)
+        {
+            Collider.removeSelf();
+            delete &Collider;
+        }
 
-        //fix this
-        //for (auto& SubColliderVector : Colliders)
-        //{
-        //    for (auto& Collider : SubColliderVector)
-        //    {
-        //        Collider.removeSelf();
-        //    }
-        //}
+        //Dock Removing Logic
+        /*while (!DockTileVector.empty() && DockTileVector.back().pos.y < windowRect.left - TileLength)
+        {
+            DockTileVector.pop_back();
+            if (!DockColliders.empty())
+            {
+                DockColliders.back().removeSelf();
+                DockColliders.pop_back();
+            }
+        }*/
+
         if (!waiting) //!waiting
         {
             std::vector<StaticColliderComponent> SubColliderVector;
@@ -110,7 +130,6 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                 {
                     StaticColliderComponent component = *new StaticColliderComponent({NPV.pos.x + 3, NPV.pos.y + 3, 10, 10}, "hard");
                     SubColliderVector.push_back(component);
-
                 }
             }
             //do gen for fish (at near -1)
@@ -169,16 +188,22 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
             }
         }
     }
+    for (auto& dockTile : DockTileVector)
+    {
+        m_dockPrinter.setTextureRect({dockTile.LeftTop.x,
+                                      dockTile.LeftTop.y,
+                                      m_dockPrinter.getTextureRect().width,
+                                      m_dockPrinter.getTextureRect().height});
+        m_dockPrinter.setPosition(dockTile.pos);
+        window.draw(m_dockPrinter);
+
+    }
     int iterationCounter = 0;
     for (auto& NPV : NPVs)
     {
         iterationCounter++;
         for (auto& Tile : NPV)
         {
-            /*if (iterationCounter % 2 == 1)
-            {
-                continue;
-            }*/
             sf::Color col = {200, 20, 20, 30};
 
             if (Tile.noise > threshold)
@@ -208,8 +233,10 @@ void ObstacleGenerator::generateNextSprite()
         {
             continue;
         }
+
         ObstacleSpriteMap[1][iterator].pos = NPV1[iterator].pos;
         Vector2i directionVec              = {0, 0};
+        std::vector<Vector2i> normalVecs     = {};
         int neighbourCount                 = 0;
         bool     hasUpVec                  = false; //note: there is one use for this to find a difference between two 0,0 vecs
         
@@ -240,13 +267,15 @@ void ObstacleGenerator::generateNextSprite()
         {
             case 0:
             {
+                normalVecs = {{0, 0}};
                 directionVec = Vector2i{64, 64};
                 break;
             }
             case 1:
             {
-                directionVec *= 32;
+                directionVec *= 16 * 2;
                 directionVec += {32, 32};
+                normalVecs = {directionVec};
                 break;
             }
             case 2:
@@ -255,15 +284,18 @@ void ObstacleGenerator::generateNextSprite()
                 {
                     if (hasUpVec)
                     {
+                        normalVecs   = {{0, 1}, {0, -1}};
                         directionVec = Vector2i(0, 64);
                     }
                     else
                     {
+                        normalVecs   = {{1,0}, {-1,0}};
                         directionVec = Vector2i(0, 0);
                     }
                 }
                 else
                 {
+                    normalVecs = {directionVec};
                     directionVec *= 16;
                     directionVec += {32, 32};
                 }
@@ -271,6 +303,7 @@ void ObstacleGenerator::generateNextSprite()
             }
             case 3:
             {
+                normalVecs = {directionVec};
                 directionVec *= 16;
                 directionVec += {32, 32};
                 break;
@@ -283,15 +316,87 @@ void ObstacleGenerator::generateNextSprite()
             default:
                 directionVec = {32, 32};
         }
+        if (iterator > 4 && iterator < 10)
+        {
+            generateNextDock(neighbourCount, normalVecs, {32, 32}, NPV1[iterator].pos);
+        }
+
         ToModifyColumn[iterator].print = true;
 
         ToModifyColumn[iterator].LeftTop = directionVec;
+        
     }
 }
+
+void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos)
+{
+    int t_seed = _seed + pos.x + pos.y;
+
+    static std::mt19937 gen(t_seed);
+    static std::uniform_int_distribution<> spawnChance(1, 20);
+    if (spawnChance(gen) != 20)
+    {
+        return;
+    }
+
+    static std::uniform_int_distribution<> dist(1, 4); //4 for case of a lone tile
+    int result = dist(gen);
+
+    Vector2i resultVec = {0, 0};
+
+    if (normalVec.size() == 0)
+    {
+        return;
+    }
+    else
+    {
+        if (normalVec.size() == 1)
+        {
+            if (normalVec[0].y == 0 && normalVec[0].x == 0)
+            {
+                int mappedX = (result == 1) ? 1 : (result == 2) ? -1 : 0;
+                int mappedY = (result == 3) ? 1 : (result == 4) ? -1 : 0;
+                resultVec   = {mappedX, mappedY};
+            }
+            else if (normalVec[0].y == 0 || normalVec[0].x == 0)
+            {
+                resultVec = normalVec[0];
+            }else 
+            if (result % 2 == 1)
+            {
+                //put on x axis
+                resultVec = {normalVec[0].x, 0};
+            }
+            else
+            {
+                //put on y axis
+                resultVec = {0, normalVec[0].y};
+            }
+        }
+        else
+        {
+            resultVec = normalVec[result % 2]; //assumes that this is the case for the shapes || or =
+        }     
+    }
+    DockTiles Tile;
+    Tile.LeftTop = resultVec * 16 + Vector2i(16, 16);
+    Tile.pos     = pos + Vector2f(resultVec.x, resultVec.y)*16.f;
+    for (auto& DockTile : DockTileVector)
+    {
+        if (Tile.pos == DockTile.pos)
+        {
+            return;
+        }
+    }
+
+    DockTileVector.insert(DockTileVector.begin(), Tile);
+}
+
 void ObstacleGenerator::shutdown()
 {
     //Colliders = {};
     NPVs      = {};
     ObstacleSpriteMap = {};
+    DockTileVector    = {};
 }
 } // namespace mmt_gd

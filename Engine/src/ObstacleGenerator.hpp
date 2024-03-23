@@ -2,7 +2,7 @@
 #include "FastNoiseLite.h"
 
 #include "StaticColliderComponent.hpp"
-
+#include <random>;
 namespace mmt_gd
 {
 class ObstacleGenerator
@@ -16,11 +16,15 @@ public:
     };
     struct ObstacleTiles
     {
-        bool endTile = false; //for Rocks and docks,...
         bool     print   = false;
         float    noise   = 0;
         Vector2i LeftTop = {0, 0};
         Vector2f pos     = {0, 0};  
+    };
+    struct DockTiles
+    {
+        Vector2f pos;
+        Vector2i LeftTop;
     };
 
     void init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed);
@@ -30,8 +34,9 @@ public:
     void shutdown();
 
 private:
-    void generateNextSprite();
 
+    void generateNextSprite();
+    void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -41,7 +46,16 @@ private:
     std::vector<std::vector<ObstacleTiles>>             ObstacleSpriteMap;
 
     Sprite                                            m_printer;
-    Texture                                      m_texture;
+    Texture                                           m_texture;
+
+    
+    std::vector<DockTiles>               DockTileVector;
+    std::vector<StaticColliderComponent> DockColliders;
+
+    Sprite  m_dockPrinter;
+    Texture m_dockTexture;
+
+    int                                          _seed = 0;
     float                                        threshold = 0.2;
     float                                        scaleVal = 30;
     int                                          TileLength = 0;
