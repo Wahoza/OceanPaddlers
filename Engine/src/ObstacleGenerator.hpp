@@ -50,7 +50,7 @@ private:
 
     
     std::vector<DockTiles>               DockTileVector;
-    std::vector<StaticColliderComponent> DockColliders;
+    std::vector<StaticColliderComponent*> DockColliders;
 
     Sprite  m_dockPrinter;
     Texture m_dockTexture;

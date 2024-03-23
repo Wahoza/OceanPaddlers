@@ -109,15 +109,20 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
         }
 
         //Dock Removing Logic
-        /*while (!DockTileVector.empty() && DockTileVector.back().pos.y < windowRect.left - TileLength)
+        if (!DockTileVector.empty())
         {
-            DockTileVector.pop_back();
-            if (!DockColliders.empty())
+            while ((DockTileVector.back().pos.x < windowRect.left - TileLength))
             {
-                DockColliders.back().removeSelf();
-                DockColliders.pop_back();
+
+                DockTileVector.pop_back();
+                if (!DockColliders.empty())
+                {
+                    DockColliders.back()->removeSelf();
+                    delete DockColliders.back();
+                    DockColliders.pop_back();
+                }
             }
-        }*/
+        }
 
         if (!waiting) //!waiting
         {
@@ -174,6 +179,16 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
     {
         return;
     }
+    for (auto& dockTile : DockTileVector)
+    {
+        m_dockPrinter.setTextureRect({dockTile.LeftTop.x,
+                                      dockTile.LeftTop.y,
+                                      m_dockPrinter.getTextureRect().width,
+                                      m_dockPrinter.getTextureRect().height});
+        m_dockPrinter.setPosition(dockTile.pos);
+        window.draw(m_dockPrinter);
+
+    }
     for (auto& ObVec : ObstacleSpriteMap)
     {
         for (auto& obj : ObVec)
@@ -188,16 +203,7 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
             }
         }
     }
-    for (auto& dockTile : DockTileVector)
-    {
-        m_dockPrinter.setTextureRect({dockTile.LeftTop.x,
-                                      dockTile.LeftTop.y,
-                                      m_dockPrinter.getTextureRect().width,
-                                      m_dockPrinter.getTextureRect().height});
-        m_dockPrinter.setPosition(dockTile.pos);
-        window.draw(m_dockPrinter);
-
-    }
+    
     int iterationCounter = 0;
     for (auto& NPV : NPVs)
     {
@@ -381,6 +387,7 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
     DockTiles Tile;
     Tile.LeftTop = resultVec * 16 + Vector2i(16, 16);
     Tile.pos     = pos + Vector2f(resultVec.x, resultVec.y)*16.f;
+
     for (auto& DockTile : DockTileVector)
     {
         if (Tile.pos == DockTile.pos)
@@ -388,7 +395,8 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
             return;
         }
     }
-
+    StaticColliderComponent* component = new StaticColliderComponent({Tile.pos.x + 3, Tile.pos.y + 3, 10, 10}, "hard");
+    DockColliders.insert(DockColliders.begin(), component);
     DockTileVector.insert(DockTileVector.begin(), Tile);
 }
 
@@ -398,5 +406,6 @@ void ObstacleGenerator::shutdown()
     NPVs      = {};
     ObstacleSpriteMap = {};
     DockTileVector    = {};
+    DockColliders     = {};
 }
 } // namespace mmt_gd
