@@ -48,7 +48,9 @@ private:
     Sprite                                            m_printer;
     Texture                                           m_texture;
 
-    
+    Sprite                                m_waterPrinter;
+    Texture                               m_waterTexture;
+
     std::vector<DockTiles>               DockTileVector;
     std::vector<StaticColliderComponent*> DockColliders;
 

@@ -36,6 +36,14 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     m_dockPrinter.setTexture(m_dockTexture);
     m_dockPrinter.setTextureRect(_TextureRect);
 
+    if (!m_waterTexture.loadFromFile("../assets/SegmentedTiles/waterTile.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_waterPrinter.setTexture(m_waterTexture);
+    m_waterPrinter.setOrigin(2, 0);
+
     TileLength  = _TextureRect.width;
     waitingDist = Area.x * TileLength;
     
@@ -178,6 +186,18 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
     if (waiting)
     {
         return;
+    }
+    for (auto& ObVec : ObstacleSpriteMap)
+    {
+        for (auto& obj : ObVec)
+        {
+
+            if (obj.print)
+            {
+                m_waterPrinter.setPosition(obj.pos);
+                window.draw(m_waterPrinter);
+            }
+        }
     }
     for (auto& dockTile : DockTileVector)
     {

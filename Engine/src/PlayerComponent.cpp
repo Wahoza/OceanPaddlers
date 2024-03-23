@@ -33,7 +33,7 @@ void PlayerComponent::DamageCollision()
 
         if (currentlives == 0)
         {
-            //GameEnd();
+            GameEnd();
         }
     }
 }
