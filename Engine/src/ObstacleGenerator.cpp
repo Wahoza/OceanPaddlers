@@ -110,11 +110,21 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                 if (PathVals[i] < 0)
                 {
                     static std::mt19937 genCollectible(_seed + windowRect.left);
-                    static std::uniform_int_distribution<> collectibleSpread(0, 100);
+                    static std::uniform_int_distribution<> collectibleSpread(0, 70);
                     if (collectibleSpread(genCollectible) == 1)
                     {
                         ObjSpawner.createCollectible(SubVector[i].pos);
                     }
+                }
+            }
+
+            if (SubVector[i].noise < threshold && (i > 3 && i < 13))
+            {
+                static std::mt19937                    genCollectible(_seed + windowRect.left + SubVector[i].pos.y);
+                static std::uniform_int_distribution<> collectibleSpread(0, 150);
+                if (collectibleSpread(genCollectible) == 1)
+                {
+                    ObjSpawner.createFish(SubVector[i].pos);
                 }
             }
         }
@@ -177,8 +187,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                     SubColliderVector.push_back(component);
                 }
             }
-            //do gen for fish (at near -1)
-            //do gen for currents (at -1, -0.5)
+
             Colliders.insert(Colliders.begin(), SubColliderVector);
 
             std::vector<bool> hasIsland;

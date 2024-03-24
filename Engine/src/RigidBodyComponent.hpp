@@ -34,6 +34,7 @@ public:
     float m_invMass = 0;
     float maxSpeed  = 600.f;
     float               Loss      = 0.0f;
+    bool                isActive  = true;
 
     std::list<Vector2f> m_forces;   ///< forces constantly applied to object, e.g., gravity
     std::list<Vector2f> m_impulses; ///< impulses fire only once, e.g., during collision
@@ -41,6 +42,7 @@ public:
     Vector2f m_acceleration;
     Vector2f m_velocity;
     Vector2f m_gameObjectOffset;
+
     bool        init() override;
     void        update(float deltaTime) override;
     const float getInvMass();

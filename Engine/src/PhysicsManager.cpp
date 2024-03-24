@@ -107,7 +107,7 @@ void PhysicsManager::findCollisions()
     {
         
         auto& body1 = *itA;
-        if (!body1->getGameObject().isActive())
+        if (!(body1->getGameObject().isActive() && body1->isActive))
         {
             continue;
         }
@@ -118,7 +118,7 @@ void PhysicsManager::findCollisions()
                 continue;
 
             auto& body2 = *itB;
-            if (!body2->getGameObject().isActive())
+            if (!(body2->getGameObject().isActive() && body2->isActive))
             {
                 continue;
             }
