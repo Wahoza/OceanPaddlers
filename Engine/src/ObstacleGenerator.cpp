@@ -18,7 +18,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
 {
     PathGen.init(seed, {-1,8}, Area);
     ObjSpawner.init(TileLength, &window);
-
+    RockGen.init(Area, seed);
     _seed = seed;
     noise.SetSeed(seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
@@ -92,6 +92,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
         std::vector<NoisePositionValue> SubVector = NPVs[1];
         std::vector<float>              PathVals  = PathGen.GetPath(SubVector[0].pos.x / TileLength);
+
         for (int i = 0; i < SubVector.size(); i++)
         {
             SubVector[i].pos.x += TileLength * 2;
@@ -122,6 +123,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             {
                 static std::mt19937                    genCollectible(_seed + windowRect.left + SubVector[i].pos.y);
                 static std::uniform_int_distribution<> collectibleSpread(0, 150);
+
                 if (collectibleSpread(genCollectible) == 1)
                 {
                     ObjSpawner.createFish(SubVector[i].pos);
@@ -183,7 +185,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
                 if (NPV.noise > threshold && (NPV.pos.y / 16 > 3 && NPV.pos.y / 16 <13))
                 {
-                    StaticColliderComponent component = *new StaticColliderComponent({NPV.pos.x + 3, NPV.pos.y + 3, 10, 10}, "hard");
+                    StaticColliderComponent component = *new StaticColliderComponent({NPV.pos.x + 1, NPV.pos.y + 1, 14, 14}, "hard");
                     SubColliderVector.push_back(component);
                 }
             }
@@ -209,6 +211,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
 
             generateNextSprite();
+            RockGen.generateNextTile(NPVs[0][0].pos.x);
             return;
         }
 
@@ -227,18 +230,6 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
     if (waiting)
     {
         return;
-    }
-    for (auto& ObVec : ObstacleSpriteMap)
-    {
-        for (auto& obj : ObVec)
-        {
-
-            if (obj.print)
-            {
-                m_waterPrinter.setPosition(obj.pos);
-                window.draw(m_waterPrinter);
-            }
-        }
     }
     for (auto& dockTile : DockTileVector)
     {
@@ -280,6 +271,23 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
             DebugDraw::getInstance().drawRectangle(Tile.pos, {16, 16}, col, col);
         }
     }
+}
+void ObstacleGenerator::drawWater(sf::RenderWindow& window)
+{
+    for (auto& ObVec : ObstacleSpriteMap)
+    {
+        for (auto& obj : ObVec)
+        {
+
+            if (obj.print)
+            {
+                m_waterPrinter.setPosition(obj.pos);
+                window.draw(m_waterPrinter);
+            }
+        }
+    }
+
+    RockGen.draw(window);
 }
 void ObstacleGenerator::generateNextSprite()
 {

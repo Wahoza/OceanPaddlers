@@ -117,8 +117,9 @@ void MainState::update(const float deltaTime)
 void MainState::draw()
 {
     PROFILE_FUNCTION();
-    m_gen.draw(m_game->getWindow());
+    m_gen.drawBackground(m_game->getWindow());
     m_spriteManager.draw();
+    m_gen.drawForeground(m_game->getWindow());
     m_Hud->draw(m_game->getWindow());
 }
 

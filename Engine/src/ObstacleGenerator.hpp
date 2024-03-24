@@ -6,6 +6,7 @@
 #include "ObjectSpawner.hpp"
 
 #include "StaticColliderComponent.hpp"
+#include "RockGenerator.hpp"
 
 #include <random>;
 namespace mmt_gd
@@ -35,6 +36,7 @@ public:
     void init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window);
     void update(float deltaTime, sf::FloatRect windowRect);
     void draw(sf::RenderWindow& window);
+    void drawWater(sf::RenderWindow& window);
 
     void shutdown();
 
@@ -42,7 +44,6 @@ private:
 
     void generateNextSprite();
     void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
-    void          updateWalls();
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -71,6 +72,7 @@ private:
 
     PathGenerator PathGen;
     ObjectSpawner ObjSpawner;
+    RockGenerator RockGen;
 
     int  collectibleCount = 0;
 

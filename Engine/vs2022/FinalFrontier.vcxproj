@@ -170,6 +170,7 @@
     <ClInclude Include="..\src\PlayerComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
+    <ClInclude Include="..\src\RockGenerator.hpp" />
     <ClInclude Include="..\src\ScoreConverter.hpp" />
     <ClInclude Include="..\src\ScoreDisplayComponent.hpp" />
     <ClInclude Include="..\src\SoundManager.hpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="..\src\CameraRenderComponent.cpp" />
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\src\RockGenerator.cpp" />
     <ClCompile Include="..\src\ScoreConverter.cpp" />
     <ClCompile Include="..\src\ScoreDisplayComponent.cpp" />
     <ClCompile Include="..\src\SoundManager.cpp" />

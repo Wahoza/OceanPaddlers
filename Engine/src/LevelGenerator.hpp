@@ -11,7 +11,8 @@ class LevelGenerator
 public:
     void Initialize(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager);
     void update(float deltaTime);
-    void draw(sf::RenderWindow& window);
+    void drawBackground(sf::RenderWindow& window);
+    void drawForeground(sf::RenderWindow& window);
     void shutdown();
 
 private:
