@@ -5,6 +5,8 @@
 #include "StaticColliderComponent.hpp"
 #include "ObjectSpawner.hpp"
 
+#include "StaticColliderComponent.hpp"
+
 #include <random>;
 namespace mmt_gd
 {
@@ -40,7 +42,7 @@ private:
 
     void generateNextSprite();
     void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
-    
+    void          updateWalls();
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -69,7 +71,10 @@ private:
 
     PathGenerator PathGen;
     ObjectSpawner ObjSpawner;
-    //void spawnCollectible(Vector2f pos);
+
     int  collectibleCount = 0;
+
+    StaticColliderComponent* WallColliderTop;
+    StaticColliderComponent* WallColliderBottom;
 };
 }

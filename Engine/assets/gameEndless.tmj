@@ -88,7 +88,7 @@
          "name":"Objects",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":65,
          "x":0,
          "y":0
@@ -211,40 +211,6 @@
                  "y":129.979166666666
                 }, 
                 {
-                 "height":57.3333333333333,
-                 "id":75,
-                 "name":"BottomWall1",
-                 "properties":[
-                        {
-                         "name":"CollisionType",
-                         "type":"string",
-                         "value":"Wall"
-                        }],
-                 "rotation":0,
-                 "type":"Collider",
-                 "visible":true,
-                 "width":3360,
-                 "x":0,
-                 "y":214.666666666667
-                }, 
-                {
-                 "height":58,
-                 "id":87,
-                 "name":"TopWall",
-                 "properties":[
-                        {
-                         "name":"CollisionType",
-                         "type":"string",
-                         "value":"Wall"
-                        }],
-                 "rotation":0,
-                 "type":"Collider",
-                 "visible":true,
-                 "width":3360,
-                 "x":0,
-                 "y":0
-                }, 
-                {
                  "height":26.1515,
                  "id":350,
                  "name":"Egg3",
@@ -310,7 +276,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 

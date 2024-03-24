@@ -75,10 +75,16 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
             std::vector<StaticColliderComponent> SubColliderVector;
             Colliders.push_back(SubColliderVector);
         }
+
+    WallColliderBottom = new StaticColliderComponent(FloatRect{0, 0, (float)Area.x * TileLength, 3.5f * TileLength}, "Hard");
+    WallColliderTop    = new StaticColliderComponent(FloatRect{0.f, (float)(Area.y - (2.5)) * TileLength, (float)Area.x * TileLength, 3.5f * TileLength}, "Hard");
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
-        PathGen.GetPath(NPVs[0][1].pos.x / TileLength);
+    WallColliderTop->m_shape.left = windowRect.left;
+    WallColliderBottom->m_shape.left = windowRect.left;
+
+    PathGen.GetPath(NPVs[0][1].pos.x / TileLength);
 
     if (NPVs[NPVs.size() - 1][0].pos.x < windowRect.left - TileLength)
     {
