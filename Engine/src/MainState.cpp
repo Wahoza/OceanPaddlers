@@ -118,8 +118,10 @@ void MainState::draw()
 {
     PROFILE_FUNCTION();
     m_gen.drawBackground(m_game->getWindow());
+    m_spriteManager.drawBackground();
     m_spriteManager.draw();
     m_gen.drawForeground(m_game->getWindow());
+    m_spriteManager.drawTop();
     m_Hud->draw(m_game->getWindow());
 }
 

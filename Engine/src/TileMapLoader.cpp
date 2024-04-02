@@ -147,7 +147,8 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map,
     // go through all object layers
     for (auto& layer : map->getLayers())
     {
-        if (!(layer.getName() == "GameObjects" || layer.getName() == "Objects")) 
+        if (!(layer.getName() == "GameObjects" || layer.getName() == "Objects" || layer.getName() == "Background" ||
+              layer.getName() == "Top")) 
         {
             continue;
         }

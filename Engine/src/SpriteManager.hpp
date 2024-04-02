@@ -81,6 +81,8 @@ public:
     }
 
     void draw();
+    void drawBackground();
+    void drawTop();
 
 private:
     sf::RenderWindow& m_renderWindow;

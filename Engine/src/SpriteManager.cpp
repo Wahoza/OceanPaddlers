@@ -96,20 +96,64 @@ void SpriteManager::draw()
 
         m_camera->draw();
 
-    for (const auto& order : m_layerOrder)
+
+    const auto& order = m_layerOrder[3];
+
+    PROFILE_SCOPE(order);
+
+    ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
+
+        auto& layer = m_layerToComp[order];
+    for (auto* comp : layer)
     {
-        PROFILE_SCOPE(order);
-
-        ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
-
-            auto& layer = m_layerToComp[order];
-        
-        for (auto* comp : layer)
+        if (comp->getGameObject().isActive())
         {
-            if (comp->getGameObject().isActive())
-            {
-                comp->draw();
-            }
+            comp->draw();
+        }
+    }
+}
+void SpriteManager::drawBackground()
+{
+    //{"Floor", "Background", "Objects", "GameObjects", "Top"}
+    ffAssertMsg(m_camera != nullptr, "Camera is nullptr")
+
+        m_camera->draw();
+
+
+    const auto& order = m_layerOrder[1];
+
+    PROFILE_SCOPE(order);
+
+    ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
+
+        auto& layer = m_layerToComp[order];
+    for (auto* comp : layer)
+    {
+        if (comp->getGameObject().isActive())
+        {
+            comp->draw();
+        }
+    }
+}
+void SpriteManager::drawTop()
+{
+    ffAssertMsg(m_camera != nullptr, "Camera is nullptr")
+
+        m_camera->draw();
+
+
+    const auto& order = m_layerOrder[4];
+
+    PROFILE_SCOPE(order);
+
+    ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
+
+        auto& layer = m_layerToComp[order];
+    for (auto* comp : layer)
+    {
+        if (comp->getGameObject().isActive())
+        {
+            comp->draw();
         }
     }
 }
