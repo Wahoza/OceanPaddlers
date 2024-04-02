@@ -21,6 +21,10 @@ void mmt_gd::ObjectSpawner::init(int TileSize, sf::RenderWindow* window)
 }
 void ObjectSpawner::createCollectible(sf::Vector2f pos)
 {
+    if (pos.x / 16 < waitVal)
+    {
+        return;
+    }
 
     auto gameObject = GameObject::create("Collectible" + std::to_string(CollectibleCtr));
     gameObject->setPosition(pos + Vector2f{16, 16});
@@ -43,6 +47,10 @@ void ObjectSpawner::createCollectible(sf::Vector2f pos)
 }
 void ObjectSpawner::createFish(sf::Vector2f pos)
 {
+    if (pos.x / 16 < waitVal)
+    {
+        return;
+    }
 
     auto gameObject = GameObject::create("Fish" + std::to_string(FishCtr));
     gameObject->setPosition(pos);

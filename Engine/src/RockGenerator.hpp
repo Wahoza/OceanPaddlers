@@ -25,8 +25,8 @@ private:
     int                                               TextureSize = 16;
 
     Vector2i _Area;
-    int      wallsize = 3;
-    int      chance   = 3;
+    int      wallsize = 4;
+    int      chance   = 200;
     int      _seed;
 };
 }

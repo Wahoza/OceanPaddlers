@@ -16,7 +16,7 @@ namespace mmt_gd
 {
 void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window)
 {
-    PathGen.init(seed, {-1,8}, Area);
+    PathGen.init(seed, {0,9}, Area);
     ObjSpawner.init(TileLength, &window);
     RockGen.init(Area, seed);
     _seed = seed;
@@ -209,9 +209,8 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             EventBus::getInstance().fireEvent(Islands);
             
 
-
-            generateNextSprite();
             RockGen.generateNextTile(NPVs[0][0].pos.x);
+            generateNextSprite();
             return;
         }
 
@@ -408,8 +407,8 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
     int t_seed = _seed + pos.x + pos.y;
 
     static std::mt19937 gen(t_seed);
-    static std::uniform_int_distribution<> spawnChance(1, 20);
-    if (spawnChance(gen) != 20)
+    static std::uniform_int_distribution<> spawnChance(1, 15);
+    if (spawnChance(gen) != 1)
     {
         return;
     }

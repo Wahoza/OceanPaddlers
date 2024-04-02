@@ -12,12 +12,13 @@ void RockGenerator::init(sf::Vector2i Area, int seed)
         return;
     }
     m_Sprite.setTexture(m_texture);
-    std::vector<Obstacle> SubVec;
     for (int x = Area.x; x >= 0; x--)
     {
+        std::vector<Obstacle> SubVec;
         Rocks.push_back(SubVec); 
     }
     _seed = seed;
+    _Area = Area;
 }
 
 void RockGenerator::generateNextTile(float xpos)
@@ -54,12 +55,19 @@ void RockGenerator::generateNextTile(float xpos)
         if (random_number == 1)
         {
             Obstacle t_obstacle;
-            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3), float(i * TextureSize + 3), float(TextureSize - 3), float(TextureSize - 3)},
+            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3), float(i * TextureSize + 3), float(TextureSize - 6), float(TextureSize - 6)},
                                                               "Hard");
             t_obstacle.pos = {xpos,float(i * TextureSize)};
             t_obstacle.LeftTop  = {0, 0};
 
-            if (random_number % 10 == 0)
+
+            
+            std::mt19937                       gen(_seed + xpos + i + 1);
+            std::uniform_int_distribution<int> dist(0, chance);
+
+            int random_number = dist(gen);
+
+            if (random_number % 4 == 0)
             {
                 t_obstacle.LeftTop = {TextureSize, 0};
             }

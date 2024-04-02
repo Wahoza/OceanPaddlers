@@ -9,6 +9,7 @@ public:
     void createFish(sf::Vector2f pos);
 
 private:
+    int               waitVal = 30;
     int _tileSize;
     int CollectibleCtr = 0;
     int FishCtr = 0;

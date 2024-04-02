@@ -52,6 +52,10 @@ void ScoreConverter::CreateScoreLabels(std::string input, int displayedAmount)
 
         try
         {
+            if (datastring.size() <3)
+            {
+                continue;
+            }
             int intValue = std::stoi(datastring[1]);
             //create new objects here!!
 
