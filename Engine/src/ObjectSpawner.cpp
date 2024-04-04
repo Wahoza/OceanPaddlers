@@ -43,6 +43,7 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     {
         return;
     }
+
     auto gameObject = GameObject::create("Collectible" + std::to_string(CollectibleCtr));
     gameObject->setPosition(pos + Vector2f{8, 8});
 

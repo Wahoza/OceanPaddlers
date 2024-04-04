@@ -57,8 +57,8 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     m_waterPrinter.setOrigin(2, 0);
 
     TileLength  = _TextureRect.width;
-    waitingDist = Area.x * TileLength;
-    
+    waitingDist = Area.x * TileLength + 4 * TileLength;
+    waiting     = true;
         for (int x = Area.x; x >= 0; x--)
         {
             std::vector<NoisePositionValue> SubVector;
@@ -90,6 +90,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
+
     WallColliderTop->m_shape.left = windowRect.left;
     WallColliderBottom->m_shape.left = windowRect.left;
 
@@ -132,6 +133,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
                     if (PathVals[i] <= -2)
                     {
+                        pathy = SubVector[i].pos.y;
                         ObjSpawner.createPotentialCollectible(SubVector[i].pos);
                     }
                 }
@@ -231,7 +233,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             EventBus::getInstance().fireEvent(Islands);
             
 
-            RockGen.generateNextTile(NPVs[0][0].pos.x);
+            RockGen.generateNextTile(NPVs[0][0].pos.x, pathy);
             generateNextSprite();
             return;
         }

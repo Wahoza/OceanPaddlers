@@ -76,7 +76,7 @@ private:
     float                                        threshold = 0.2;
     float                                        scaleVal = 30;
     int                                          TileLength = 0;
-
+    int                                          pathy;
     PathGenerator PathGen;
     ObjectSpawner ObjSpawner;
     RockGenerator RockGen;

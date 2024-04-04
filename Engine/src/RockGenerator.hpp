@@ -7,7 +7,7 @@ class RockGenerator
 {
 public:
     void init(sf::Vector2i Area, int seed);
-    void generateNextTile(float xpos);
+    void generateNextTile(float xpos, int pathy);
     void draw(sf::RenderWindow& window);
     void shutdown();
 

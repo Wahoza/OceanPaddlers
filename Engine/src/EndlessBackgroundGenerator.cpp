@@ -102,14 +102,13 @@ void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, con
 
     Organize();
     tileSize = sprites[0]->getTextureRect().getSize().x;
-    //m_DetailGen.init(sprites[0].get()->getTextureRect(), {int(OrganizedSprites.size()), int(OrganizedSprites[0].size())});
 }
 void EndlessBackgroundGenerator::Organize()
 {
     int height = 17;
-    int width  = sprites.size() / height;
+    int width  = (sprites.size()) / height;
 
-    for (int g = width; g >0; g--)
+    for (int g = width; g > 0; g--)
     {
         std::vector<sf::Sprite*> subVector;
 
@@ -126,7 +125,7 @@ void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindo
 {
     m_lastWindowRect = lastWindowRect;
     if (OrganizedSprites[OrganizedSprites.size() - 1][0]->getPosition().x <
-        m_lastWindowRect.left - OrganizedSprites[OrganizedSprites.size() - 1][0]->getTextureRect().width)
+        m_lastWindowRect.left - OrganizedSprites[OrganizedSprites.size() - 1][0]->getTextureRect().width * 2) //x2 for buffer tile
     {
 
         std::vector<sf::Sprite*> poppedElement = OrganizedSprites.back();
@@ -150,6 +149,7 @@ void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindo
 }
 void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
 {
+    window.clear({71, 163, 71, 255});
     for (auto& TileY : OrganizedSprites)
     {
         for (auto& Tile : TileY)

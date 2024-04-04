@@ -21,7 +21,7 @@ void RockGenerator::init(sf::Vector2i Area, int seed)
     _Area = Area;
 }
 
-void RockGenerator::generateNextTile(float xpos)
+void RockGenerator::generateNextTile(float xpos, int pathy)
 {
     if (!Rocks.empty())
     {
@@ -47,11 +47,16 @@ void RockGenerator::generateNextTile(float xpos)
     std::vector<Obstacle> Subvector;
     for (int i = wallsize; i < _Area.y - wallsize; i++)
     {
+        if (i * TextureSize == pathy)
+        {
+            continue;
+        }
+
         std::mt19937 gen(_seed + xpos + i);  
         std::uniform_int_distribution<int> dist(0, chance);
 
         int                                random_number = dist(gen);
-
+        
         if (random_number == 1)
         {
             Obstacle t_obstacle;
