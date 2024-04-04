@@ -25,15 +25,24 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
 
     if (!m_texture.loadFromFile("../assets/SegmentedTiles/tiles.png"))
     {
-        sf::err() << "Could not load icon\n";
+        sf::err() << "Could not load texture\n";
         return;
     }
     m_printer.setTexture(m_texture);
     m_printer.setTextureRect(_TextureRect);
 
+    
+    if (!m_dirttexture.loadFromFile("../assets/SegmentedTiles/tilesDirt.png"))
+    {
+        sf::err() << "Could not load texture\n";
+        return;
+    }
+    m_dirtprinter.setTexture(m_dirttexture);
+    m_dirtprinter.setTextureRect(_TextureRect);
+
     if (!m_dockTexture.loadFromFile("../assets/SegmentedTiles/dockTiles2.png"))
     {
-        sf::err() << "Could not load icon\n";
+        sf::err() << "Could not load texture\n";
         return;
     }
     m_dockPrinter.setTexture(m_dockTexture);
@@ -88,8 +97,9 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
     if (NPVs[NPVs.size() - 1][0].pos.x < windowRect.left - TileLength)
     {
+        GenerateDirtArea(NPVs[0][0].pos.x);
         NPVs.pop_back();
-
+        
         std::vector<NoisePositionValue> SubVector = NPVs[1];
         std::vector<float>              PathVals  = PathGen.GetPath(SubVector[0].pos.x / TileLength);
 
@@ -105,6 +115,15 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             {
                 SubVector[i].noise = -1;
             }
+            if (!DirtArea.contains(SubVector[i].pos) && DirtAreaBarrier.contains(SubVector[i].pos))
+            {
+                SubVector[i].noise = -1;
+            }
+            else if (DirtArea.contains(SubVector[i].pos))
+            {
+                SubVector[i].noise += 0.3;
+            }
+
             if (i < PathVals.size())
             {
                 SubVector[i].noise += PathVals[i];
@@ -192,17 +211,21 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
             Colliders.insert(Colliders.begin(), SubColliderVector);
 
-            std::vector<bool> hasIsland;
+            std::vector<int> hasIsland;
 
             for (auto& NPV : NPVs[1])
             {
                 if (NPV.noise > threshold)// && (NPV.pos.y / 16 > 3 && NPV.pos.y / 16 < 13))
                 {
-                    hasIsland.push_back(true);
+                    int value = 0;
+                    if (DirtArea.contains(NPV.pos)) {
+                        value = 1;
+                    }
+                    hasIsland.push_back(value);
                 }
                 else
                 {
-                    hasIsland.push_back(false);
+                    hasIsland.push_back(-1);
                 }
             }
             IEvent::Ptr Islands = std::make_shared<IslandTileGenEvent>(hasIsland);
@@ -247,11 +270,23 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
             
             if (obj.print)
             {
-                m_printer.setPosition(obj.pos);
-                m_printer.setTextureRect(
-                    {obj.LeftTop.x, obj.LeftTop.y, m_printer.getTextureRect().width, m_printer.getTextureRect().height});
-                window.draw(m_printer);
+                if (obj.isDirt)
+                {
+                    m_dirtprinter.setPosition(obj.pos);
+                    m_dirtprinter.setTextureRect(
+                        {obj.LeftTop.x, obj.LeftTop.y, m_dirtprinter.getTextureRect().width, m_dirtprinter.getTextureRect().height});
+                    window.draw(m_dirtprinter);
+                }
+                else
+                {
+
+                    m_printer.setPosition(obj.pos);
+                    m_printer.setTextureRect(
+                        {obj.LeftTop.x, obj.LeftTop.y, m_printer.getTextureRect().width, m_printer.getTextureRect().height});
+                    window.draw(m_printer);
+                }
             }
+
         }
     }
     
@@ -270,6 +305,8 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
             DebugDraw::getInstance().drawRectangle(Tile.pos, {16, 16}, col, col);
         }
     }
+    sf::Color col = {200, 200, 200, 30};
+    DebugDraw::getInstance().drawRectangle({DirtArea.left, DirtArea.top}, {DirtArea.width, DirtArea.height}, col, col);
 }
 void ObstacleGenerator::drawWater(sf::RenderWindow& window)
 {
@@ -398,7 +435,17 @@ void ObstacleGenerator::generateNextSprite()
         ToModifyColumn[iterator].print = true;
 
         ToModifyColumn[iterator].LeftTop = directionVec;
-        
+        auto& currentPos                    = ToModifyColumn[iterator].pos;
+
+
+        if (DirtArea.contains(ToModifyColumn[iterator].pos))
+        {
+            ToModifyColumn[iterator].isDirt = true;
+        }
+        else
+        {
+            ToModifyColumn[iterator].isDirt = false;
+        }
     }
 }
 
@@ -466,6 +513,42 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
     StaticColliderComponent* component = new StaticColliderComponent({Tile.pos.x + 3, Tile.pos.y + 3, 10, 10}, "hard");
     DockColliders.insert(DockColliders.begin(), component);
     DockTileVector.insert(DockTileVector.begin(), Tile);
+}
+
+void ObstacleGenerator::GenerateDirtArea(float xpos)
+{
+    if (DirtAreaBarrier.left + DirtAreaBarrier.width +16 < xpos)
+    {
+        //generate new DirtArea aka place fór islands with dirt
+        int t_seed = _seed + xpos;
+
+        static std::mt19937                    gen(t_seed);
+        static std::uniform_int_distribution<> spawnChance(0, dirtSpawnChance);
+        if (spawnChance(gen) == 1)
+        {
+            DirtAreaBarrier.left = xpos + 16;
+
+            static std::uniform_int_distribution<> areaTop(3, 9);
+            DirtAreaBarrier.top = areaTop(gen) * 16;
+
+            static std::uniform_int_distribution<> areaWidth(min_dirtArea.width, max_dirtArea.width);
+            DirtAreaBarrier.width = areaWidth(gen) * 16;
+
+            
+            static std::uniform_int_distribution<> areaHeight(min_dirtArea.height, max_dirtArea.height);
+            DirtAreaBarrier.height = areaHeight(gen) * 16;
+
+            DirtArea = DirtAreaBarrier;
+            DirtArea.left += 16;
+            DirtArea.top += 16;
+            DirtArea.width -= 16;
+            DirtArea.height -= 16;
+
+            //Adjustment to include the next tile above and below
+            DirtAreaBarrier.height += 1;
+            DirtAreaBarrier.width += 1;
+        }
+    }
 }
 
 void ObstacleGenerator::shutdown()

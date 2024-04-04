@@ -116,14 +116,28 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
             sf::Sprite t_sprite;
             if (NPV.pos.y > 16 * 3 && NPV.pos.y < 16 * 13)
             {
-                if (int(NPV.localNoise * 100) % 5 == 0) {
-                    t_sprite = *m_SpriteMapVillage[NoiseToInt(m_SpriteMapVillage.size(), float(NPV.localNoise))];
-                }else{
-                    t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
+                if (NPV.noise == 0)
+                {
+                    if (int(NPV.localNoise * 100) % 5 == 0)
+                    {
+                        t_sprite = *m_SpriteMapVillage[NoiseToInt(m_SpriteMapVillage.size(), float(NPV.localNoise))];
+                    }
+                    else
+                    {
+                        t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
+                    }
+
+                    t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -6});
+
+                    window.draw(t_sprite);
                 }
-                t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -6});
-                
-                window.draw(t_sprite);
+                else
+                {
+                    t_sprite = *m_SpriteMapMines[NoiseToInt(m_SpriteMapMines.size(), float(NPV.localNoise))];
+                    t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -7});
+
+                    window.draw(t_sprite);
+                }
 
                 continue;
             }
@@ -191,7 +205,16 @@ void BackgroundDetailGen::IslandGenListener(IEvent::Ptr event)
             {
                 if (!m_NoisePosVals[0][i].draw)
                 {
-                    m_NoisePosVals[0][i].draw = Islands[i];
+                    if (Islands[i] > -1)
+                    {
+                        m_NoisePosVals[0][i].draw = true;
+                        m_NoisePosVals[0][i].noise = Islands[i];
+
+                    }
+                    else
+                    {
+                        m_NoisePosVals[0][i].draw = false;
+                    }
                     //m_NoisePosVals[0][i].pos -= {0, 1};
                 }
             }

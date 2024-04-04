@@ -26,6 +26,7 @@ public:
         float    noise   = 0;
         Vector2i LeftTop = {0, 0};
         Vector2f pos     = {0, 0};  
+        bool     isDirt  = false;
     };
     struct DockTiles
     {
@@ -42,8 +43,10 @@ public:
 
 private:
 
-    void generateNextSprite();
+    void          generateNextSprite();
     void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
+    void          GenerateDirtArea(float xpos);
+
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -54,6 +57,10 @@ private:
 
     Sprite                                            m_printer;
     Texture                                           m_texture;
+
+    
+    Sprite  m_dirtprinter;
+    Texture m_dirttexture;
 
     Sprite                                m_waterPrinter;
     Texture                               m_waterTexture;
@@ -78,5 +85,11 @@ private:
 
     StaticColliderComponent* WallColliderTop;
     StaticColliderComponent* WallColliderBottom;
+
+    int       dirtSpawnChance = 20;
+    FloatRect DirtAreaBarrier = {0, 0, 0, 0};
+    FloatRect DirtArea = {0, 0, 0, 0};
+    FloatRect min_dirtArea = {0, 0,10, 10};
+    FloatRect max_dirtArea = {0, 0, 20, 20};
 };
 }

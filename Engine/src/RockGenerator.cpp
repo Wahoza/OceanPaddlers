@@ -55,7 +55,7 @@ void RockGenerator::generateNextTile(float xpos)
         if (random_number == 1)
         {
             Obstacle t_obstacle;
-            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3), float(i * TextureSize + 3), float(TextureSize - 6), float(TextureSize - 6)},
+            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3), float(i * TextureSize + 5), float(TextureSize - 6), float(TextureSize - 10)},
                                                               "Hard");
             t_obstacle.pos = {xpos,float(i * TextureSize)};
             t_obstacle.LeftTop  = {0, 0};

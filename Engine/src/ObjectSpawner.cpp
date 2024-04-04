@@ -58,7 +58,7 @@ void ObjectSpawner::createFish(sf::Vector2f pos)
     gameObject->addComponent<AIController>(*gameObject);
 
     //FloatRect shape, Vector2f offset, string forces, float mass, float Loss
-    gameObject->addComponent<RigidBodyComponent>(*gameObject, FloatRect{0, 0, 16, 16}, Vector2f(0, 0), "", 0.1, 1);
+    gameObject->addComponent<RigidBodyComponent>(*gameObject, FloatRect{0, 0, 16, 16}, Vector2f(0, 0), "", 3.0, 0.2);
 
     const auto renderComp = gameObject->addComponent<SpriteRenderComponent>(*gameObject,
                                                                             *m_window,

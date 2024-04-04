@@ -148,7 +148,7 @@ public:
         return Type;
     }
 };
-class IslandTileGenEvent final : public BasicDataEvent <std::vector<bool>>
+class IslandTileGenEvent final : public BasicDataEvent <std::vector<int>>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

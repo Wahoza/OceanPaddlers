@@ -215,10 +215,13 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
                 if (abs(normal.x) > abs(normal.y))
                 {
                     body1->m_velocity -= sf::Vector2f{body1->m_velocity.x, 0.f};
+                    body1->getGameObject().move(normal.x * penetration, 0);
                 }
                 else
                 {
                     body1->m_velocity -= sf::Vector2f{0.f, body1->m_velocity.y};
+                    body1->getGameObject().move(0, normal.y * penetration);
+
                 }
             }
 
