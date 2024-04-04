@@ -4,12 +4,16 @@ namespace mmt_gd
 class ObjectSpawner
 {
 public:
-    void init(int TileSize, sf::RenderWindow* window);
-    void createCollectible(sf::Vector2f pos);
+    void init(int TileSize, sf::RenderWindow* window, int seed);
+    void createPotentialCollectible(sf::Vector2f pos);
     void createFish(sf::Vector2f pos);
 
 private:
     int               waitVal = 30;
+    int               CallsSinceLastSpawn = 0;
+    int               minCalls            = 20;
+    int               maxCalls            = 50;
+    int               _seed = 0;
     int _tileSize;
     int CollectibleCtr = 0;
     int FishCtr = 0;

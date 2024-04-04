@@ -12,22 +12,39 @@
 
 #include "AIController.hpp"
 #include "RigidBodyComponent.hpp"
+
+#include <random>
+
 namespace mmt_gd
 {
-void mmt_gd::ObjectSpawner::init(int TileSize, sf::RenderWindow* window)
+void mmt_gd::ObjectSpawner::init(int TileSize, sf::RenderWindow* window, int seed)
 {
     m_window    = window;
     _tileSize = TileSize;
+    _seed       = seed;
 }
-void ObjectSpawner::createCollectible(sf::Vector2f pos)
+void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
 {
     if (pos.x / 16 < waitVal)
     {
         return;
     }
 
+    CallsSinceLastSpawn++;
+
+    if (CallsSinceLastSpawn < minCalls)
+    {
+        return;
+    }
+
+    static std::mt19937                    genCollectible(_seed + pos.x + pos.y);
+    static std::uniform_int_distribution<> collectibleSpread(0, 30);
+    if (!(collectibleSpread(genCollectible) == 1 || CallsSinceLastSpawn >= maxCalls))
+    {
+        return;
+    }
     auto gameObject = GameObject::create("Collectible" + std::to_string(CollectibleCtr));
-    gameObject->setPosition(pos + Vector2f{16, 16});
+    gameObject->setPosition(pos + Vector2f{8, 8});
 
     gameObject->addComponent<CollectibleComponent>(*gameObject,
                                                    "pp",
@@ -44,6 +61,7 @@ void ObjectSpawner::createCollectible(sf::Vector2f pos)
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(gameObject));
 
     CollectibleCtr++;
+    CallsSinceLastSpawn = 0;
 }
 void ObjectSpawner::createFish(sf::Vector2f pos)
 {

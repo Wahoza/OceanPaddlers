@@ -10,7 +10,7 @@ void PathGenerator::init(int seed, sf::Vector2f startPos, sf::Vector2i area)
     VecStart = startPos;
     _area    = area;
     currentVec = {1, 0};
-    m_length = 3;
+    m_length = 0;
 }
 std::vector<float> PathGenerator::GetPath(int xpos)
 {
@@ -24,7 +24,7 @@ std::vector<float> PathGenerator::GetPath(int xpos)
         }
         else
         {
-            tempVec.push_back(-2);
+            tempVec.push_back(maxVal * (1-abs((float)(i-x))/(float)pathR));
         }
     }
     return tempVec;

@@ -17,7 +17,7 @@ namespace mmt_gd
 void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window)
 {
     PathGen.init(seed, {0,9}, Area);
-    ObjSpawner.init(TileLength, &window);
+    ObjSpawner.init(TileLength, &window, seed);
     RockGen.init(Area, seed);
     _seed = seed;
     noise.SetSeed(seed);
@@ -126,14 +126,13 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 
             if (i < PathVals.size())
             {
-                SubVector[i].noise += PathVals[i];
                 if (PathVals[i] < 0)
                 {
-                    static std::mt19937 genCollectible(_seed + windowRect.left);
-                    static std::uniform_int_distribution<> collectibleSpread(0, 70);
-                    if (collectibleSpread(genCollectible) == 1)
+                    SubVector[i].noise = PathVals[i];
+
+                    if (PathVals[i] <= -2)
                     {
-                        ObjSpawner.createCollectible(SubVector[i].pos);
+                        ObjSpawner.createPotentialCollectible(SubVector[i].pos);
                     }
                 }
             }
@@ -290,23 +289,31 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
         }
     }
     
-    int iterationCounter = 0;
-    for (auto& NPV : NPVs)
-    {
-        iterationCounter++;
-        for (auto& Tile : NPV)
-        {
-            sf::Color col = {200, 20, 20, 30};
+  if(DebugDraw::getInstance().is_enabled()){
 
-            if (Tile.noise > threshold)
+        for (auto& NPV : NPVs)
+        {
+            for (auto& Tile : NPV)
             {
-                col = {20, 200, 20, 30};
+                sf::Color col = {200, 20, 20, 30};
+
+                if (Tile.noise > threshold)
+                {
+                    col = {20, 200, 20, 30};
+                }
+
+                if (Tile.noise == -3)
+                {
+                    col = {100, 100, 100, 30};
+                }
+                DebugDraw::getInstance().drawRectangle(Tile.pos, {16, 16}, col, col);
+
             }
-            DebugDraw::getInstance().drawRectangle(Tile.pos, {16, 16}, col, col);
         }
+        
+        sf::Color col = {200, 200, 200, 30};
+        DebugDraw::getInstance().drawRectangle({DirtArea.left, DirtArea.top}, {DirtArea.width, DirtArea.height}, col, col);
     }
-    sf::Color col = {200, 200, 200, 30};
-    DebugDraw::getInstance().drawRectangle({DirtArea.left, DirtArea.top}, {DirtArea.width, DirtArea.height}, col, col);
 }
 void ObstacleGenerator::drawWater(sf::RenderWindow& window)
 {

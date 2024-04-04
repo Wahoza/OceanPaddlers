@@ -12,6 +12,7 @@ public:
 private:
     int m_seed = 0;
     int          pathR      = 3;
+    float        maxVal      = -3;
     sf::Vector2f currentVec = {0, 0};
     sf::Vector2f VecStart   = {0, 0};
     sf::Vector2i _area       = {0,0};

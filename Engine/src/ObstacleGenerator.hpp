@@ -86,7 +86,7 @@ private:
     StaticColliderComponent* WallColliderTop;
     StaticColliderComponent* WallColliderBottom;
 
-    int       dirtSpawnChance = 20;
+    int       dirtSpawnChance = 60;
     FloatRect DirtAreaBarrier = {0, 0, 0, 0};
     FloatRect DirtArea = {0, 0, 0, 0};
     FloatRect min_dirtArea = {0, 0,10, 10};
