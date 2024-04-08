@@ -35,7 +35,10 @@ void RockGenerator::generateNextRock(float xpos, int pathy)
                     if (item.collider != nullptr)
                     {
                         item.collider->removeSelf();
-                        delete item.collider;
+                        if (item.collider != nullptr)
+                        {
+                            delete item.collider;
+                        }
                     }
                 }
                 Rocks.pop_back();
@@ -56,11 +59,11 @@ void RockGenerator::generateNextRock(float xpos, int pathy)
         }
 
         std::mt19937                       gen(_seed + xpos + i);
-        std::uniform_int_distribution<int> dist(0, chance);
+        std::uniform_int_distribution<int> dist(0, chance.y);
 
         int random_number = dist(gen);
 
-        if (random_number == 1)
+        if (random_number <= chance.x)
         {
             Obstacle t_obstacle;
             t_obstacle.collider = new StaticColliderComponent({float(xpos + 3),
@@ -71,13 +74,7 @@ void RockGenerator::generateNextRock(float xpos, int pathy)
             t_obstacle.pos      = {xpos, float(i * TextureSize)};
             t_obstacle.LeftTop  = {0, 0};
 
-
-            std::mt19937                       gen(_seed + xpos + i + 1);
-            std::uniform_int_distribution<int> dist(0, chance);
-
-            int random_number = dist(gen);
-
-            if (random_number % 15 == 0)
+            if (random_number % chance.x == 1)
             {
                 t_obstacle.LeftTop = {TextureSize, 0};
             }

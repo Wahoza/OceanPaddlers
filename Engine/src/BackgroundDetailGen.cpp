@@ -127,8 +127,14 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
                         t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
                     }
 
-                    t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -6});
-
+                    if (NPV.pos.y + 1 > 16 * 13)
+                    {
+                        t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -3});
+                    }
+                    else
+                    {
+                        t_sprite.setPosition(NPV.pos + sf::Vector2f{0, -6});
+                    }
                     window.draw(t_sprite);
                 }
                 else

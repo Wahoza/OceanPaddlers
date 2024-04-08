@@ -18,3 +18,8 @@ ss,60,1,192
 Cool guy,89,4,308
 Schmingu,45,1,147
 minion,151,8,534
+peter,41,1,133
+mara,51,1,165
+mara,46,1,150
+www,88,3,294
+sugondes,235,10,807

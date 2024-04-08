@@ -30,7 +30,7 @@ private:
 
     Vector2i _Area;
     int      wallsize = 4;
-    int      chance   = 30;
+    Vector2i chance   = {10, 500};
     int      _seed;
 
     struct Current
