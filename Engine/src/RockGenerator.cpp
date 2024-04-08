@@ -21,7 +21,7 @@ void RockGenerator::init(sf::Vector2i Area, int seed)
     _Area = Area;
 }
 
-void RockGenerator::generateNextTile(float xpos, int pathy)
+void RockGenerator::generateNextRock(float xpos, int pathy)
 {
     {
     if (!Rocks.empty())
@@ -86,73 +86,72 @@ void RockGenerator::generateNextTile(float xpos, int pathy)
     }
     Rocks.insert(Rocks.begin(), Subvector);
     }
-    {
-    //generate a current based on an area
+}
+
+void RockGenerator::generateNextCurrent(float xpos, int pathy)
+{
     if (xpos > currentArea.top + currentArea.width)
     {
 
-        std::mt19937                       genChance(_seed + xpos);
-        std::uniform_int_distribution<int> distChance(0, currentChance);
-        int                                random_number = distChance(genChance);
+    std::mt19937                       genChance(_seed + xpos);
+    std::uniform_int_distribution<int> distChance(0, currentChance);
+    int                                random_number = distChance(genChance);
 
-        if (random_number == 1)
-        {
-            std::mt19937                       genWidth(_seed + xpos + pathy + 1);
-            std::uniform_int_distribution<int> distWidth(minCurrentSize.x, maxCurrentSize.x);
-            std::mt19937                       genHeight(_seed + xpos + pathy + 2);
-            std::uniform_int_distribution<int> distHeight(minCurrentSize.y, maxCurrentSize.y);
+    if (random_number == 1)
+    {
+        std::mt19937                       genSize(_seed + xpos + pathy + 1);
+        std::uniform_int_distribution<int> distSize(1,2000);
+        int                                SizeVal = distSize(genSize); 
+        currentArea.width = SizeVal % maxCurrentSize.x * 16;
+        currentArea.height = SizeVal % maxCurrentSize.y * 16;
 
-            currentArea.width = distWidth(genWidth) * 16;
-            currentArea.height = distHeight(genHeight) * 16;
+        float Offset = -currentArea.height / 2;
 
-            float Offset = -currentArea.height / 2;
+        std::mt19937                  genOffset(_seed + xpos + 1);
+        std::uniform_int_distribution offsetdist(-maxOffset, maxOffset);
 
-            std::mt19937 genOffset(_seed + xpos + 1);
-            std::uniform_int_distribution offsetdist(-maxOffset, maxOffset);
-
-            currentArea.left = xpos;
-            currentArea.top  = pathy + Offset + offsetdist(genOffset);
-        }
+        currentArea.left = xpos;
+        currentArea.top  = pathy + Offset + offsetdist(genOffset);
+    }
     }
 
     std::vector<Current> SubVector;
     for (int i = wallsize; i <= _Area.y - wallsize; i++)
     {
-        if (currentArea.contains({(int)xpos, i * TextureSize}))
-        {
-            Current t_current;
-            t_current.LeftTop = {TextureSize * 2,0};
-            t_current.pos     = {xpos, (float)i * TextureSize};
-            t_current.trigger = new TriggerComponent({t_current.pos.x, t_current.pos.y, (float)TextureSize/ 2, (float)TextureSize},
-                                                     "Player0",
-                                                     "Current");
-            SubVector.push_back(t_current);
-        }
+    if (currentArea.contains({(int)xpos, i * TextureSize}))
+    {
+        Current t_current;
+        t_current.LeftTop = {TextureSize * 2, 0};
+        t_current.pos     = {xpos, (float)i * TextureSize};
+        t_current.trigger = new TriggerComponent({t_current.pos.x, t_current.pos.y, (float)TextureSize / 2, (float)TextureSize},
+                                                 "Player0",
+                                                 "Current");
+        SubVector.push_back(t_current);
+    }
     }
     Currents.insert(Currents.begin(), SubVector);
 
     if (!Currents.empty())
+    {
+    if (!Currents.back().empty())
+    {
+        if (Currents.back()[0].pos.x < xpos - _Area.x * TextureSize)
         {
-        if (!Currents.back().empty())
-        {
-            if (Currents.back()[0].pos.x < xpos - _Area.x * TextureSize)
+            for (auto& item : Currents.back())
             {
-                for (auto& item : Currents.back())
+                if (item.trigger != nullptr)
                 {
-                    if (item.trigger != nullptr)
-                    {
-                        item.trigger->removeSelf();
-                        delete item.trigger;
-                    }
+                    item.trigger->removeSelf();
+                    delete item.trigger;
                 }
-                Currents.pop_back();
             }
-        }
-        else
-        {
             Currents.pop_back();
         }
-        }
+    }
+    else
+    {
+        Currents.pop_back();
+    }
     }
 }
 

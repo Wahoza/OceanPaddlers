@@ -114,7 +114,7 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
 
             //note: these are values tuned by testing
             sf::Sprite t_sprite;
-            if (NPV.pos.y > 16 * 3 && NPV.pos.y < 16 * 13)
+            if (NPV.pos.y > 16 * 2 && NPV.pos.y < 16 * 14)
             {
                 if (NPV.noise == 0)
                 {
@@ -195,7 +195,7 @@ void BackgroundDetailGen::IslandGenListener(IEvent::Ptr event)
     {
         auto& Islands = IslandEvent.get()->getData();
 
-        for (int i = 4; i < m_NoisePosVals[1].size()-4; i++)
+        for (int i = 3; i < m_NoisePosVals[1].size()-3; i++)
         {
             if (!(i < Islands.size() || i>0))
             {

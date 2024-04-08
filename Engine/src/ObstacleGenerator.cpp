@@ -231,7 +231,11 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                 {
                     int value = 0;
                     if (DirtArea.contains(NPV.pos)) {
-                        value = 1;
+                        value = -1;
+                        if (NPV.pos.y / 16 > 3 && NPV.pos.y / 16 < 13)
+                        {
+                            value = 1;
+                        }
                     }
                     hasIsland.push_back(value);
                 }
@@ -244,7 +248,8 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             EventBus::getInstance().fireEvent(Islands);
             
 
-            RockGen.generateNextTile(NPVs[0][0].pos.x, pathy);
+            RockGen.generateNextRock(NPVs[0][0].pos.x, pathy);
+            RockGen.generateNextCurrent(NPVs[0][0].pos.x, pathy);
             generateNextSprite();
             return;
         }
@@ -337,8 +342,11 @@ void ObstacleGenerator::drawWater(sf::RenderWindow& window)
 
             if (obj.print)
             {
-                m_waterPrinter.setPosition(obj.pos);
-                window.draw(m_waterPrinter);
+                if (obj.pos.y/ 16 > 3 && obj.pos.y/ 16 <13)
+                {
+                    m_waterPrinter.setPosition(obj.pos);
+                    window.draw(m_waterPrinter);
+                }
             }
         }
     }
@@ -357,9 +365,9 @@ void ObstacleGenerator::generateNextSprite()
 
     //note: Check in + pattern
     //3 comes from tile barriers
-    for (int iterator = 3; iterator <= ToModifyColumn.size()-3; iterator++)
+    for (int iterator = 2; iterator <= ToModifyColumn.size()-2; iterator++)
     {
-        if (!(NPV1[iterator].noise > threshold) || !(NPV1[iterator].pos.y / 16 > 3 && NPV1[iterator].pos.y / 16 < 13) ||
+        if (!(NPV1[iterator].noise > threshold) || !(NPV1[iterator].pos.y / 16 > 2 && NPV1[iterator].pos.y / 16 < 14) ||
             waiting)
         {
             continue;
@@ -371,23 +379,48 @@ void ObstacleGenerator::generateNextSprite()
         int neighbourCount                 = 0;
         bool     hasUpVec                  = false; //note: there is one use for this to find a difference between two 0,0 vecs
         
-        if (NPV1[iterator + 1].noise > threshold && (NPV1[iterator + 1].pos.y/16 < 13))
+        if (!DirtArea.contains(ToModifyColumn[iterator].pos))
         {
-            directionVec += {0, -1};
-            neighbourCount++;
-            hasUpVec = true;
+            if ((NPV1[iterator + 1].noise > threshold && (NPV1[iterator + 1].pos.y / 16 < 14)) ||
+                (NPV1[iterator + 1].pos.y / 16 >= 14))
+            {
+                directionVec += {0, -1};
+                neighbourCount++;
+                hasUpVec = true;
+            }
+            if ((NPV1[iterator - 1].noise > threshold && (NPV1[iterator - 1].pos.y / 16 > 2)) ||
+                (NPV1[iterator - 1].pos.y / 16 <= 2))
+            {
+                directionVec += {0, 1};
+                neighbourCount++;
+                hasUpVec = true;
+            }
+        }
+        else
+        {
+            if (!(ToModifyColumn[iterator].pos.y / 16 > 3 && ToModifyColumn[iterator].pos.y / 16 < 13))
+            {
+                continue;
+            }
+            if ((NPV1[iterator + 1].noise > threshold && (NPV1[iterator + 1].pos.y / 16 < 13)))
+            {
+                directionVec += {0, -1};
+                neighbourCount++;
+                hasUpVec = true;
+            }
+            if ((NPV1[iterator - 1].noise > threshold && (NPV1[iterator - 1].pos.y / 16 > 3)))
+            {
+                directionVec += {0, 1};
+                neighbourCount++;
+                hasUpVec = true;
+            }
         }
         if (NPV0[iterator].noise > threshold)
         {
             directionVec += {-1, 0};
             neighbourCount++;
         }
-        if (NPV1[iterator - 1].noise > threshold && (NPV1[iterator - 1].pos.y/16 > 3))
-        {
-            directionVec += {0, 1};
-            neighbourCount++;
-            hasUpVec = true;
-        }
+        
         if (NPV2[iterator].noise > threshold)
         {
             directionVec += {1, 0};
@@ -530,7 +563,7 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
             return;
         }
     }
-    StaticColliderComponent* component = new StaticColliderComponent({Tile.pos.x + 3, Tile.pos.y + 3, 10, 10}, "hard");
+    StaticColliderComponent* component = new StaticColliderComponent({Tile.pos.x + 4, Tile.pos.y + 4, 8, 8}, "hard");
     DockColliders.insert(DockColliders.begin(), component);
     DockTileVector.insert(DockTileVector.begin(), Tile);
 }

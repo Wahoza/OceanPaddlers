@@ -10,7 +10,8 @@ class RockGenerator
 {
 public:
     void init(sf::Vector2i Area, int seed);
-    void generateNextTile(float xpos, int pathy);
+    void generateNextRock(float xpos, int pathy);
+    void generateNextCurrent(float xpos, int pathy);
     void draw(sf::RenderWindow& window);
     void shutdown();
 
@@ -41,7 +42,6 @@ private:
     std::vector<std::vector<Current>> Currents;
     IntRect                         currentArea    = {0, 0, 0, 0};
     int       currentChance = 30;
-    Vector2i  minCurrentSize = {2, 2};
     Vector2i  maxCurrentSize = {3, 4};
     int maxOffset      = 3;
 };
