@@ -88,7 +88,7 @@ public:
 };
 
 //GameOverEvent: Distance Traveled, Eggs Collected, reached end
-class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool>>
+class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool, int>>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

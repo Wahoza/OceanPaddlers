@@ -124,7 +124,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             {
                 SubVector[i].noise += 0.3;
             }
-
+            
             if (i < PathVals.size())
             {
                 if (PathVals[i] < 0)
@@ -138,7 +138,18 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                     }
                 }
             }
+            if (i > 0)
+            {
+                if (SubVector[i - 1].noise > threshold)
+                {
+                    SubVector[i].noise += 0.1;
+                }
 
+                if (NPVs[1][i].noise > threshold)
+                {
+                    SubVector[i].noise += 0.1;
+                }
+            }
             if (SubVector[i].noise < threshold && (i > 3 && i < 13))
             {
                 static std::mt19937                    genCollectible(_seed + windowRect.left + SubVector[i].pos.y);

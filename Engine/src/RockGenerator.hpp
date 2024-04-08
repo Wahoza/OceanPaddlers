@@ -1,5 +1,8 @@
+#pragma once
 #include "stdafx.h"
 #include "StaticColliderComponent.hpp"
+#include "TriggerComponent.hpp"
+
 #pragma once
 namespace mmt_gd
 {
@@ -26,7 +29,20 @@ private:
 
     Vector2i _Area;
     int      wallsize = 4;
-    int      chance   = 200;
+    int      chance   = 30;
     int      _seed;
+
+    struct Current
+    {
+        TriggerComponent* trigger;
+        sf::Vector2f      pos;
+        sf::Vector2i      LeftTop;
+    };
+    std::vector<std::vector<Current>> Currents;
+    IntRect                         currentArea    = {0, 0, 0, 0};
+    int       currentChance = 30;
+    Vector2i  minCurrentSize = {2, 2};
+    Vector2i  maxCurrentSize = {3, 4};
+    int maxOffset      = 3;
 };
 }

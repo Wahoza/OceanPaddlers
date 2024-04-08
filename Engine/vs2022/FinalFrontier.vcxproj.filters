@@ -237,6 +237,9 @@
     <ClInclude Include="..\src\RockGenerator.hpp">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\HighScoresState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -373,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="..\src\RockGenerator.cpp">
       <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\HighScoresState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,10 @@ void PhysicsManager::UnregisterStaticCollider(StaticColliderComponent* Collider)
     m_staticcolliders.erase(std::remove(m_staticcolliders.begin(), m_staticcolliders.end(), Collider),
                             m_staticcolliders.end());
 }
+void PhysicsManager::UnregisterTrigger(TriggerComponent* Trigger)
+{
+    m_triggers.erase(std::remove(m_triggers.begin(), m_triggers.end(), Trigger), m_triggers.end());
+}
 PhysicsManager* PhysicsManager::m_instance;
 PhysicsManager* PhysicsManager::getInstance()
 {

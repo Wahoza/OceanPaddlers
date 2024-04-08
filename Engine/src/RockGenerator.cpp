@@ -23,11 +23,12 @@ void RockGenerator::init(sf::Vector2i Area, int seed)
 
 void RockGenerator::generateNextTile(float xpos, int pathy)
 {
+    {
     if (!Rocks.empty())
     {
         if (!Rocks.back().empty())
         {
-            if (Rocks.back()[0].pos.x < xpos - _Area.x * TextureSize)
+            if (Rocks.back()[0].pos.x < xpos - _Area.x * TextureSize - TextureSize)
             {
                 for (auto& item : Rocks.back())
                 {
@@ -38,52 +39,135 @@ void RockGenerator::generateNextTile(float xpos, int pathy)
                     }
                 }
                 Rocks.pop_back();
-
             }
-
+        }
+        else
+        {
+            Rocks.pop_back();
         }
     }
 
     std::vector<Obstacle> Subvector;
     for (int i = wallsize; i < _Area.y - wallsize; i++)
     {
-        if (i * TextureSize == pathy)
+        if (pathy - TextureSize - 1 < i * TextureSize && i * TextureSize < pathy + TextureSize + 1)
         {
             continue;
         }
 
-        std::mt19937 gen(_seed + xpos + i);  
+        std::mt19937                       gen(_seed + xpos + i);
         std::uniform_int_distribution<int> dist(0, chance);
 
-        int                                random_number = dist(gen);
-        
+        int random_number = dist(gen);
+
         if (random_number == 1)
         {
             Obstacle t_obstacle;
-            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3), float(i * TextureSize + 5), float(TextureSize - 6), float(TextureSize - 10)},
+            t_obstacle.collider = new StaticColliderComponent({float(xpos + 3),
+                                                               float(i * TextureSize + 5),
+                                                               float(TextureSize - 6),
+                                                               float(TextureSize - 10)},
                                                               "Hard");
-            t_obstacle.pos = {xpos,float(i * TextureSize)};
+            t_obstacle.pos      = {xpos, float(i * TextureSize)};
             t_obstacle.LeftTop  = {0, 0};
 
 
-            
             std::mt19937                       gen(_seed + xpos + i + 1);
             std::uniform_int_distribution<int> dist(0, chance);
 
             int random_number = dist(gen);
 
-            if (random_number % 4 == 0)
+            if (random_number % 15 == 0)
             {
                 t_obstacle.LeftTop = {TextureSize, 0};
             }
             Subvector.push_back(t_obstacle);
         }
     }
-    Rocks.push_back(Subvector);
+    Rocks.insert(Rocks.begin(), Subvector);
+    }
+    {
+    //generate a current based on an area
+    if (xpos > currentArea.top + currentArea.width)
+    {
+
+        std::mt19937                       genChance(_seed + xpos);
+        std::uniform_int_distribution<int> distChance(0, currentChance);
+        int                                random_number = distChance(genChance);
+
+        if (random_number == 1)
+        {
+            std::mt19937                       genWidth(_seed + xpos + pathy + 1);
+            std::uniform_int_distribution<int> distWidth(minCurrentSize.x, maxCurrentSize.x);
+            std::mt19937                       genHeight(_seed + xpos + pathy + 2);
+            std::uniform_int_distribution<int> distHeight(minCurrentSize.y, maxCurrentSize.y);
+
+            currentArea.width = distWidth(genWidth) * 16;
+            currentArea.height = distHeight(genHeight) * 16;
+
+            float Offset = -currentArea.height / 2;
+
+            std::mt19937 genOffset(_seed + xpos + 1);
+            std::uniform_int_distribution offsetdist(-maxOffset, maxOffset);
+
+            currentArea.left = xpos;
+            currentArea.top  = pathy + Offset + offsetdist(genOffset);
+        }
+    }
+
+    std::vector<Current> SubVector;
+    for (int i = wallsize; i <= _Area.y - wallsize; i++)
+    {
+        if (currentArea.contains({(int)xpos, i * TextureSize}))
+        {
+            Current t_current;
+            t_current.LeftTop = {TextureSize * 2,0};
+            t_current.pos     = {xpos, (float)i * TextureSize};
+            t_current.trigger = new TriggerComponent({t_current.pos.x, t_current.pos.y, (float)TextureSize/ 2, (float)TextureSize},
+                                                     "Player0",
+                                                     "Current");
+            SubVector.push_back(t_current);
+        }
+    }
+    Currents.insert(Currents.begin(), SubVector);
+
+    if (!Currents.empty())
+        {
+        if (!Currents.back().empty())
+        {
+            if (Currents.back()[0].pos.x < xpos - _Area.x * TextureSize)
+            {
+                for (auto& item : Currents.back())
+                {
+                    if (item.trigger != nullptr)
+                    {
+                        item.trigger->removeSelf();
+                        delete item.trigger;
+                    }
+                }
+                Currents.pop_back();
+            }
+        }
+        else
+        {
+            Currents.pop_back();
+        }
+        }
+    }
 }
 
 void RockGenerator::draw(sf::RenderWindow& window)
 {
+    for (auto& currentVec : Currents)
+    {
+        for (auto& current : currentVec)
+        {
+            m_Sprite.setTextureRect({current.LeftTop.x, current.LeftTop.y, TextureSize, TextureSize});
+            m_Sprite.setPosition(current.pos);
+
+            window.draw(m_Sprite);
+        }
+    }
     for (auto& obstacleVec : Rocks)
     {
         for (auto& obstacle : obstacleVec)
@@ -98,5 +182,6 @@ void RockGenerator::draw(sf::RenderWindow& window)
 void RockGenerator::shutdown()
 {
     Rocks = {};
+    Currents = {};
 }
 } // namespace mmt_gd

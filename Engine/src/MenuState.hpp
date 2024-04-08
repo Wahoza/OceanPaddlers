@@ -29,5 +29,10 @@ private:
     sf::Sprite  m_logo;
     sf::Texture m_logoTexture;
     bool m_isInit = false;
+
+    float currentyAxis;
+    float lastyAxis        = 0;
+
+    int currentSelection = 0;
 };
 } // namespace mmt_gd

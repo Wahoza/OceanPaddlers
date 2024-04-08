@@ -146,6 +146,7 @@
     <ClInclude Include="..\src\FastNoiseLite.h" />
     <ClInclude Include="..\src\GameOverState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\HighScoresState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
     <ClInclude Include="..\src\InputObject.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
@@ -214,6 +215,7 @@
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
     <ClCompile Include="..\src\GameOverState.cpp" />
+    <ClCompile Include="..\src\HighScoresState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
     <ClCompile Include="..\src\InputObject.cpp" />
     <ClCompile Include="..\src\LevelGenerator.cpp" />

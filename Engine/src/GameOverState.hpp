@@ -29,8 +29,10 @@ namespace mmt_gd
         sf::Text m_name;
         sf::Text m_distanceText;
         sf::Text m_eggsText;
+        sf::Text m_totalScoreText;
         float distance = 0;
         int   eggsCollected = 0;
+        int      totalScore    = 0;
         bool  won = false;
         float    wait          = 0;
 	};

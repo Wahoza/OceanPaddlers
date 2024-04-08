@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 namespace mmt_gd
 {
@@ -16,7 +17,7 @@ private:
     sf::Vector2f currentVec = {0, 0};
     sf::Vector2f VecStart   = {0, 0};
     sf::Vector2i _area       = {0,0};
-    int          wallSize   = 3;
+    int          wallSize   = 2;
     int          m_length    = 0;
 };
 }

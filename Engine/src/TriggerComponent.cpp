@@ -33,6 +33,7 @@ void TriggerComponent::Notify(GameObject& gameObject)
             if (PlayerComponent* comp = gameObject.getComponent<PlayerComponent>().get(); comp != nullptr)
             {
                 comp->Victory();
+                //removeSelf();
             }
             //Hud::getInstance()->won = true;
         }
@@ -51,5 +52,9 @@ void TriggerComponent::Notify(GameObject& gameObject)
 Vector2f TriggerComponent::getPosition()
 {
     return {m_shape.left, m_shape.top};
+}
+void TriggerComponent::removeSelf()
+{
+    PhysicsManager::getInstance()->UnregisterTrigger(this);
 }
 }

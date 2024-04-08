@@ -36,6 +36,7 @@ public:
     string m_notification;
     string m_identifier;
     Vector2f getPosition();
+    void     removeSelf();
     TriggerComponent(FloatRect shape, string identifier, string notification);
 };
 } // namespace mmt_gd

@@ -1,6 +1,7 @@
 //Author: Kilian Kolb
 //Description: Game State for the End of the Game. Contains posibility for victory screen or game over Screen. utilizes InputObject.
 //License: LICENSE.txt
+#pragma once
 #include "stdafx.h"
 
 #include "InputObject.hpp"
@@ -66,8 +67,12 @@ void GameOverState::init()
     m_distanceText.setString("Distance traveled: " + to_string((int)distance) + "m");
 
 
-    m_view = m_game->getWindow().getView();
+    m_totalScoreText.setFont(m_font);
+    m_totalScoreText.setPosition(ScreenCenter.x, ScreenCenter.y + 200);
+    m_totalScoreText.setFillColor(color);
+    m_totalScoreText.setString("Total score: " + to_string(totalScore));
 
+    m_view = m_game->getWindow().getView();
     
     m_name.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 100);
     m_name.setFillColor(color);
@@ -106,6 +111,8 @@ void GameOverState::draw()
     m_game->getWindow().draw(m_text);
     m_game->getWindow().draw(m_eggsText);
     m_game->getWindow().draw(m_distanceText);
+    m_game->getWindow().draw(m_totalScoreText);
+
     m_game->getWindow().draw(m_name);
 
     InputObject::getInstance()->draw(m_game->getWindow());
@@ -121,6 +128,7 @@ void GameOverState::updateStats(IEvent::Ptr event)
 
         eggsCollected = std::get<1>(gameOverevent.get()->getData());
         won = std::get<2>(gameOverevent.get()->getData());
+        totalScore = std::get<3>(gameOverevent.get()->getData());
     }
 }
 
@@ -142,7 +150,7 @@ void GameOverState::exit()
 
                 // Append new data to the existing content
                 fileContent += "\n" + InputObject::getInstance()->getText() + "," + to_string((int)distance) + "," +
-                               to_string(eggsCollected);
+                               to_string(eggsCollected) + "," + to_string(totalScore);
 
                 // Write the updated content back to the file
                 std::ofstream outputFile(filePath);

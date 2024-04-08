@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 #include "FastNoiseLite.h"
 
@@ -8,7 +9,7 @@
 #include "StaticColliderComponent.hpp"
 #include "RockGenerator.hpp"
 
-#include <random>;
+#include <random>
 namespace mmt_gd
 {
 class ObstacleGenerator
@@ -73,7 +74,7 @@ private:
 
     
     int                                          _seed = 0;
-    float                                        threshold = 0.2;
+    float                                        threshold = 0.2f;
     float                                        scaleVal = 30;
     int                                          TileLength = 0;
     int                                          pathy;

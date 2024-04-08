@@ -25,6 +25,7 @@ private:
     int  EggScore     = 0;
     int  initlives    = 3;
     int  currentlives = 3;
+    int  totalScore   = 0;
     bool won          = false;
 
     float hurtTime = 0;

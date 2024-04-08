@@ -36,7 +36,7 @@ int PathGenerator::CalculatePathAtPos(int xpos)
 
     static std::mt19937                    gen(m_seed + xpos);
     static std::uniform_int_distribution<> direction(-_area.y + wallSize, _area.y - wallSize);
-    static std::uniform_int_distribution<> length(3, 7);
+    static std::uniform_int_distribution<> length(3, 6);
 
     int directionResult = direction(gen);
 
