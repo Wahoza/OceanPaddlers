@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PathGenerator.hpp"
 #include <random>
+#include <cmath>
 
 namespace mmt_gd
 {
@@ -14,51 +15,88 @@ void PathGenerator::init(int seed, sf::Vector2f startPos, sf::Vector2i area)
 }
 std::vector<float> PathGenerator::GetPath(int xpos)
 {
-    int x = CalculatePathAtPos(xpos);
+    std::vector<int> xbig = CalculatePathAtPos(xpos);
     std::vector<float> tempVec = {};
-    for (int i = 0; i < _area.y; i++)
+    
+    bool firstLoop = true;
+    for (auto& x : xbig)
     {
-        if (i <= x - pathR || i >= x + pathR)
+        if (firstLoop)
         {
-            tempVec.push_back(0);
+            for (int i = 0; i < _area.y; i++)
+            {
+                if (i <= x - pathR || i >= x + pathR)
+                {
+                    tempVec.push_back(0);
+                }
+                else
+                {
+                    tempVec.push_back(maxVal * (1 - abs((float)(i - x)) / (float)pathR));
+                }
+            }
+            firstLoop = false;
         }
         else
         {
-            tempVec.push_back(maxVal * (1-abs((float)(i-x))/(float)pathR));
+            for (int i = 0; i < _area.y; i++)
+            {
+                if (i > tempVec.size() - 1)
+                {
+                    continue;
+                }
+                if (!(i <= x - pathR || i >= x + pathR))
+                {
+                    float val = maxVal * (1 - abs((float)(i - x)) / (float)pathR);
+                    if (tempVec[i] > val)
+                    {
+                        tempVec[i] = val;
+                    }
+                }
+            }
         }
     }
     return tempVec;
 }
-int PathGenerator::CalculatePathAtPos(int xpos)
+std::vector<int> PathGenerator::CalculatePathAtPos(int xpos)
 {
-    if ((m_length + VecStart.x) < xpos){
+    if ((m_length + VecStart.x) < xpos)
+    {
         VecStart += currentVec * static_cast<float>(m_length);
 
-    static std::mt19937                    gen(m_seed + xpos);
-    static std::uniform_int_distribution<> direction(-_area.y + wallSize, _area.y - wallSize);
-    static std::uniform_int_distribution<> length(3, 6);
+        static std::mt19937                    gen(m_seed + xpos);
+        static std::uniform_int_distribution<> direction(-_area.y + wallSize, _area.y - wallSize);
+        static std::uniform_int_distribution<> length(3, 6);
 
-    int directionResult = direction(gen);
+        int directionResult = direction(gen);
 
-    // Adjust directionResult to ensure it doesn't overlap with the walls
-    int upperBound = _area.y - wallSize - pathR;
-    int lowerBound = wallSize + pathR;
-    if (directionResult + VecStart.y < lowerBound)
-    {
-        directionResult = lowerBound - VecStart.y;
+        // Adjust directionResult to ensure it doesn't overlap with the walls
+        int upperBound = _area.y - wallSize - pathR;
+        int lowerBound = wallSize + pathR;
+        if (directionResult + VecStart.y < lowerBound)
+        {
+            directionResult = lowerBound - VecStart.y;
+        }
+        else if (directionResult + VecStart.y > upperBound)
+        {
+            directionResult = upperBound - VecStart.y;
+        }
+
+        m_length = length(gen);
+        float m  = std::sqrt(static_cast<float>(m_length * m_length + directionResult * directionResult));
+
+        currentVec = {m_length / m, directionResult / m};
     }
-    else if (directionResult + VecStart.y > upperBound)
+    std::vector<int> returnVals;
+    float            tempVal = currentVec.y * (xpos - VecStart.x) + VecStart.y;
+    if (abs(currentVec.y) > 0.5)
     {
-        directionResult = upperBound - VecStart.y;
+        returnVals.push_back(ceil(tempVal - 1));
+        returnVals.push_back(floor(tempVal - 1));
     }
-
-    m_length = length(gen);
-    float m  = std::sqrt(static_cast<float>(m_length * m_length + directionResult * directionResult));
-
-    currentVec = {m_length / m, directionResult / m};
-}
-
-    return currentVec.y * (xpos-VecStart.x)+VecStart.y;
+    else{
+        returnVals.push_back(floor(tempVal));
+    }
+    return returnVals;
 }
 
 void PathGenerator::shutdown()

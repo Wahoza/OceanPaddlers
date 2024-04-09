@@ -92,5 +92,7 @@ private:
     FloatRect DirtArea = {0, 0, 0, 0};
     FloatRect min_dirtArea = {0, 0,10, 10};
     FloatRect max_dirtArea = {0, 0, 20, 20};
+
+    int TextureSize = 16;
 };
 }

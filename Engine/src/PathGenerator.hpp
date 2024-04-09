@@ -7,7 +7,7 @@ class PathGenerator
 public:
     void               init(int seed, sf::Vector2f startPos, sf::Vector2i area);
     std::vector<float> GetPath(int xpos);
-    int                CalculatePathAtPos(int xpos);
+    std::vector<int>   CalculatePathAtPos(int xpos);
     void               shutdown();
 
 private:

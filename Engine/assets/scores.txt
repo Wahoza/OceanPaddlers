@@ -23,3 +23,7 @@ mara,51,1,165
 mara,46,1,150
 www,88,3,294
 sugondes,235,10,807
+smerg,154,7,532
+big mac,221,8,744
+gangnam,171,9,603
+doodoo,220,14,800

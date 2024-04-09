@@ -30,7 +30,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     }
     m_printer.setTexture(m_texture);
     m_printer.setTextureRect(_TextureRect);
-
+    TextureSize = _TextureRect.width;
     
     if (!m_dirttexture.loadFromFile("../assets/SegmentedTiles/tilesDirt.png"))
     {
@@ -57,7 +57,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     m_waterPrinter.setOrigin(2, 0);
 
     TileLength  = _TextureRect.width;
-    waitingDist = Area.x * TileLength + 4 * TileLength;
+    waitingDist = 20 * TileLength;
     waiting     = true;
         for (int x = Area.x; x >= 0; x--)
         {
@@ -114,7 +114,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             }
             else
             {
-                SubVector[i].noise = -1;
+                SubVector[i].noise = -2;
             }
             if (!DirtArea.contains(SubVector[i].pos) && DirtAreaBarrier.contains(SubVector[i].pos))
             {
@@ -207,7 +207,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             }
         }
 
-        if (!waiting) //!waiting
+        if (true) //!waiting
         {
             std::vector<StaticColliderComponent> SubColliderVector;
 
@@ -257,8 +257,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
         
     }
 
-
-    if (windowRect.left + windowRect.width > waitingDist)
+    if (windowRect.left > waitingDist)
     {
         waiting = false;
     }
@@ -296,11 +295,25 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
                 }
                 else
                 {
-
-                    m_printer.setPosition(obj.pos);
-                    m_printer.setTextureRect(
-                        {obj.LeftTop.x, obj.LeftTop.y, m_printer.getTextureRect().width, m_printer.getTextureRect().height});
-                    window.draw(m_printer);
+                    if (obj.pos.y / 16 <= 3)
+                    {
+                        m_printer.setPosition({obj.pos.x, obj.pos.y + 2});
+                        m_printer.setTextureRect({obj.LeftTop.x,
+                                                  obj.LeftTop.y + 2, TextureSize, TextureSize -2});
+                        window.draw(m_printer);
+                    }
+                    else if (obj.pos.y / 16 < 13)
+                    {
+                        m_printer.setPosition(obj.pos);
+                        m_printer.setTextureRect({obj.LeftTop.x, obj.LeftTop.y, TextureSize, TextureSize});
+                        window.draw(m_printer); 
+                    }
+                    else
+                    {
+                        m_printer.setPosition(obj.pos);
+                        m_printer.setTextureRect({obj.LeftTop.x, obj.LeftTop.y, TextureSize, TextureSize -2});
+                        window.draw(m_printer); 
+                    }
                 }
             }
 
@@ -342,9 +355,22 @@ void ObstacleGenerator::drawWater(sf::RenderWindow& window)
 
             if (obj.print)
             {
-                if (obj.pos.y/ 16 > 3 && obj.pos.y/ 16 <13)
+                if (obj.pos.y / 16 <= 3)
                 {
                     m_waterPrinter.setPosition(obj.pos);
+                    m_waterPrinter.setTextureRect({20, 0, 20, 20});
+                    window.draw(m_waterPrinter);
+                }
+                else if (obj.pos.y/ 16 > 3 && obj.pos.y/ 16 <13)
+                {
+                    m_waterPrinter.setPosition(obj.pos);
+                    m_waterPrinter.setTextureRect({0, 0, 20, 20});
+                    window.draw(m_waterPrinter);
+                }
+                else
+                {
+                    m_waterPrinter.setPosition(obj.pos);
+                    m_waterPrinter.setTextureRect({40, 0, 20, 20});
                     window.draw(m_waterPrinter);
                 }
             }
@@ -480,7 +506,7 @@ void ObstacleGenerator::generateNextSprite()
             default:
                 directionVec = {32, 32};
         }
-        if (iterator > 4 && iterator < 10)
+        if (iterator > 4 && iterator < 11)
         {
             generateNextDock(neighbourCount, normalVecs, {32, 32}, NPV1[iterator].pos);
         }
