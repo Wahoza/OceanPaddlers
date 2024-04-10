@@ -22,7 +22,7 @@ public:
     ~TetherComponent();
     void update(const float deltaTime) override;
     void GetForce(float deltaTime);
-    void CalculateEffect();
+    void CalculateEffect(float deltaTime);
     void RepositionBodies();
     bool init() override;
     Vector2f normalize(Vector2f vec);
@@ -36,9 +36,30 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
+    vector<Vector2f>    constlocalForces;
+    Vector2f         m_velocity = {0, 0};
+    float               Loss       = 0;
+    float               maxSpeed = 10;
+
     bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
     void     ApplyForce(Vector2f _force);
+    
     Vector2f getPosition();
+
+    std::vector<sf::Vector2f> StringToVecList(string input)
+    {
+
+        std::istringstream      iss(input);
+        std::vector<sf::Vector2f> vecs;
+
+        float x, y;
+        while (iss >> x >> y)
+        {
+            vecs.emplace_back(x, y);
+        }
+
+        return vecs;
+    }
 
 private:
     //orientation should be normalized, then multiplied with length
@@ -46,5 +67,6 @@ private:
     //also note: GameObject Position is defined by topleft, therefore at init change Pos of game Object, so no weird effects at init
     float movePercentage;
     float       length;
+    void  AddLocalForce(Vector2f _force);
 };
 }

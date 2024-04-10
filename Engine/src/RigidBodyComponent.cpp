@@ -71,6 +71,7 @@ void RigidBodyComponent::update(float deltaTime)
     {
         addVelocity(force * deltaTime);
     }
+
     m_gameObject.move(m_velocity * deltaTime);
 
     m_velocity -= m_velocity * deltaTime * Loss;

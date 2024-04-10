@@ -137,7 +137,7 @@
                         {
                          "name":"Forces",
                          "type":"string",
-                         "value":"1 0"
+                         "value":"10 0"
                         }, 
                         {
                          "name":"Mass",
@@ -147,7 +147,7 @@
                         {
                          "name":"TetherPercentage",
                          "type":"float",
-                         "value":0.2
+                         "value":3
                         }, 
                         {
                          "name":"Texture",
@@ -247,7 +247,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
