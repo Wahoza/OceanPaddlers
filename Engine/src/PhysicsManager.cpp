@@ -194,6 +194,10 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
             }
 
             sf::Vector2f rv             = body1->m_velocity;
+            if (body1->GetTether() != nullptr)
+            {
+                rv += body1->GetTether()->getVelocity();
+            }
             float        velAlongNormal = normal.x * rv.x + normal.y * rv.y;
 
             if (velAlongNormal > 0)
@@ -218,7 +222,7 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
                 if (abs(normal.x) > abs(normal.y))
                 {
-                    body1->m_velocity -= sf::Vector2f{body1->m_velocity.x, 0.f};
+                    body1->m_velocity -= sf::Vector2f{body1->m_velocity.x, 0.f}; //if less bouncy is wanted set to 0
                     body1->getGameObject().move(normal.x * penetration, 0);
                 }
                 else
@@ -282,7 +286,17 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
             
              if (body2->m_notification == "Current")
              {
-                body1->addVelocity({0.03, 0});
+                if (body1->GetTether() != nullptr)
+                {
+                    TetherComponent* tether = body1->GetTether();
+                    Vector2f tetherVeclocity = tether->getVelocity();
+
+                    if (tetherVeclocity.x * tetherVeclocity.x + tetherVeclocity.y * tetherVeclocity.y <
+                        body2->SquaredMaxVelocity)
+                    {
+                        body1->addVelocity({0.04, 0});
+                    }
+                }
              }
              
              if (body1->GetTether() != nullptr)

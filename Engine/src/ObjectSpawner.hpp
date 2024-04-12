@@ -12,8 +12,8 @@ public:
 private:
     int               waitVal = 30;
     int               CallsSinceLastSpawn = 0;
-    int               minCalls            = 20;
-    int               maxCalls            = 50;
+    int               minCalls            = 10;
+    int               maxCalls            = 35;
     int               _seed = 0;
     int _tileSize;
     int CollectibleCtr = 0;

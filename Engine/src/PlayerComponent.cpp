@@ -40,7 +40,7 @@ void PlayerComponent::DamageCollision()
 void PlayerComponent::GameEnd()
 {
     float       distanceTraveled = m_gameObject.getPosition().x / distancePixeltoM;
-    totalScore             = distanceTraveled * 3 + EggScore * 10;
+    totalScore             = distanceTraveled * 3 + EggScore * 12;
     std::tuple       eventData(distanceTraveled, EggScore, won, totalScore);
     IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
     EventBus::getInstance().fireEvent(GameOver);

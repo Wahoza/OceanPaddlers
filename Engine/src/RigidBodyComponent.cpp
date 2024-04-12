@@ -42,12 +42,12 @@ void RigidBodyComponent::addVelocity(Vector2f velocity)
 {
     m_velocity += velocity;
 
-    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= maxSpeed * maxSpeed)
+    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= trueMaxVelocity * trueMaxVelocity)
     {  
         if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y > 0)
         {
            
-            m_velocity = m_velocity/sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * maxSpeed;
+            m_velocity = m_velocity/sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * trueMaxVelocity;
 
         }
     }

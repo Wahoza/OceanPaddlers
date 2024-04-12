@@ -32,7 +32,7 @@ public:
 
     float m_mass = 10.f;
     float m_invMass = 0;
-    float maxSpeed  = 600.f;
+    float trueMaxVelocity  = 600.f;
     float               Loss      = 0.0f;
     bool                isActive  = true;
 

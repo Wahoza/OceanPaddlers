@@ -137,17 +137,17 @@
                         {
                          "name":"Forces",
                          "type":"string",
-                         "value":"10 0"
+                         "value":"5 0"
                         }, 
                         {
                          "name":"Mass",
                          "type":"float",
-                         "value":20
+                         "value":200
                         }, 
                         {
                          "name":"TetherPercentage",
                          "type":"float",
-                         "value":3
+                         "value":30
                         }, 
                         {
                          "name":"Texture",

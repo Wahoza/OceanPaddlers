@@ -44,14 +44,14 @@ TetherItem2(createNewTetheredObject("tethered2"))
 
     //note: forces are changed here for purpose of the game, as it is better feel like this
     TetherItem1.addComponent<RigidBodyComponent>(TetherItem1,
-                            FloatRect{0, 0, length, height}, Vector2f{0.f, 0.f}, "1 0",
+                            FloatRect{0, 0, length, height}, Vector2f{0.f, 0.f}, "0 0",
                             mass/2,
                             loss);
     TetherItem1.getComponent<RigidBodyComponent>()->SetTether(this);
 
 
     TetherItem2.addComponent<RigidBodyComponent>(TetherItem2,
-                            FloatRect{0, 0, length, height}, Vector2f{0.f, 0.f}, "1 0",
+                            FloatRect{0, 0, length, height}, Vector2f{0.f, 0.f}, "0 0",
                             mass/2,
                             loss);
     TetherItem2.getComponent<RigidBodyComponent>()->SetTether(this);
@@ -73,9 +73,11 @@ TetherItem2(createNewTetheredObject("tethered2"))
     TetherItem2.setPosition(pos2);
     
     constlocalForces = StringToVecList(forces);
+    currentMaxVelocity  = 20;
 }
 void TetherComponent::update(const float deltaTime)
 {
+    currentMaxVelocity = initMaxVelocity + velocityIncrease * m_gameObject.getPosition().x;
     TetherItem1.update(deltaTime);
     TetherItem2.update(deltaTime);
 
@@ -107,31 +109,29 @@ void TetherComponent::GetForce(float deltaTime)
 
 void TetherComponent::CalculateEffect(float deltaTime)
 {
-    for (Vector2f force : forces)
+    for (Vector2f& force : forces)
     {
-        m_gameObject.setPosition(m_gameObject.getPosition() + force * movePercentage);
+        AddLocalForce(sf::Vector2f{force.x * movePercentage / 10, force.y * movePercentage});
+        //m_gameObject.setPosition(m_gameObject.getPosition() + sf::Vector2f{force.x * movePercentage/10, force.y * movePercentage});
         //force = force - force*movePercentage;
     }
-    
-    for (Vector2f force : constlocalForces)
+    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y < currentMaxVelocity * currentMaxVelocity)
     {
-        AddLocalForce(force);
+        for (Vector2f force : constlocalForces)
+        {
+            AddLocalForce(force * deltaTime);
+        }
     }
+    
     m_gameObject.move(m_velocity * deltaTime);
-    m_velocity -= m_velocity * deltaTime * Loss;
+    m_velocity -= sf::Vector2f{m_velocity.x * Loss.x, m_velocity.y * Loss.y} * deltaTime;
 
     //only two objects are tethered
     //behind:
     orientation = normalize(orientation / 2.f - forces[0]);
 
     orientation = normalize(orientation / 2.f + forces[1]);
-    //I still need to treat tether like Physics Object->apply forces from Component 1 and 2 to it
-    /*m_gameObject.move(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() *
-                      TetherItem1.getComponent<RigidBodyComponent>()->getInvMass());
-    m_gameObject.move(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity() *
-                      TetherItem2.getComponent<RigidBodyComponent>()->getInvMass());*/
-    /*TetherItem1
-    TetherItem2*/
+
     forces.clear();
 }
 void TetherComponent::RepositionBodies()
@@ -189,8 +189,22 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
 
     Vector2f result = Vector2f(-std::sin(angle), std::cos(angle));
 
-    collider->getComponent<RigidBodyComponent>().get()->setVelocity(result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
-    other->getComponent<RigidBodyComponent>().get()->setVelocity(-result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass());
+    Vector2f colliderVelocityresult = -result * otherSpeed * other->getComponent<RigidBodyComponent>().get()->getInvMass();
+
+    collider->getComponent<RigidBodyComponent>().get()->setVelocity(colliderVelocityresult);
+    other->getComponent<RigidBodyComponent>().get()->setVelocity(-colliderVelocityresult);
+    
+    //this needs a fix
+    if (abs(collisionVec.x) > 0)
+    {
+        m_velocity.x = 0;
+    }
+    else
+    {
+        m_velocity.y = 0;
+    }
+    
+    AddLocalForce(-collisionVec);
     return true;
 }
 void TetherComponent::ApplyForce(Vector2f _force)
@@ -199,19 +213,25 @@ void TetherComponent::ApplyForce(Vector2f _force)
     TetherItem2.getComponent<RigidBodyComponent>()->addVelocity(_force);
 
     AddLocalForce(_force);
-} 
+}
+Vector2f TetherComponent::getVelocity()
+{
+    return m_velocity;
+}
+
 Vector2f TetherComponent::getPosition()
 {
     return m_gameObject.getPosition()+orientation/2.f;
 }
 void TetherComponent::AddLocalForce(Vector2f _force)
 {
-    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= maxSpeed * maxSpeed)
+    m_velocity += _force;
+    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= trueMaxVelocity * trueMaxVelocity)
     {
         if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y > 0)
         {
 
-            m_velocity = m_velocity / sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * maxSpeed;
+            m_velocity = m_velocity / sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * trueMaxVelocity;
         }
     }
 }

@@ -36,14 +36,9 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
-    vector<Vector2f>    constlocalForces;
-    Vector2f         m_velocity = {0, 0};
-    float               Loss       = 0;
-    float               maxSpeed = 10;
-
     bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
     void     ApplyForce(Vector2f _force);
-    
+    Vector2f     getVelocity();
     Vector2f getPosition();
 
     std::vector<sf::Vector2f> StringToVecList(string input)
@@ -67,6 +62,13 @@ private:
     //also note: GameObject Position is defined by topleft, therefore at init change Pos of game Object, so no weird effects at init
     float movePercentage;
     float       length;
+    float            velocityIncrease = 0.05 / 16;
+    vector<Vector2f> constlocalForces;
+    Vector2f         m_velocity      = {0, 0};
+    Vector2f         Loss            = {0.1, 0.9};
+    float            trueMaxVelocity = 100;
+    float            initMaxVelocity    = 20;
+    float            currentMaxVelocity = 0;
     void  AddLocalForce(Vector2f _force);
 };
 }

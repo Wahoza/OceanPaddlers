@@ -38,7 +38,7 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     }
 
     static std::mt19937                    genCollectible(_seed + pos.x + pos.y);
-    static std::uniform_int_distribution<> collectibleSpread(0, 30);
+    static std::uniform_int_distribution<> collectibleSpread(0, 20);
     if (!(collectibleSpread(genCollectible) == 1 || CallsSinceLastSpawn >= maxCalls))
     {
         return;
