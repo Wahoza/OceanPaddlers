@@ -162,7 +162,7 @@ void HighScoreState::update(float deltaTime)
         {
             currentSort = 3;
         }
-        std::cout << currentSort << std::endl;
+        //std::cout << currentSort << std::endl;
         SortNext(currentSort);
     }
 

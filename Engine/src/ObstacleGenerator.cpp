@@ -214,7 +214,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             for (auto& NPV : SubVector)
             {
 
-                if (NPV.noise > threshold && (NPV.pos.y / 16 > 3 && NPV.pos.y / 16 <13))
+                if (NPV.noise > threshold && (NPV.pos.y / 16 > 2 && NPV.pos.y / 16 <14))
                 {
                     StaticColliderComponent component = *new StaticColliderComponent({NPV.pos.x + 1, NPV.pos.y + 1, 14, 14}, "hard");
                     SubColliderVector.push_back(component);

@@ -16,8 +16,8 @@ void EndlessBackgroundGenerator::loadTileSetTextures(const std::unique_ptr<tson:
 {
     for (const auto& tileSet : map->getTilesets())
     {
-        std::cout << "Load tileset: " << tileSet.getName() << " width filename: " << tileSet.getImagePath()
-                  << " and tile size: " << tileSet.getTileSize().x << ", " << tileSet.getTileSize().y << std::endl;
+        /*std::cout << "Load tileset: " << tileSet.getName() << " width filename: " << tileSet.getImagePath()
+                  << " and tile size: " << tileSet.getTileSize().x << ", " << tileSet.getTileSize().y << std::endl;*/
 
         const auto texture = std::make_shared<sf::Texture>();
 
@@ -75,8 +75,8 @@ void EndlessBackgroundGenerator::createTileSprite(
 }
 void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
 {
-    std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
-              << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;
+    /*std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
+              << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;*/
 
     //spriteManager.setTileSize({map->getTileSize().x, map->getTileSize().y});
 
