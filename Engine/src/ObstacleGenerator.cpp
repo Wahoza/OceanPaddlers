@@ -16,6 +16,7 @@ namespace mmt_gd
 {
 void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window)
 {
+    _windowRect = {0, 0, (float)Area.x * 16, (float)Area.y * 16};
     PathGen.init(seed, {0,9}, Area);
     ObjSpawner.init(TileLength, &window, seed);
     RockGen.init(Area, seed);
@@ -23,38 +24,7 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
     noise.SetSeed(seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
-    if (!m_texture.loadFromFile("../assets/SegmentedTiles/tiles.png"))
-    {
-        sf::err() << "Could not load texture\n";
-        return;
-    }
-    m_printer.setTexture(m_texture);
-    m_printer.setTextureRect(_TextureRect);
-    TextureSize = _TextureRect.width;
-    
-    if (!m_dirttexture.loadFromFile("../assets/SegmentedTiles/tilesDirt.png"))
-    {
-        sf::err() << "Could not load texture\n";
-        return;
-    }
-    m_dirtprinter.setTexture(m_dirttexture);
-    m_dirtprinter.setTextureRect(_TextureRect);
-
-    if (!m_dockTexture.loadFromFile("../assets/SegmentedTiles/dockTiles2.png"))
-    {
-        sf::err() << "Could not load texture\n";
-        return;
-    }
-    m_dockPrinter.setTexture(m_dockTexture);
-    m_dockPrinter.setTextureRect(_TextureRect);
-
-    if (!m_waterTexture.loadFromFile("../assets/SegmentedTiles/waterTile.png"))
-    {
-        sf::err() << "Could not load icon\n";
-        return;
-    }
-    m_waterPrinter.setTexture(m_waterTexture);
-    m_waterPrinter.setOrigin(2, 0);
+    LoadTextures("grassTiles/", _TextureRect);
 
     TileLength  = _TextureRect.width;
     waitingDist = 20 * TileLength;
@@ -86,11 +56,11 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
         }
 
     WallColliderBottom = new StaticColliderComponent(FloatRect{0, 0, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
-    WallColliderTop    = new StaticColliderComponent(FloatRect{0.f, (float)(Area.y - (2.5)) * TileLength, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
+    WallColliderTop    = new StaticColliderComponent(FloatRect{0.f, (float)(Area.y - (3.5)) * TileLength, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
-
+    _windowRect                      = windowRect;
     WallColliderTop->m_shape.left = windowRect.left;
     WallColliderBottom->m_shape.left = windowRect.left;
 
@@ -123,6 +93,11 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             else if (DirtArea.contains(SubVector[i].pos))
             {
                 SubVector[i].noise += 0.3;
+            }
+
+            if (disabledArea->contains(SubVector[i].pos))
+            {
+                SubVector[i].noise = -100.0;
             }
             
             if (i < PathVals.size())
@@ -264,7 +239,6 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 }
 void ObstacleGenerator::draw(sf::RenderWindow& window)
 {
-
     if (waiting)
     {
         return;
@@ -344,6 +318,9 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
         
         sf::Color col = {200, 200, 200, 30};
         DebugDraw::getInstance().drawRectangle({DirtArea.left, DirtArea.top}, {DirtArea.width, DirtArea.height}, col, col);
+        col = {100, 255, 100, 30};
+        DebugDraw::getInstance()
+            .drawRectangle({disabledArea->left, disabledArea->top}, {disabledArea->width, disabledArea->height}, col, col);
     }
 }
 void ObstacleGenerator::drawWater(sf::RenderWindow& window)
@@ -527,7 +504,6 @@ void ObstacleGenerator::generateNextSprite()
         }
     }
 }
-
 void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos)
 {
     int t_seed = _seed + pos.x + pos.y;
@@ -593,7 +569,6 @@ void ObstacleGenerator::generateNextDock(int NCount, std::vector<Vector2i> norma
     DockColliders.insert(DockColliders.begin(), component);
     DockTileVector.insert(DockTileVector.begin(), Tile);
 }
-
 void ObstacleGenerator::GenerateDirtArea(float xpos)
 {
     if (DirtAreaBarrier.left + DirtAreaBarrier.width +16 < xpos)
@@ -629,7 +604,47 @@ void ObstacleGenerator::GenerateDirtArea(float xpos)
         }
     }
 }
+void ObstacleGenerator::DisableGenArea(sf::FloatRect* Rect)
+{
+    disabledArea = Rect;
+    std::cout << "i got updated" << std::endl;
+}
+void ObstacleGenerator::LoadTextures(string Folder, IntRect _TextureRect)
+{
+    string TotalFilePath = "../assets/SegmentedTiles/" + Folder;
+    if (!m_texture.loadFromFile(TotalFilePath + "tiles.png"))
+    {
+        sf::err() << "Could not load texture\n";
+        return;
+    }
+    m_printer.setTexture(m_texture);
+    m_printer.setTextureRect(_TextureRect);
+    TextureSize = _TextureRect.width;
 
+    if (!m_dirttexture.loadFromFile(TotalFilePath + "tilesDirt.png"))
+    {
+        sf::err() << "Could not load texture\n";
+        return;
+    }
+    m_dirtprinter.setTexture(m_dirttexture);
+    m_dirtprinter.setTextureRect(_TextureRect);
+
+    if (!m_dockTexture.loadFromFile(TotalFilePath + "dockTiles2.png"))
+    {
+        sf::err() << "Could not load texture\n";
+        return;
+    }
+    m_dockPrinter.setTexture(m_dockTexture);
+    m_dockPrinter.setTextureRect(_TextureRect);
+
+    if (!m_waterTexture.loadFromFile(TotalFilePath + "waterTile.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_waterPrinter.setTexture(m_waterTexture);
+    m_waterPrinter.setOrigin(2, 0);
+}
 void ObstacleGenerator::shutdown()
 {
     NPVs      = {};
@@ -637,5 +652,6 @@ void ObstacleGenerator::shutdown()
     DockTileVector    = {};
     DockColliders     = {};
     PathGen.shutdown();
+    RockGen.shutdown();
 }
 } // namespace mmt_gd

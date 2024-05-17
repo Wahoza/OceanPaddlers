@@ -21,7 +21,7 @@ public:
     TetherComponent(GameObject& gameObject, FloatRect shape, Vector2f offset, string forces, float mass, float loss, bool controll, float _movePercentage);
     ~TetherComponent();
     void update(const float deltaTime) override;
-    void GetForce(float deltaTime);
+    void calculateRBForce(float deltaTime);
     void CalculateEffect(float deltaTime);
     void RepositionBodies();
     bool init() override;
@@ -36,8 +36,10 @@ public:
     Vector2f         orientation = {1, 0};
     vector<GameObject*> getTethers();
 
-    bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec, bool damage);
+    bool  CollisionPhysics(GameObject* collider, Vector2f collisionVec);
     void     ApplyForce(Vector2f _force);
+    void     setVelocity(Vector2f _velocity);
+
     Vector2f     getVelocity();
     Vector2f getPosition();
 

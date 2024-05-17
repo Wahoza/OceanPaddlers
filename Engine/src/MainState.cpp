@@ -36,6 +36,12 @@ m_spriteManager(game->getWindow())
 
 void MainState::init()
 {
+    std::random_device rd;
+    std::mt19937       generator(rd());
+
+    std::uniform_int_distribution<int> distribution(0, 1000);
+    int                                seed = distribution(generator);
+
     PROFILE_FUNCTION();
     m_soundManager.init();
     m_gameObjectManager.init();
@@ -43,6 +49,7 @@ void MainState::init()
     m_PhysicsManager = PhysicsManager::getInstance();
     m_Hud            = Hud::getInstance();
     m_Hud->CreateHud();
+    m_Hud->setSeed(seed);
 
     // load tile map/level
     {
@@ -54,7 +61,7 @@ void MainState::init()
         {
             TileMapLoader::init(map, resourcePath, m_spriteManager);
             TileMapLoader::loadObjectLayers(map, resourcePath, m_spriteManager);
-            m_gen.Initialize(map, resourcePath, m_spriteManager);
+            m_gen.Initialize(map, resourcePath, m_spriteManager, seed);
         }
         else
         {
@@ -71,6 +78,7 @@ void MainState::init()
         float scaleFactor = m_game->getWindow().getSize().y / ((m_spriteManager.getTileSize().y-2) * 16);
         sf::View gameView = View(FloatRect(0, 0, m_game->getWindow().getSize().x / scaleFactor, m_game->getWindow().getSize().y / scaleFactor));
         //gameView.zoom(1.5);
+        
         m_game->getWindow().setView(gameView);
 
         const auto camera = GameObject::create("Camera");
@@ -94,7 +102,10 @@ void MainState::init()
 
     // Define layer order manually here. Could come from custom file settings.
     m_spriteManager.setLayerOrder({"Floor", "Background", "Objects", "GameObjects", "Top"});
+
     m_soundManager.playMusic("Music");
+
+    sf::FloatRect viewport(0.f, 0.f, 400.f, 300.f);
 }
 
 void MainState::update(const float deltaTime)
@@ -102,9 +113,13 @@ void MainState::update(const float deltaTime)
     PROFILE_FUNCTION();
     if (InputManager::getInstance().isKeyPressed("Exit"))
     {
-        m_gameStateManager->setState("GameOverState");
+        paused = !paused;
+    }
+    if (paused)
+    {
         return;
     }
+
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
     m_gen.update(deltaTime);
@@ -117,6 +132,7 @@ void MainState::update(const float deltaTime)
 void MainState::draw()
 {
     PROFILE_FUNCTION();
+
     m_gen.drawBackground(m_game->getWindow());
     m_spriteManager.drawBackground();
     m_spriteManager.draw();

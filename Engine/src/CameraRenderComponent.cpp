@@ -48,7 +48,7 @@ sf::View CameraRenderComponent::getLetterboxView(sf::View view, int windowWidth,
         posY  = (1.0f - sizeY) / 2.0f;
     }
 
-    view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+    view.setViewport(sf::FloatRect(posX, posY, sizeX * 0.1, sizeY*0.1));
 
     return view;
 }
@@ -56,8 +56,7 @@ sf::View CameraRenderComponent::getLetterboxView(sf::View view, int windowWidth,
 void CameraRenderComponent::update(float deltaTime)
 {
     m_view.setCenter(m_gameObject.getPosition());
-    //m_view.setSize(1920, 1080);
-    m_view = getLetterboxView(m_view, m_renderWindow.getSize().x, m_renderWindow.getSize().y);
+    //m_view = getLetterboxView(m_view, m_renderWindow.getSize().x, m_renderWindow.getSize().y);
     m_renderWindow.setView(m_view);
 }
 } // namespace mmt_gd

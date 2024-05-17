@@ -38,6 +38,7 @@ length(shape.width / 2),
 TetherItem1(createNewTetheredObject("tethered1")),
 TetherItem2(createNewTetheredObject("tethered2"))
 {
+    mass              = 20;
     float scaleFactor = 0.6;
     length = shape.width / 2 * scaleFactor;
     float height = shape.height*scaleFactor;
@@ -81,7 +82,7 @@ void TetherComponent::update(const float deltaTime)
     TetherItem1.update(deltaTime);
     TetherItem2.update(deltaTime);
 
-    GetForce(deltaTime);
+    calculateRBForce(deltaTime);
     CalculateEffect(deltaTime);
     RepositionBodies();
 
@@ -101,7 +102,7 @@ void TetherComponent::update(const float deltaTime)
     }
 }
 
-void TetherComponent::GetForce(float deltaTime)
+void TetherComponent::calculateRBForce(float deltaTime)
 {
     forces.push_back(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
     forces.push_back(TetherItem2.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
@@ -169,7 +170,7 @@ TetherComponent::~TetherComponent()
     delete &TetherItem1;
     delete &TetherItem2;
 }
-bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVec, bool damage)
+bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVec)
 {
     GameObject* other;
     if (collider->getId() == TetherItem1.getId())
@@ -194,17 +195,8 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
     collider->getComponent<RigidBodyComponent>().get()->setVelocity(colliderVelocityresult);
     other->getComponent<RigidBodyComponent>().get()->setVelocity(-colliderVelocityresult);
     
-    //this needs a fix
-    if (abs(collisionVec.x) > 0)
-    {
-        m_velocity.x = 0;
-    }
-    else
-    {
-        m_velocity.y = 0;
-    }
-    
     AddLocalForce(-collisionVec);
+
     return true;
 }
 void TetherComponent::ApplyForce(Vector2f _force)
@@ -213,6 +205,11 @@ void TetherComponent::ApplyForce(Vector2f _force)
     TetherItem2.getComponent<RigidBodyComponent>()->addVelocity(_force);
 
     AddLocalForce(_force);
+}
+void TetherComponent::setVelocity(Vector2f _velocity)
+{
+    forces.clear();
+    forces.push_back(_velocity);
 }
 Vector2f TetherComponent::getVelocity()
 {

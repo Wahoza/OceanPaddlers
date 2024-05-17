@@ -18,7 +18,6 @@ void EndlessBackgroundGenerator::loadTileSetTextures(const std::unique_ptr<tson:
     {
         /*std::cout << "Load tileset: " << tileSet.getName() << " width filename: " << tileSet.getImagePath()
                   << " and tile size: " << tileSet.getTileSize().x << ", " << tileSet.getTileSize().y << std::endl;*/
-
         const auto texture = std::make_shared<sf::Texture>();
 
         if (!texture->loadFromFile((resourcePath / tileSet.getImagePath()).string()))
@@ -75,6 +74,7 @@ void EndlessBackgroundGenerator::createTileSprite(
 }
 void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
 {
+    _map = map.get();
     /*std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
               << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;*/
 
@@ -102,13 +102,16 @@ void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, con
 
     Organize();
     tileSize = sprites[0]->getTextureRect().getSize().x;
+    LoadFromFolder("grassTiles/");
 }
 void EndlessBackgroundGenerator::Organize()
 {
-    int height = 17;
-    int width  = (sprites.size()) / height;
+    bool isFirstZero = true;
 
-    for (int g = width; g > 0; g--)
+    int height = 17;
+    width  = (sprites.size()) / height;
+
+    for (int g = width; g >= 0; g--)
     {
         std::vector<sf::Sprite*> subVector;
 
@@ -117,15 +120,21 @@ void EndlessBackgroundGenerator::Organize()
             //std::cout << sprites[i]->getPosition().x << std::endl;
             subVector.push_back(sprites[i].get());
         }
-
-        OrganizedSprites.push_back(subVector);
+        if (!(subVector[0]->getPosition().x == 0 && isFirstZero))
+        {
+            OrganizedSprites.push_back(subVector);
+        }
+        else if (isFirstZero)
+        {
+            isFirstZero = false;
+        }
     }
 }
 void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindowRect)
 {
+    //LoadFromFolder("");
     m_lastWindowRect = lastWindowRect;
-    if (OrganizedSprites[OrganizedSprites.size() - 1][0]->getPosition().x <
-        m_lastWindowRect.left - OrganizedSprites[OrganizedSprites.size() - 1][0]->getTextureRect().width * 2) //x2 for buffer tile
+    if (OrganizedSprites.back()[0]->getPosition().x < m_lastWindowRect.left - tileSize * 2) //x2 for buffer tile
     {
 
         std::vector<sf::Sprite*> poppedElement = OrganizedSprites.back();
@@ -135,8 +144,7 @@ void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindo
 
         for (auto& tile : poppedElement)
         {
-            tile->setPosition(OrganizedSprites[1][0]->getPosition().x + tileSize,
-                              tile->getPosition().y);
+            tile->setPosition(OrganizedSprites.front()[0]->getPosition().x + tileSize, tile->getPosition().y);
         }
         // Insert the popped element at the beginning
         OrganizedSprites.insert(OrganizedSprites.begin(), poppedElement);
@@ -149,15 +157,46 @@ void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindo
 }
 void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
 {
-    window.clear({71, 163, 71, 255});
-    for (auto& TileY : OrganizedSprites)
+    window.clear(clearColor);
+    for (auto& Tile : sprites)
     {
-        for (auto& Tile : TileY)
+        float ySpritePos = Tile.get()->getPosition().y;
+
+        if (3 * tileSize < ySpritePos && ySpritePos < 13 * tileSize)
+        {
+            sf::RectangleShape testRect;
+            testRect.setFillColor({0, 0, 0, 255});
+            testRect.setScale(tileSize, tileSize);
+            testRect.setPosition(Tile.get()->getPosition());
+            window.draw(testRect);
+
+        }
+        else
         {
             window.draw(*Tile);
         }
     }
-    //m_DetailGen.draw(window);
+}
+void EndlessBackgroundGenerator::LoadFromFolder(std::string FolderName)
+{
+    
+    for (auto& tileSet : m_tileSets)
+    {   
+        std::cout << tileSet.first << std::endl;
+        sf::Texture tempTexture;
+        
+        if (!tempTexture.loadFromFile("../assets/SegmentedTiles/" + FolderName + tileSet.first + ".png"))
+        {
+            continue;
+        }
+        sf::Image tempImage;
+        tempImage.loadFromFile("../assets/SegmentedTiles/" + FolderName + tileSet.first + ".png");
+
+        tileSet.second->swap(tempTexture);
+        tileSet.second->setSmooth(false);
+
+        clearColor = tempImage.getPixel(tileSize * 1.5, tileSize * 2.5);
+    }
 }
 void EndlessBackgroundGenerator::shutdown()
 {
@@ -171,5 +210,5 @@ sf::Vector2i EndlessBackgroundGenerator::GetTotalSize()
 sf::Vector2i EndlessBackgroundGenerator::GetTileSize()
 {
     return {int(sprites[0]->getTextureRect().width), int(sprites[0]->getTextureRect().height)};
-    }
+}
 } // namespace mmt_gd

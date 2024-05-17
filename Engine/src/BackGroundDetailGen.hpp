@@ -21,6 +21,7 @@ public:
 
     int NoiseToInt(int TotalSize, float noiseVal);
 
+    void LoadTextures(std::string FolderName);
     void shutdown();
 
 private:

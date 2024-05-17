@@ -215,8 +215,10 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
                 {
                     if (auto player = tether->getGameObject().getComponent<PlayerComponent>(); player != nullptr)
                     {
-                        if (player->getHurtTime() > 0)
+                        if (player->getHurtTime() > 1 && player->getHurtTime() < player->getMaxHurtTime())
+                        {
                             return;
+                        };
                     }
                 }
 
@@ -389,7 +391,7 @@ bool PhysicsManager::CheckforTether(RigidBodyComponent* obj,Vector2f collisionVe
         {
             player->DamageCollision();
         }
-        if (tether->CollisionPhysics(&obj->getGameObject(),collisionVec, damage))
+        if (tether->CollisionPhysics(&obj->getGameObject(),collisionVec))
         {
             return true;
         }

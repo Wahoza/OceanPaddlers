@@ -6,7 +6,7 @@ namespace mmt_gd
 {
 void RockGenerator::init(sf::Vector2i Area, int seed)
 {
-    if (!m_texture.loadFromFile("../assets/SegmentedTiles/ObstacleTiles.png"))
+    if (!m_texture.loadFromFile("../assets/SegmentedTiles/grassTiles/ObstacleTiles.png"))
     {
         sf::err() << "Could not load icon\n";
         return;
@@ -177,7 +177,7 @@ void RockGenerator::draw(sf::RenderWindow& window)
 }
 void RockGenerator::shutdown()
 {
-    Rocks = {};
-    Currents = {};
+    Rocks.clear();
+    Currents.clear();
 }
 } // namespace mmt_gd

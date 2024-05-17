@@ -177,6 +177,7 @@
     <ClInclude Include="..\src\SoundManager.hpp" />
     <ClInclude Include="..\src\StaticColliderComponent.hpp" />
     <ClInclude Include="..\src\TetherComponent.hpp" />
+    <ClInclude Include="..\src\TileNames.hpp" />
     <ClInclude Include="..\src\TransformAnimationSmoothFollow.hpp" />
     <ClInclude Include="..\src\SpriteManager.hpp" />
     <ClInclude Include="..\src\TileMapLoader.hpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="..\src\TransformAnimationComponent.hpp" />
     <ClInclude Include="..\src\TileLayerRenderComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationConstantMotion.hpp" />
+    <ClInclude Include="..\src\TransitionObject.hpp" />
     <ClInclude Include="..\src\TriggerComponent.hpp" />
     <ClInclude Include="..\src\Trigonometry.h" />
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
@@ -235,6 +237,7 @@
     <ClCompile Include="..\src\SoundManager.cpp" />
     <ClCompile Include="..\src\StaticColliderComponent.cpp" />
     <ClCompile Include="..\src\TetherComponent.cpp" />
+    <ClCompile Include="..\src\TileNames.cpp" />
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp" />
     <ClCompile Include="..\src\SpriteManager.cpp" />
     <ClCompile Include="..\src\SpriteRenderComponent.cpp" />
@@ -247,6 +250,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\TransitionObject.cpp" />
     <ClCompile Include="..\src\TriggerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

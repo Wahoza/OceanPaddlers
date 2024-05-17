@@ -15,9 +15,12 @@ private:
     int               minCalls            = 10;
     int               maxCalls            = 35;
     int               _seed = 0;
+
     int _tileSize;
     int CollectibleCtr = 0;
     int FishCtr = 0;
+
+
     sf::RenderWindow* m_window;
 };
 }

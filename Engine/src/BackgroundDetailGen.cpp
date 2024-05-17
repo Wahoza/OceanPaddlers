@@ -61,10 +61,10 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
         m_NoisePosVals.push_back(SubVector);
     }
     
-    initSpriteMap(m_SpriteMapField, "FieldAssets.png");
-    initSpriteMap(m_SpriteMapForrest, "ForrestAssets.png");
-    initSpriteMap(m_SpriteMapMines, "MineAssets.png");
-    initSpriteMap(m_SpriteMapVillage, "VillageAssets.png");
+    initSpriteMap(m_SpriteMapField, "grassTiles/FieldAssets.png");
+    initSpriteMap(m_SpriteMapForrest, "grassTiles/ForrestAssets.png");
+    initSpriteMap(m_SpriteMapMines, "grassTiles/MineAssets.png");
+    initSpriteMap(m_SpriteMapVillage, "grassTiles/VillageAssets.png");
 
     //m_IslandTiles.push_back({30*16,5*16 });
 }
@@ -151,7 +151,7 @@ void BackgroundDetailGen::draw(sf::RenderWindow& window)
             //Conditionals for drawing on land
             if (NPV.noise < -0.3)
             {
-                t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
+                 t_sprite = *m_SpriteMapForrest[NoiseToInt(m_SpriteMapForrest.size(), float(NPV.localNoise))];
             }
             else if (NPV.noise < -0.1)
             {
@@ -256,6 +256,13 @@ int BackgroundDetailGen::NoiseToInt(int TotalSize, float noiseVal)
     noiseVal   = (noiseVal + 1) / 2; //Noise now is between 0 and 1;
     
     return int(almostmaxVal * noiseVal);
+}
+void BackgroundDetailGen::LoadTextures(std::string FolderName)
+{
+    initSpriteMap(m_SpriteMapField, FolderName + "/FieldAssets.png");
+    initSpriteMap(m_SpriteMapForrest, FolderName + "/ForrestAssets.png");
+    initSpriteMap(m_SpriteMapMines, FolderName + "/MineAssets.png");
+    initSpriteMap(m_SpriteMapVillage, FolderName + "/VillageAssets.png");
 }
 void BackgroundDetailGen::shutdown()
 {

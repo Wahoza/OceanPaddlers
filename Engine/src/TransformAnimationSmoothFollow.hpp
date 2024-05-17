@@ -19,5 +19,6 @@ private:
     float                               middleYval = 17 / 2 * 16 +8;
     std::shared_ptr<mmt_gd::GameObject> m_target;
     float                               m_smoothFactor;
+    sf::Vector2f                        furthestTartgetPos = {0, 0};
 };
 } // namespace mmt

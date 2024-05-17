@@ -240,6 +240,12 @@
     <ClInclude Include="..\src\HighScoresState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\TransitionObject.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TileNames.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -379,6 +385,12 @@
     </ClCompile>
     <ClCompile Include="..\src\HighScoresState.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TransitionObject.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TileNames.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

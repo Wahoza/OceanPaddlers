@@ -42,12 +42,14 @@ public:
 
     void shutdown();
 
+    void LoadTextures(string Folder, IntRect _TextureRect);
+    void DisableGenArea(sf::FloatRect* Rect);
+
 private:
 
     void          generateNextSprite();
     void          generateNextDock(int type, std::vector<Vector2i> normalVec, Vector2i offset, Vector2f pos);
     void          GenerateDirtArea(float xpos);
-
     FastNoiseLite noise;
     int           waitingDist = 0; //purpose: Have a bit of a prefab to ease people into game
     bool          waiting     = true;
@@ -93,6 +95,10 @@ private:
     FloatRect min_dirtArea = {0, 0,10, 10};
     FloatRect max_dirtArea = {0, 0, 20, 20};
 
+    FloatRect* disabledArea;
+
     int TextureSize = 16;
+
+    sf::FloatRect _windowRect;
 };
 }

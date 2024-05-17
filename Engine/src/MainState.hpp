@@ -33,5 +33,7 @@ private:
     PhysicsManager*   m_PhysicsManager;
     Hud*              m_Hud;
     LevelGenerator    m_gen;
+
+    bool paused = false;
 };
 } // namespace mmt_gd

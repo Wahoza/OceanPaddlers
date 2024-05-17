@@ -160,5 +160,28 @@ public:
         return Type;
     }
 };
+class SwapTiles final : public BasicDataEvent<std::tuple<int, int>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
 
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class SwapTileRequest final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 } // namespace mmt_gd

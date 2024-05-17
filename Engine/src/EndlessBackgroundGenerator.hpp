@@ -29,6 +29,7 @@ public:
     void Organize();
     void update(float deltaTime, sf::FloatRect lastWindowRect);
     void draw(sf::RenderWindow& window);
+    void LoadFromFolder(std::string FolderName);
     void shutdown();
     
     sf::Vector2i GetTotalSize();
@@ -40,6 +41,13 @@ private:
     sf::FloatRect                        m_lastWindowRect;
     TileSetMap                               m_tileSets;
     int                                      tileSize;
+    sf::Color                                clearColor = {71, 163, 71, 255};
+
+    sf::Texture _texture;
+    
+    tson::Map* _map;
+
+    int width = 0;
     //BackgroundDetailGen                      m_DetailGen;
 };
 }
