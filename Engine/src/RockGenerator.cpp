@@ -21,6 +21,16 @@ void RockGenerator::init(sf::Vector2i Area, int seed)
     _Area = Area;
 }
 
+void RockGenerator::loadTextures(std::string Filepath)
+{
+    if (!m_texture.loadFromFile("../assets/SegmentedTiles/" + Filepath + "ObstacleTiles.png"))
+    {
+        sf::err() << "Could not load icon\n";
+        return;
+    }
+    m_Sprite.setTexture(m_texture);
+}
+
 void RockGenerator::generateNextRock(float xpos, int pathy)
 {
     {

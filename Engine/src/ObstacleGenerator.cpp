@@ -222,9 +222,11 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             IEvent::Ptr Islands = std::make_shared<IslandTileGenEvent>(hasIsland);
             EventBus::getInstance().fireEvent(Islands);
             
-
-            RockGen.generateNextRock(NPVs[0][0].pos.x, pathy);
-            RockGen.generateNextCurrent(NPVs[0][0].pos.x, pathy);
+            if (!disabledArea->contains(NPVs[0][0].pos))
+                {
+                    RockGen.generateNextRock(NPVs[0][0].pos.x, pathy);
+                    RockGen.generateNextCurrent(NPVs[0][0].pos.x, pathy);
+                }
             generateNextSprite();
             return;
         }
@@ -644,6 +646,8 @@ void ObstacleGenerator::LoadTextures(string Folder, IntRect _TextureRect)
     }
     m_waterPrinter.setTexture(m_waterTexture);
     m_waterPrinter.setOrigin(2, 0);
+
+    RockGen.loadTextures(Folder);
 }
 void ObstacleGenerator::shutdown()
 {

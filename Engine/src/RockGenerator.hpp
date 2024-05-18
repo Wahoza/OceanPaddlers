@@ -10,6 +10,7 @@ class RockGenerator
 {
 public:
     void init(sf::Vector2i Area, int seed);
+    void loadTextures(std::string Filepath);
     void generateNextRock(float xpos, int pathy);
     void generateNextCurrent(float xpos, int pathy);
     void draw(sf::RenderWindow& window);

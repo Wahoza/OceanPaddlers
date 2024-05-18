@@ -239,7 +239,8 @@ void BackgroundDetailGen::initSpriteMap(std::unordered_map<int, std::shared_ptr<
 
     m_textures.push_back(texture);
     int size = texture->getSize().x / 16;
-
+    
+    map.clear();
     for (int i = 0; i < size; i++)
     {
         std::shared_ptr<sf::Sprite> t_sprite = std::make_shared<sf::Sprite>();
@@ -259,10 +260,11 @@ int BackgroundDetailGen::NoiseToInt(int TotalSize, float noiseVal)
 }
 void BackgroundDetailGen::LoadTextures(std::string FolderName)
 {
-    initSpriteMap(m_SpriteMapField, FolderName + "/FieldAssets.png");
-    initSpriteMap(m_SpriteMapForrest, FolderName + "/ForrestAssets.png");
-    initSpriteMap(m_SpriteMapMines, FolderName + "/MineAssets.png");
-    initSpriteMap(m_SpriteMapVillage, FolderName + "/VillageAssets.png");
+    m_textures.clear();
+    initSpriteMap(m_SpriteMapField, FolderName + "FieldAssets.png");
+    initSpriteMap(m_SpriteMapForrest, FolderName + "ForrestAssets.png");
+    initSpriteMap(m_SpriteMapMines, FolderName + "MineAssets.png");
+    initSpriteMap(m_SpriteMapVillage, FolderName + "VillageAssets.png");
 }
 void BackgroundDetailGen::shutdown()
 {
