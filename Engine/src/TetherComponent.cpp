@@ -196,7 +196,7 @@ bool TetherComponent::CollisionPhysics(GameObject* collider,Vector2f collisionVe
     other->getComponent<RigidBodyComponent>().get()->setVelocity(-colliderVelocityresult);
     
     AddLocalForce(-collisionVec);
-
+    
     return true;
 }
 void TetherComponent::ApplyForce(Vector2f _force)
@@ -223,14 +223,14 @@ Vector2f TetherComponent::getPosition()
 void TetherComponent::AddLocalForce(Vector2f _force)
 {
     m_velocity += _force;
-    if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= trueMaxVelocity * trueMaxVelocity)
+    /*if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y >= trueMaxVelocity * trueMaxVelocity)
     {
         if (m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y > 0)
         {
 
             m_velocity = m_velocity / sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) * trueMaxVelocity;
         }
-    }
+    }*/
 }
 GameObject* TetherComponent::getOtherObj(GameObject collider)
 {

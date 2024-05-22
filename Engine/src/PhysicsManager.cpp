@@ -62,9 +62,18 @@ void PhysicsManager::HandleCollisions(float fDeltaTimeSeconds)
     //std::cout << "update" << std::endl;
     for (auto& body : m_staticcolliders)
     {
-        DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
-                                               {body->m_shape.width, body->m_shape.height},
-                                               sf::Color::Green);
+        if (body->m_coll == StaticColliderComponent::Disabled)
+        {
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   {100,100,100,255});
+        }
+        else
+        {
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   sf::Color::Green);
+        }
         //std::cout << body->m_shape.width << std::endl;
     }
     for (auto& body : m_triggers)
@@ -176,6 +185,10 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
     for (auto itB = m_staticcolliders.begin(); itB != m_staticcolliders.end(); ++itB)
     {
         auto& body2 = *itB;
+        if (body2->m_coll == StaticColliderComponent::Disabled)
+        {
+            continue;
+        }
 
         Transform body1Transform;
         body1Transform.translate(body1->getGameObject().getPosition());
@@ -215,8 +228,10 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
                 {
                     if (auto player = tether->getGameObject().getComponent<PlayerComponent>(); player != nullptr)
                     {
-                        if (player->getHurtTime() > 1 && player->getHurtTime() < player->getMaxHurtTime())
+                        if (player->getHurtTime() > 0.3 && player->getHurtTime() < player->getMaxHurtTime())
                         {
+                            body2->ChangeType("Disabled");
+
                             return;
                         };
                     }
@@ -297,6 +312,7 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
                         body2->SquaredMaxVelocity)
                     {
                         body1->addVelocity({0.04, 0});
+                        tether->ApplyForce({0.04, 0});
                     }
                 }
              }

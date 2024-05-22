@@ -26,7 +26,7 @@ Hud* Hud::getInstance()
     
     return m_instance;
 }
-Hud::Hud() : EggScore(0), currentlives(3)
+Hud::Hud() : EggScore(0), currentlives(3), levelIterator(0)
 {
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
@@ -62,13 +62,13 @@ void Hud::Notify(IEvent::Ptr event)
 
         int swapType =  std::get<0>(swapEvent.get()->getData());
 
+        levelIterator++;
+
         swapText.setString(
             "Level " + std::to_string(levelIterator) + ": " + TileNames::getLevelAdjective(swapType, tensDigit) +
             " " + TileNames::getLevelNoun(swapType, onesDigit));
 
         swapText.setOrigin({swapText.getString().getSize() * swapText.getCharacterSize() / 2.f, 0});
-
-        levelIterator++;
     }
 }
 
@@ -78,6 +78,7 @@ void Hud::CreateHud()
     {
         EggScore         = 0;
         currentlives     = 3;
+        levelIterator    = 0;
     }
     {
         if (!m_font.loadFromFile("../assets/HudAssets/PixelFont.ttf"))

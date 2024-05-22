@@ -113,7 +113,9 @@ void MainState::update(const float deltaTime)
     PROFILE_FUNCTION();
     if (InputManager::getInstance().isKeyPressed("Exit"))
     {
-        paused = !paused;
+        //paused = !paused;
+        m_gameStateManager->setState("GameOverState");
+
     }
     if (paused)
     {

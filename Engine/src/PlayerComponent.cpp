@@ -79,6 +79,10 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
             rb.get()->GetTether()->setVelocity({0, 0});
         }
     }
+
+    if (auto pos = m_gameObject.getPosition().y; !(pos > boundings[0] && pos < boundings[1])) {
+        DamageCollision();
+    }
     timeSinceLastSwap += deltaTime;
 }
 void PlayerComponent::onEnvironmentSwap(IEvent::Ptr event)

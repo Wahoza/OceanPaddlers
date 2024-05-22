@@ -39,6 +39,8 @@ private:
     float ObjectYonSwap = 8 * 16;
     float maxHurtTime   = 5;
     float hurtTime      = maxHurtTime + 1;
+
+    std::vector<float> boundings = {0, 20 * 16};
 };
 
 }

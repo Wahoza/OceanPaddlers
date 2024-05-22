@@ -62,6 +62,7 @@ void MenuState::init()
                           m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
     m_logo.setScale(m_logo.getScale() / 4.f);
     m_isInit = true;
+    initButtonsDown = true;
 }
 
 void MenuState::update(float delta)
@@ -73,14 +74,23 @@ void MenuState::update(float delta)
     if (InputManager::getInstance().isKeyPressed("Select") || sf::Joystick::isButtonPressed(0, 0) ||
         sf::Joystick::isButtonPressed(1, 0))
     {
-        if (currentSelection == 0)
+        if (!initButtonsDown)
         {
-            m_gameStateManager->setState("MainState");
+
+
+            if (currentSelection == 0)
+            {
+                m_gameStateManager->setState("MainState");
+            }
+            else
+            {
+                m_gameStateManager->setState("HighScoresState");
+            }
         }
-        else
-        {
-            m_gameStateManager->setState("HighScoresState");
-        }
+    }
+    else
+    {
+        initButtonsDown = false;
     }
 
     currentyAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);

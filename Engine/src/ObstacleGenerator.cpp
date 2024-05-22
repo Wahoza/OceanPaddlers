@@ -609,7 +609,6 @@ void ObstacleGenerator::GenerateDirtArea(float xpos)
 void ObstacleGenerator::DisableGenArea(sf::FloatRect* Rect)
 {
     disabledArea = Rect;
-    std::cout << "i got updated" << std::endl;
 }
 void ObstacleGenerator::LoadTextures(string Folder, IntRect _TextureRect)
 {

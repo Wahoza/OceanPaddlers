@@ -34,5 +34,6 @@ private:
     float lastyAxis        = 0;
 
     int currentSelection = 0;
+    bool initButtonsDown             = true;
 };
 } // namespace mmt_gd
