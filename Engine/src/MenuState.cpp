@@ -17,7 +17,8 @@ using namespace std;
 void MenuState::init()
 {
     PROFILE_FUNCTION();
-
+    initButtonsDown = true;
+    
     if (m_isInit)
     {
         return;
@@ -30,9 +31,11 @@ void MenuState::init()
     }
     m_font.setSmooth(false);
     m_text.setPosition(m_game->getWindow().getView().getCenter());
-    m_text.setString(" <Play>\n Scores");
     m_text.setFillColor(sf::Color::White);
     m_text.setFont(m_font);
+
+        generateSelectedOption(0);
+
     sf::FloatRect textRect = m_text.getLocalBounds();
     m_text.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 
@@ -48,6 +51,7 @@ void MenuState::init()
 
     m_background.setScale(m_game->getWindow().getSize().x / static_cast<float>(m_backgroundTexture.getSize().x),
                           m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
+
     m_background.setPosition(m_game->getWindow().getView().getCenter());
 
     m_background.setTexture(m_backgroundTexture);
@@ -62,7 +66,6 @@ void MenuState::init()
                           m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
     m_logo.setScale(m_logo.getScale() / 4.f);
     m_isInit = true;
-    initButtonsDown = true;
 }
 
 void MenuState::update(float delta)
@@ -77,14 +80,20 @@ void MenuState::update(float delta)
         if (!initButtonsDown)
         {
 
-
-            if (currentSelection == 0)
+            switch (currentSelection)
             {
-                m_gameStateManager->setState("MainState");
-            }
-            else
-            {
-                m_gameStateManager->setState("HighScoresState");
+                case 0:
+                    m_gameStateManager->setState("MainLevelState");
+                    return;
+                case 1:
+                    m_gameStateManager->setState("MainEndlessState");
+                    return;
+                case 2:
+                    m_gameStateManager->setState("HighScoresState");
+                    return;
+                case 3:
+                    m_gameStateManager->setState("CreditsState");
+                    return;
             }
         }
     }
@@ -108,23 +117,17 @@ void MenuState::update(float delta)
         //use to select next or previous char
         int direction = int(currentyAxis / abs(currentyAxis));
         currentSelection += direction;
-        if (currentSelection >= 2)
+        if (currentSelection >= 4)
         {
             currentSelection = 0;
         }
         if (currentSelection < 0)
         {
-            currentSelection = 1;
+            currentSelection = 3;
         }
 
-        if (currentSelection == 0)
-        {
-            m_text.setString(" <Play>\n Scores");
-        }
-        else
-        {
-            m_text.setString("  Play\n<Scores>");
-        }
+        generateSelectedOption(currentSelection);
+        
     }
 
     lastyAxis = currentyAxis;
@@ -147,5 +150,27 @@ void MenuState::exit()
     PROFILE_FUNCTION();
 
     GameState::exit();
+}
+void MenuState::generateSelectedOption(int id)
+{
+    std::string tempText = "";
+
+    for (size_t i = 0; i < options.size(); i++)
+    {
+        if (i == id)
+        {
+            tempText += "<" + options[i] + ">\n";
+        }
+        else
+        {
+            tempText += " " + options[i] + "\n";
+        }
+    }
+
+    m_text.setString(tempText);
+    //    for (size_t i = 0; i < options.size(); ++i)
+    //{
+    //    std::cout << "Length of \"" << options[i] << "\" is " << options[i].length() << std::endl;
+    //}
 }
 } // namespace mmt_gd

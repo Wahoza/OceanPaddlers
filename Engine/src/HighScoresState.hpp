@@ -47,5 +47,6 @@ private:
     float lastxAxis = 0;
 
     int currentSort;
+    bool initButtonsDown = true;
 };
 }

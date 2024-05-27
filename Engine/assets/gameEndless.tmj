@@ -227,6 +227,78 @@
                  "width":26.1515,
                  "x":800,
                  "y":124
+                }, 
+                {
+                 "height":13.5,
+                 "id":377,
+                 "name":"fish1",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":3
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"pushfish.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":0.2
+                        }],
+                 "rotation":0,
+                 "type":"Sprite",
+                 "visible":true,
+                 "width":13.5,
+                 "x":975.25,
+                 "y":157.25
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -316,7 +388,7 @@
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":377,
+ "nextobjectid":378,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

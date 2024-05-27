@@ -3,7 +3,7 @@
 //License: LICENSE.txt
 #include "stdafx.h"
 
-#include "MainState.hpp"
+#include "MainEndlessState.hpp"
 #include "AiManager.hpp"
 #include "CameraRenderComponent.hpp"
 //#include "Hud.hpp"
@@ -27,22 +27,24 @@
 
 namespace mmt_gd
 {
-MainState::MainState(GameStateManager* gameStateManager, Game* game) :
+MainEndlessState::MainEndlessState(GameStateManager* gameStateManager, Game* game) :
 GameState(gameStateManager, game),
 m_spriteManager(game->getWindow())
 {
     EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { ListenforEnd(event); });
 }
 
-void MainState::init()
+void MainEndlessState::init()
 {
+    PROFILE_FUNCTION();
+
     std::random_device rd;
     std::mt19937       generator(rd());
 
     std::uniform_int_distribution<int> distribution(0, 1000);
     int                                seed = distribution(generator);
 
-    PROFILE_FUNCTION();
+    isActive = true;
     m_soundManager.init();
     m_gameObjectManager.init();
     m_spriteManager.init();
@@ -55,13 +57,24 @@ void MainState::init()
     {
         PROFILE_SCOPE("Load Tile Map");
         const auto resourcePath = fs::path{"../"} / "assets";
-        const auto mapPath      = resourcePath / "gameEndless.tmj";
+        
+        std::string path = "gameEndless.tmj";
+        if (!isEndless)
+        {
+            path = "game.tmj";
+        }
+        const auto mapPath      = resourcePath / path;
+
         tson::Tileson t;
         if (const std::unique_ptr<tson::Map> map = t.parse(mapPath); map->getStatus() == tson::ParseStatus::OK)
         {
             TileMapLoader::init(map, resourcePath, m_spriteManager);
             TileMapLoader::loadObjectLayers(map, resourcePath, m_spriteManager);
-            m_gen.Initialize(map, resourcePath, m_spriteManager, seed);
+
+            if (isEndless)
+            {
+                m_gen.Initialize(map, resourcePath, m_spriteManager, seed);
+            }
         }
         else
         {
@@ -108,13 +121,13 @@ void MainState::init()
     sf::FloatRect viewport(0.f, 0.f, 400.f, 300.f);
 }
 
-void MainState::update(const float deltaTime)
+void MainEndlessState::update(const float deltaTime)
 {
     PROFILE_FUNCTION();
     if (InputManager::getInstance().isKeyPressed("Exit"))
     {
-        //paused = !paused;
-        m_gameStateManager->setState("GameOverState");
+        paused = !paused;
+        //m_gameStateManager->setState("GameOverState");
 
     }
     if (paused)
@@ -124,31 +137,46 @@ void MainState::update(const float deltaTime)
 
     EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
-    m_gen.update(deltaTime);
+    if (isEndless)
+    {
+        m_gen.update(deltaTime);
+    }
+
     //m_PhysicsManager = PhysicsManager::getInstance();
     m_PhysicsManager->HandleCollisions(deltaTime);
     m_Hud->update(deltaTime);
     AiManager::getInstance()->update();
 }
 
-void MainState::draw()
+void MainEndlessState::draw()
 {
     PROFILE_FUNCTION();
-
-    m_gen.drawBackground(m_game->getWindow());
-    m_spriteManager.drawBackground();
-    m_spriteManager.draw();
-    m_gen.drawForeground(m_game->getWindow());
-    m_spriteManager.drawTop();
+    if (isEndless)
+    {
+        m_gen.drawBackground(m_game->getWindow());
+        m_spriteManager.drawBackground();
+        m_spriteManager.drawCenter();
+        m_gen.drawForeground(m_game->getWindow());
+        m_spriteManager.drawTop();
+    }
+    else
+    {
+        m_spriteManager.drawAll();
+    }
+    
     m_Hud->draw(m_game->getWindow());
 }
 
-void MainState::ListenforEnd(IEvent::Ptr event)
+void MainEndlessState::ListenforEnd(IEvent::Ptr event)
 {
-    m_gameStateManager->setState("GameOverState");
+    if (isActive)
+    {
+        m_gameStateManager->setState("GameOverEndlessState");
+        isActive = false;
+    }
 }
 
-void MainState::exit()
+void MainEndlessState::exit()
 {
     PROFILE_FUNCTION();
     m_spriteManager.shutdown();

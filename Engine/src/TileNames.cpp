@@ -2,15 +2,19 @@
 #include "TileNames.hpp"
 namespace mmt_gd
 {
-    std::vector<std::string> TileNames::FolderNames = {"grassTiles", "desertTiles"};
+std::vector<std::string> TileNames::FolderNames = {"grassTiles", "desertTiles", "winterTiles", "mountainTiles"};
 
     std::vector<std::vector<std::string>> TileNames::LevelNamesNouns =
         {{"Meadow", "Field", "Pasture", "Glade", "Valley", "Grove", "Hollow", "Clearing", "Vale", "Sward"},
-         {"Wasteland", "Dunes", "Oasis", "Sands", "Desert", "Expanse", "Badlands", "Canyon", "Plateau", "Arroyo"}};
+         {"Wasteland", "Dunes", "Oasis", "Sands", "Desert", "Expanse", "Badlands", "Canyon", "Plateau", "Arroyo"},
+     {"Snowfield", "Tundra", "Valley", "Fjord", "Hollow", "Copse", "Dale", "Ridge", "Timberland", "Woods"},
+     {"Peak", "Summit", "Ridge", "Crest", "Range", "Bluff", "Slope", "Cliff", "Highland", "Alps"}};
 
     std::vector<std::vector<std::string>> TileNames::LevelNamesAdjectives =
         {{"Brisk", "Whispering", "Enchanted", "Swaying", "Tranquil", "Wild", "Mystical", "Gentle", "Serene", "Vibrant"},
-         {"Sizzling", "Scorching", "Arid", "Golden", "Dusty", "Barren", "Sunbaked", "Sandy", "Parched", "Mirage-like"}};
+         {"Sizzling", "Scorching", "Arid", "Golden", "Dusty", "Barren", "Sunbaked", "Sandy", "Parched", "Mirage-like"},
+         {"Icy", "Frosty", "Snowy", "Chilly", "Arctic", "Nordic", "Frozen", "Wintry", "Frigid", "Glacial"},
+         {"Rocky", "Steep", "Lofty", "Craggy", "Majestic", "Rugged", "Towering", "Alpine", "Sheer", "Elevated"}};
 
 std::string TileNames::getFolderLocation(int id)
 {

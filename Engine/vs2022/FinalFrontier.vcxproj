@@ -142,16 +142,19 @@
     <ClInclude Include="..\src\AiManager.hpp" />
     <ClInclude Include="..\src\BackGroundDetailGen.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
+    <ClInclude Include="..\src\CreditsState.hpp" />
     <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp" />
     <ClInclude Include="..\src\FastNoiseLite.h" />
-    <ClInclude Include="..\src\GameOverState.hpp" />
+    <ClInclude Include="..\src\GameOverEndlessState.hpp" />
+    <ClInclude Include="..\src\GameOverLevelState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
     <ClInclude Include="..\src\HighScoresState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
     <ClInclude Include="..\src\InputObject.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
     <ClInclude Include="..\src\LevelGenerator.hpp" />
-    <ClInclude Include="..\src\MainState.hpp" />
+    <ClInclude Include="..\src\MainLevelState.hpp" />
+    <ClInclude Include="..\src\MainEndlessState.hpp" />
     <ClInclude Include="..\src\MenuState.hpp" />
     <ClInclude Include="..\src\Game.hpp" />
     <ClInclude Include="..\src\GameObject.hpp" />
@@ -201,7 +204,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
-    <ClCompile Include="../src/MainState.cpp" />
+    <ClCompile Include="..\src\GameOverLevelState.cpp" />
+    <ClCompile Include="..\src\MainEndlessState.cpp" />
     <ClCompile Include="../src/MenuState.cpp" />
     <ClCompile Include="../src/Game.cpp" />
     <ClCompile Include="../src/GameObject.cpp" />
@@ -211,16 +215,18 @@
     <ClCompile Include="..\src\AiManager.cpp" />
     <ClCompile Include="..\src\BackgroundDetailGen.cpp" />
     <ClCompile Include="..\src\CollectibleComponent.cpp" />
+    <ClCompile Include="..\src\CreditsState.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
     <ClCompile Include="..\src\EndlessBackgroundGenerator.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
-    <ClCompile Include="..\src\GameOverState.cpp" />
+    <ClCompile Include="..\src\GameOverEndlessState.cpp" />
     <ClCompile Include="..\src\HighScoresState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
     <ClCompile Include="..\src\InputObject.cpp" />
     <ClCompile Include="..\src\LevelGenerator.cpp" />
+    <ClCompile Include="..\src\MainLevelState.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
     <ClCompile Include="..\src\ObjectSpawner.cpp" />
     <ClCompile Include="..\src\ObstacleGenerator.cpp" />

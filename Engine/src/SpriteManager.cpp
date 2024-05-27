@@ -90,7 +90,7 @@ std::string SpriteManager::getLayer(const IRenderComponent* comp)
     return {};
 }
 
-void SpriteManager::draw()
+void SpriteManager::drawCenter()
 {
     ffAssertMsg(m_camera != nullptr, "Camera is nullptr")
 
@@ -154,6 +154,28 @@ void SpriteManager::drawTop()
         if (comp->getGameObject().isActive())
         {
             comp->draw();
+        }
+    }
+}
+void SpriteManager::drawAll()
+{
+    ffAssertMsg(m_camera != nullptr, "Camera is nullptr")
+
+        m_camera->draw();
+
+    for (const auto& order : m_layerOrder)
+    {
+        PROFILE_SCOPE(order);
+
+        ffAssertMsg(m_layerToComp.find(order) != m_layerToComp.end(), "Layer with this name not defined: " + order)
+
+            auto& layer = m_layerToComp[order];
+        for (auto* comp : layer)
+        {
+            if (comp->getGameObject().isActive())
+            {
+                comp->draw();
+            }
         }
     }
 }

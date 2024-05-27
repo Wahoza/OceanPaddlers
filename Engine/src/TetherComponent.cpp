@@ -100,6 +100,7 @@ void TetherComponent::update(const float deltaTime)
         sprite.setOrigin(spriteOffset);
         sprite.setRotation(angle);
     }
+
 }
 
 void TetherComponent::calculateRBForce(float deltaTime)

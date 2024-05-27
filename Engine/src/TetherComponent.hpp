@@ -67,7 +67,7 @@ private:
     float            velocityIncrease = 0.05 / 16;
     vector<Vector2f> constlocalForces;
     Vector2f         m_velocity      = {0, 0};
-    Vector2f         Loss            = {0.1, 0.9};
+    Vector2f         Loss            = {0.4, 0.8};
     float            trueMaxVelocity = 100;
     float            initMaxVelocity    = 20;
     float            currentMaxVelocity = 0;

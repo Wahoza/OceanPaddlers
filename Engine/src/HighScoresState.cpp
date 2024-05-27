@@ -32,7 +32,7 @@ bool HighScoreState::compareInnerTuple(const std::tuple<std::string, int, int, i
 void HighScoreState::init()
 {
     PROFILE_FUNCTION();
-
+    initButtonsDown = true;
     ScreenSize = m_game->getWindow().getView().getSize();
     ScreenTopLeft = m_game->getWindow().getView().getCenter() - ScreenSize/2.f;
 
@@ -172,7 +172,14 @@ void HighScoreState::update(float deltaTime)
     if (InputManager::getInstance().isKeyPressed("Select") || sf::Joystick::isButtonPressed(0, 0) ||
         sf::Joystick::isButtonPressed(1, 0))
     {
-        m_gameStateManager->setState("MenuState");
+        if (!initButtonsDown)
+        {
+            m_gameStateManager->setState("MenuState");
+        }
+    }
+    else
+    {
+        initButtonsDown = false;
     }
 }
 void HighScoreState::draw()

@@ -98,6 +98,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             if (disabledArea->contains(SubVector[i].pos))
             {
                 SubVector[i].noise = -100.0;
+                continue;
             }
             
             if (i < PathVals.size())
@@ -109,6 +110,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                     if (PathVals[i] <= -2)
                     {
                         pathy = SubVector[i].pos.y;
+                        
                         ObjSpawner.createPotentialCollectible(SubVector[i].pos);
                     }
                 }

@@ -6,7 +6,7 @@
 
 #include "InputObject.hpp"
 
-#include "GameOverState.hpp"
+#include "GameOverLevelState.hpp"
 #include "GameState.hpp"
 #include "Game.hpp"
 #include "EventBus.hpp"
@@ -20,12 +20,13 @@ using namespace sf;
 namespace mmt_gd
 {
 
-GameOverState::GameOverState(GameStateManager* gameStateManager, Game* game) : GameState(gameStateManager, game), wait(0)
+GameOverLevelState::GameOverLevelState(GameStateManager* gameStateManager, Game* game) :
+GameState(gameStateManager, game)
 {
     EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { updateStats(event); });
 }
 
-void GameOverState::init()
+void GameOverLevelState::init()
 {
     PROFILE_FUNCTION();
 
@@ -54,13 +55,13 @@ void GameOverState::init()
     m_text.setPosition(ScreenCenter.x, ScreenCenter.y - 100);
     m_text.setScale(5, 5);
 
-    m_eggsText.setPosition(ScreenCenter.x, ScreenCenter.y+100);
+    m_eggsText.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 100);
     m_eggsText.setFillColor(color);
 
     m_eggsText.setFont(m_font);
     m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
 
-    m_distanceText.setPosition(ScreenCenter.x, ScreenCenter.y+150);
+    m_distanceText.setPosition(ScreenCenter.x - 700, ScreenCenter.y+150);
     m_distanceText.setFillColor(color);
 
     m_distanceText.setFont(m_font);
@@ -68,35 +69,21 @@ void GameOverState::init()
 
 
     m_totalScoreText.setFont(m_font);
-    m_totalScoreText.setPosition(ScreenCenter.x, ScreenCenter.y + 200);
+    m_totalScoreText.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 200);
     m_totalScoreText.setFillColor(color);
     m_totalScoreText.setString("Total score: " + to_string(totalScore));
 
     m_view = m_game->getWindow().getView();
-    
-    m_name.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 100);
-    m_name.setFillColor(color);
-    m_name.setFont(m_font);
-    m_name.setString("Name:");
-
-    InputObject::getInstance()->init(ScreenCenter + Vector2f(-700, 150),
-                                     {500, 70},
-                                     color);
 
     //InputObject::getInstance()->StartListen();
 }
 
-void GameOverState::update(float delta)
+void GameOverLevelState::update(float delta)
 {
     PROFILE_FUNCTION();
     m_view.setSize(1920, 1080);
     m_game->getWindow().setView(m_view);
-    wait += delta;
-    if (wait > 0.3)
-    {
-        InputObject::getInstance()->StartListen();
-        InputObject::getInstance()->update(delta);
-    }
+  
     if (InputManager::getInstance().isKeyPressed("Exit") || InputManager::getInstance().isKeyPressed("Continue") ||
         sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(1, 0))
     {
@@ -104,7 +91,7 @@ void GameOverState::update(float delta)
     }
 }
 
-void GameOverState::draw()
+void GameOverLevelState::draw()
 {
     PROFILE_FUNCTION();
 
@@ -114,13 +101,11 @@ void GameOverState::draw()
     m_game->getWindow().draw(m_totalScoreText);
 
     m_game->getWindow().draw(m_name);
-
-    InputObject::getInstance()->draw(m_game->getWindow());
     //m_game->getWindow().draw(InputObject::getInstance()->m_rectangle);
     //m_game->getWindow().draw(InputObject::getInstance()->m_text);
 }
 
-void GameOverState::updateStats(IEvent::Ptr event)
+void GameOverLevelState::updateStats(IEvent::Ptr event)
 {
     if (auto gameOverevent = std::dynamic_pointer_cast<GameOverEvent>(event))
     {
@@ -132,44 +117,11 @@ void GameOverState::updateStats(IEvent::Ptr event)
     }
 }
 
-void GameOverState::exit()
+void GameOverLevelState::exit()
 {
     PROFILE_FUNCTION();
-    {
-        if (InputObject::getInstance()->getText() != "")
-        {
-
-            std::string filePath = "../assets/scores.txt";
-
-            // Read the existing file contents
-            std::ifstream inputFile(filePath);
-            if (inputFile.is_open())
-            {
-                std::string fileContent((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
-                inputFile.close();
-
-                // Append new data to the existing content
-                fileContent += "\n" + InputObject::getInstance()->getText() + "," + to_string((int)distance) + "," +
-                               to_string(eggsCollected) + "," + to_string(totalScore);
-
-                // Write the updated content back to the file
-                std::ofstream outputFile(filePath);
-                if (outputFile.is_open())
-                {
-                    outputFile << fileContent;
-                    outputFile.close();
-                }
-            }
-
-        }
-    }
 
     GameState::exit();
-    //InputObject::getInstance()->shutdown();
-    //m_gameObjectManager.shutdown();
-    //m_PhysicsManager->shutdown();
-    //m_Hud->shutdown();
-    //AiManager::getInstance()->shutdown();
-    //InputObject::getInstance()->shutdown();
+
 }
 }

@@ -10,10 +10,10 @@
 namespace mmt_gd
 {
 
-	class FINALFRONTIER_API GameOverState final : public GameState
+	class FINALFRONTIER_API GameOverLevelState final : public GameState
 	{
     public:
-        GameOverState(GameStateManager* gameStateManager, Game* game);
+        GameOverLevelState(GameStateManager* gameStateManager, Game* game);
         void init() override;
         void exit() override;
 
@@ -34,6 +34,5 @@ namespace mmt_gd
         int   eggsCollected = 0;
         int      totalScore    = 0;
         bool  won = false;
-        float    wait          = 0;
 	};
 } // namespace mmt_gd
