@@ -128,73 +128,6 @@
          "name":"GameObjects",
          "objects":[
                 {
-                 "height":48,
-                 "id":4,
-                 "name":"Player0",
-                 "properties":[
-                        {
-                         "name":"Border",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"BorderSize",
-                         "type":"int",
-                         "value":20
-                        }, 
-                        {
-                         "name":"Forces",
-                         "type":"string",
-                         "value":"1 0"
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":20
-                        }, 
-                        {
-                         "name":"TetherPercentage",
-                         "type":"float",
-                         "value":0.2
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"turtles.png"
-                        }, 
-                        {
-                         "name":"TextureRectHeight",
-                         "type":"int",
-                         "value":61
-                        }, 
-                        {
-                         "name":"TextureRectLeft",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectTop",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectWidth",
-                         "type":"int",
-                         "value":86
-                        }, 
-                        {
-                         "name":"VelocityLoss",
-                         "type":"float",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"Player",
-                 "visible":true,
-                 "width":64,
-                 "x":512,
-                 "y":128
-                }, 
-                {
                  "height":10.1912878787878,
                  "id":10,
                  "name":"Stone1",
@@ -700,25 +633,8 @@
                  "rotation":0,
                  "type":"Collider",
                  "visible":true,
-                 "width":1471.55555555556,
-                 "x":-119.777777777778,
-                 "y":214.666666666667
-                }, 
-                {
-                 "height":57.3333333333333,
-                 "id":82,
-                 "name":"BottomWall2",
-                 "properties":[
-                        {
-                         "name":"CollisionType",
-                         "type":"string",
-                         "value":"Wall"
-                        }],
-                 "rotation":0,
-                 "type":"Collider",
-                 "visible":true,
-                 "width":2299.77777777778,
-                 "x":1060.22222222222,
+                 "width":3360,
+                 "x":0,
                  "y":214.666666666667
                 }, 
                 {
@@ -734,8 +650,8 @@
                  "rotation":0,
                  "type":"Collider",
                  "visible":true,
-                 "width":3710,
-                 "x":-350,
+                 "width":3360,
+                 "x":0,
                  "y":0
                 }, 
                 {
@@ -759,150 +675,6 @@
                  "width":64,
                  "x":2016,
                  "y":176
-                }, 
-                {
-                 "height":13.5,
-                 "id":107,
-                 "name":"fish3",
-                 "properties":[
-                        {
-                         "name":"Border",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"BorderSize",
-                         "type":"int",
-                         "value":20
-                        }, 
-                        {
-                         "name":"Forces",
-                         "type":"string",
-                         "value":"0 0"
-                        }, 
-                        {
-                         "name":"Input",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"InputPlayerIdx",
-                         "type":"int",
-                         "value":99
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":3
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"pushfish.png"
-                        }, 
-                        {
-                         "name":"TextureRectHeight",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"TextureRectLeft",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectTop",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectWidth",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"VelocityLoss",
-                         "type":"float",
-                         "value":0.2
-                        }],
-                 "rotation":0,
-                 "type":"Sprite",
-                 "visible":true,
-                 "width":13.5,
-                 "x":2239.33333333333,
-                 "y":80.166666666667
-                }, 
-                {
-                 "height":13.5,
-                 "id":109,
-                 "name":"fish1",
-                 "properties":[
-                        {
-                         "name":"Border",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"BorderSize",
-                         "type":"int",
-                         "value":20
-                        }, 
-                        {
-                         "name":"Forces",
-                         "type":"string",
-                         "value":"0 0"
-                        }, 
-                        {
-                         "name":"Input",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"InputPlayerIdx",
-                         "type":"int",
-                         "value":99
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":3
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"pushfish.png"
-                        }, 
-                        {
-                         "name":"TextureRectHeight",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"TextureRectLeft",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectTop",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectWidth",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"VelocityLoss",
-                         "type":"float",
-                         "value":0.2
-                        }],
-                 "rotation":0,
-                 "type":"Sprite",
-                 "visible":true,
-                 "width":13.5,
-                 "x":1152,
-                 "y":64
                 }, 
                 {
                  "height":176,
@@ -2148,150 +1920,6 @@
                  "y":129.636363636364
                 }, 
                 {
-                 "height":13.5,
-                 "id":162,
-                 "name":"fish5",
-                 "properties":[
-                        {
-                         "name":"Border",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"BorderSize",
-                         "type":"int",
-                         "value":20
-                        }, 
-                        {
-                         "name":"Forces",
-                         "type":"string",
-                         "value":"0 0"
-                        }, 
-                        {
-                         "name":"Input",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"InputPlayerIdx",
-                         "type":"int",
-                         "value":99
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":3
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"pushfish.png"
-                        }, 
-                        {
-                         "name":"TextureRectHeight",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"TextureRectLeft",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectTop",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectWidth",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"VelocityLoss",
-                         "type":"float",
-                         "value":0.2
-                        }],
-                 "rotation":0,
-                 "type":"Sprite",
-                 "visible":true,
-                 "width":13.5,
-                 "x":3153.25,
-                 "y":193.25
-                }, 
-                {
-                 "height":13.5,
-                 "id":163,
-                 "name":"fish4",
-                 "properties":[
-                        {
-                         "name":"Border",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"BorderSize",
-                         "type":"int",
-                         "value":20
-                        }, 
-                        {
-                         "name":"Forces",
-                         "type":"string",
-                         "value":"0 0"
-                        }, 
-                        {
-                         "name":"Input",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"InputPlayerIdx",
-                         "type":"int",
-                         "value":99
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":3
-                        }, 
-                        {
-                         "name":"Texture",
-                         "type":"string",
-                         "value":"pushfish.png"
-                        }, 
-                        {
-                         "name":"TextureRectHeight",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"TextureRectLeft",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectTop",
-                         "type":"int",
-                         "value":0
-                        }, 
-                        {
-                         "name":"TextureRectWidth",
-                         "type":"int",
-                         "value":32
-                        }, 
-                        {
-                         "name":"VelocityLoss",
-                         "type":"float",
-                         "value":0.2
-                        }],
-                 "rotation":0,
-                 "type":"Sprite",
-                 "visible":true,
-                 "width":13.5,
-                 "x":2560.58333333333,
-                 "y":64.5833333333333
-                }, 
-                {
                  "height":29.5,
                  "id":164,
                  "name":"Bridge8",
@@ -2470,28 +2098,6 @@
                  "y":124
                 }, 
                 {
-                 "height":16,
-                 "id":351,
-                 "name":"ScoreGuy",
-                 "properties":[
-                        {
-                         "name":"DisplayedScores",
-                         "type":"int",
-                         "value":5
-                        }, 
-                        {
-                         "name":"FilePath",
-                         "type":"string",
-                         "value":"..\/assets\/scores.txt"
-                        }],
-                 "rotation":0,
-                 "type":"ScoreConverter",
-                 "visible":true,
-                 "width":16,
-                 "x":512,
-                 "y":224
-                }, 
-                {
                  "height":26.25,
                  "id":352,
                  "name":"current2",
@@ -2641,6 +2247,73 @@
                  "width":45.875,
                  "x":3025.5625,
                  "y":166.8125
+                }, 
+                {
+                 "height":48,
+                 "id":373,
+                 "name":"Player0",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":20
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"20 0"
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":200
+                        }, 
+                        {
+                         "name":"TetherPercentage",
+                         "type":"float",
+                         "value":30
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"turtles.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":61
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":86
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"Player",
+                 "visible":true,
+                 "width":64,
+                 "x":480.333333333333,
+                 "y":126.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2692,8 +2365,8 @@
                 }, 
                 {
                  "height":13.5,
-                 "id":369,
-                 "name":"fish2",
+                 "id":377,
+                 "name":"fwoob3",
                  "properties":[
                         {
                          "name":"Border",
@@ -2703,7 +2376,7 @@
                         {
                          "name":"BorderSize",
                          "type":"int",
-                         "value":20
+                         "value":1
                         }, 
                         {
                          "name":"Forces",
@@ -2759,17 +2432,305 @@
                  "type":"Sprite",
                  "visible":true,
                  "width":13.5,
-                 "x":1521.06818181818,
-                 "y":67.625
+                 "x":1518.25,
+                 "y":62.25
+                }, 
+                {
+                 "height":13.5,
+                 "id":379,
+                 "name":"fwoob2",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":3
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"pushfish.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":0.2
+                        }],
+                 "rotation":0,
+                 "type":"Sprite",
+                 "visible":true,
+                 "width":13.5,
+                 "x":1865.25,
+                 "y":75.25
+                }, 
+                {
+                 "height":13.5,
+                 "id":380,
+                 "name":"fwoob4",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":3
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"pushfish.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":0.2
+                        }],
+                 "rotation":0,
+                 "type":"Sprite",
+                 "visible":true,
+                 "width":13.5,
+                 "x":3271.25,
+                 "y":67.25
+                }, 
+                {
+                 "height":13.5,
+                 "id":381,
+                 "name":"fwoob5",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":3
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"pushfish.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":0.2
+                        }],
+                 "rotation":0,
+                 "type":"Sprite",
+                 "visible":true,
+                 "width":13.5,
+                 "x":3151.25,
+                 "y":190.25
+                }, 
+                {
+                 "height":13.5,
+                 "id":383,
+                 "name":"fwoob1",
+                 "properties":[
+                        {
+                         "name":"Border",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"BorderSize",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"Forces",
+                         "type":"string",
+                         "value":"0 0"
+                        }, 
+                        {
+                         "name":"Input",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"InputPlayerIdx",
+                         "type":"int",
+                         "value":99
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":3
+                        }, 
+                        {
+                         "name":"Texture",
+                         "type":"string",
+                         "value":"pushfish.png"
+                        }, 
+                        {
+                         "name":"TextureRectHeight",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"TextureRectLeft",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectTop",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"TextureRectWidth",
+                         "type":"int",
+                         "value":32
+                        }, 
+                        {
+                         "name":"VelocityLoss",
+                         "type":"float",
+                         "value":0.2
+                        }],
+                 "rotation":0,
+                 "type":"Sprite",
+                 "visible":true,
+                 "width":13.5,
+                 "x":2257.25,
+                 "y":92.25
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":373,
+ "nextobjectid":384,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

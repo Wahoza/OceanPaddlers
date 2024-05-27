@@ -140,13 +140,21 @@
     <ClInclude Include="../src/stdafx.h" />
     <ClInclude Include="..\src\AIController.hpp" />
     <ClInclude Include="..\src\AiManager.hpp" />
+    <ClInclude Include="..\src\BackGroundDetailGen.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
-    <ClInclude Include="..\src\GameOverState.hpp" />
+    <ClInclude Include="..\src\CreditsState.hpp" />
+    <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp" />
+    <ClInclude Include="..\src\FastNoiseLite.h" />
+    <ClInclude Include="..\src\GameOverEndlessState.hpp" />
+    <ClInclude Include="..\src\GameOverLevelState.hpp" />
     <ClInclude Include="..\src\GameState.hpp" />
+    <ClInclude Include="..\src\HighScoresState.hpp" />
     <ClInclude Include="..\src\Hud.hpp" />
     <ClInclude Include="..\src\InputObject.hpp" />
     <ClInclude Include="..\src\ITransformAnimation.hpp" />
-    <ClInclude Include="..\src\MainState.hpp" />
+    <ClInclude Include="..\src\LevelGenerator.hpp" />
+    <ClInclude Include="..\src\MainLevelState.hpp" />
+    <ClInclude Include="..\src\MainEndlessState.hpp" />
     <ClInclude Include="..\src\MenuState.hpp" />
     <ClInclude Include="..\src\Game.hpp" />
     <ClInclude Include="..\src\GameObject.hpp" />
@@ -159,15 +167,20 @@
     <ClInclude Include="..\src\IEvent.hpp" />
     <ClInclude Include="..\src\GameObjectManager.hpp" />
     <ClInclude Include="..\src\ObjectFactory.hpp" />
+    <ClInclude Include="..\src\ObjectSpawner.hpp" />
+    <ClInclude Include="..\src\ObstacleGenerator.hpp" />
+    <ClInclude Include="..\src\PathGenerator.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
     <ClInclude Include="..\src\PlayerComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
+    <ClInclude Include="..\src\RockGenerator.hpp" />
     <ClInclude Include="..\src\ScoreConverter.hpp" />
     <ClInclude Include="..\src\ScoreDisplayComponent.hpp" />
     <ClInclude Include="..\src\SoundManager.hpp" />
     <ClInclude Include="..\src\StaticColliderComponent.hpp" />
     <ClInclude Include="..\src\TetherComponent.hpp" />
+    <ClInclude Include="..\src\TileNames.hpp" />
     <ClInclude Include="..\src\TransformAnimationSmoothFollow.hpp" />
     <ClInclude Include="..\src\SpriteManager.hpp" />
     <ClInclude Include="..\src\TileMapLoader.hpp" />
@@ -183,6 +196,7 @@
     <ClInclude Include="..\src\TransformAnimationComponent.hpp" />
     <ClInclude Include="..\src\TileLayerRenderComponent.hpp" />
     <ClInclude Include="..\src\TransformAnimationConstantMotion.hpp" />
+    <ClInclude Include="..\src\TransitionObject.hpp" />
     <ClInclude Include="..\src\TriggerComponent.hpp" />
     <ClInclude Include="..\src\Trigonometry.h" />
     <ClInclude Include="..\src\VectorAlgebra2D.h" />
@@ -190,7 +204,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
-    <ClCompile Include="../src/MainState.cpp" />
+    <ClCompile Include="..\src\GameOverLevelState.cpp" />
+    <ClCompile Include="..\src\MainEndlessState.cpp" />
     <ClCompile Include="../src/MenuState.cpp" />
     <ClCompile Include="../src/Game.cpp" />
     <ClCompile Include="../src/GameObject.cpp" />
@@ -198,26 +213,37 @@
     <ClCompile Include="../src/InputManager.cpp" />
     <ClCompile Include="..\src\AIController.cpp" />
     <ClCompile Include="..\src\AiManager.cpp" />
+    <ClCompile Include="..\src\BackgroundDetailGen.cpp" />
     <ClCompile Include="..\src\CollectibleComponent.cpp" />
+    <ClCompile Include="..\src\CreditsState.cpp" />
     <ClCompile Include="..\src\DebugDraw.cpp" />
+    <ClCompile Include="..\src\EndlessBackgroundGenerator.cpp" />
     <ClCompile Include="..\src\EventBus.cpp" />
     <ClCompile Include="..\src\GameObjectEvents.cpp" />
     <ClCompile Include="..\src\GameObjectManager.cpp" />
-    <ClCompile Include="..\src\GameOverState.cpp" />
+    <ClCompile Include="..\src\GameOverEndlessState.cpp" />
+    <ClCompile Include="..\src\HighScoresState.cpp" />
     <ClCompile Include="..\src\Hud.cpp" />
     <ClCompile Include="..\src\InputObject.cpp" />
+    <ClCompile Include="..\src\LevelGenerator.cpp" />
+    <ClCompile Include="..\src\MainLevelState.cpp" />
     <ClCompile Include="..\src\ObjectFactory.cpp" />
+    <ClCompile Include="..\src\ObjectSpawner.cpp" />
+    <ClCompile Include="..\src\ObstacleGenerator.cpp" />
+    <ClCompile Include="..\src\PathGenerator.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
     <ClCompile Include="..\src\PlayerComponent.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />
     <ClCompile Include="..\src\CameraRenderComponent.cpp" />
     <ClCompile Include="..\src\RenderComponentEvents.cpp" />
     <ClCompile Include="..\src\RigidBodyComponent.cpp" />
+    <ClCompile Include="..\src\RockGenerator.cpp" />
     <ClCompile Include="..\src\ScoreConverter.cpp" />
     <ClCompile Include="..\src\ScoreDisplayComponent.cpp" />
     <ClCompile Include="..\src\SoundManager.cpp" />
     <ClCompile Include="..\src\StaticColliderComponent.cpp" />
     <ClCompile Include="..\src\TetherComponent.cpp" />
+    <ClCompile Include="..\src\TileNames.cpp" />
     <ClCompile Include="..\src\TransformAnimationSmoothFollow.cpp" />
     <ClCompile Include="..\src\SpriteManager.cpp" />
     <ClCompile Include="..\src\SpriteRenderComponent.cpp" />
@@ -230,6 +256,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\TransitionObject.cpp" />
     <ClCompile Include="..\src\TriggerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

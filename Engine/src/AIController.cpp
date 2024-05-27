@@ -42,6 +42,10 @@ void AIController::update(const float deltaTime)
             agressiveUpdate(deltaTime);
             break;
         case disolve:
+            if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)
+            {
+                m_gameObject.getComponent<RigidBodyComponent>().get()->isActive = false;
+            }
             disolveUpdate(deltaTime);
             break;
     }

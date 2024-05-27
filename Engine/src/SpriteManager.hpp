@@ -80,7 +80,11 @@ public:
         return m_renderWindow;
     }
 
-    void draw();
+    void drawCenter();
+    void drawBackground();
+    void drawTop();
+
+    void drawAll();
 
 private:
     sf::RenderWindow& m_renderWindow;

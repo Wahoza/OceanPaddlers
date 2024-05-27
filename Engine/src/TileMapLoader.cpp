@@ -82,7 +82,7 @@ void TileMapLoader::createTileSprite(
     tileLayers[layerIdx].m_tiles.push_back({i, sprite});
 }
 
-void TileMapLoader::loadTileLayers(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
+void TileMapLoader::init(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager)
 {
     std::cout << "Load tileMap with size: " << map->getSize().x << "x" << map->getSize().y
               << " and tile size: " << map->getTileSize().x << "x" << map->getTileSize().y << std::endl;
@@ -147,6 +147,11 @@ void TileMapLoader::loadObjectLayers(const std::unique_ptr<tson::Map>& map,
     // go through all object layers
     for (auto& layer : map->getLayers())
     {
+        if (!(layer.getName() == "GameObjects" || layer.getName() == "Objects" || layer.getName() == "Background" ||
+              layer.getName() == "Top")) 
+        {
+            continue;
+        }
         // go over all objects per layer and construct them
         for (auto& object : layer.getObjects())
         {

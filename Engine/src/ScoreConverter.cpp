@@ -52,11 +52,15 @@ void ScoreConverter::CreateScoreLabels(std::string input, int displayedAmount)
 
         try
         {
+            if (datastring.size() <3)
+            {
+                continue;
+            }
             int intValue = std::stoi(datastring[1]);
             //create new objects here!!
 
             string inputText = datastring[0] + "\n" + "Eggs: " + datastring[2];
-            Vector2f scorePosition = {((float)intValue * 30), m_gameObject.getPosition().y};
+            Vector2f scorePosition = {((float)intValue * 30) + m_gameObject.getPosition().x, m_gameObject.getPosition().y};
            
             auto scoreObject = GameObject::create("score" + to_string(counter));
 

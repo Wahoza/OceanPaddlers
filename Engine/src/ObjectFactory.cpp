@@ -39,7 +39,6 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
     if (object.getType() == "Player")
     {
         gameObject->addComponent<PlayerComponent>(*gameObject);
-        std::cout << "banana" << std::endl;
     }
 
     for (const auto* property : object.getProperties().get())
@@ -123,6 +122,12 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
                                                              forces,
                                                              mass,
                                                              loss);
+               /* std::cout << "Forces: " + forces + " Mass: " + std::to_string(mass) + " Loss: " + std::to_string(loss) +
+                                 " X/Y: " + std::to_string(static_cast<float>(object.getSize().x)) + " " +
+                                 std::to_string(static_cast<float>(object.getSize().y)) +
+                                 " GameObject: " + gameObject.get()->getId()
+                          << std::endl;*/
+                //gameObject->addComponent<RigidBodyComponent>(*gameObject, FloatRect{0, 0, 16, 16}, Vector2f(0, 0), "", -3.0, 0.2);
             }
 
         }

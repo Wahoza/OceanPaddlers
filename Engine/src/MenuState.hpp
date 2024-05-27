@@ -21,6 +21,7 @@ public:
     void exit() override;
 
 private:
+    void generateSelectedOption(int id);
     sf::Text m_text;
     sf::Font m_font;
     sf::View m_view;
@@ -29,5 +30,13 @@ private:
     sf::Sprite  m_logo;
     sf::Texture m_logoTexture;
     bool m_isInit = false;
+
+    float currentyAxis;
+    float lastyAxis        = 0;
+
+    int currentSelection = 0;
+    bool initButtonsDown             = true;
+
+    std::vector<std::string> options = {"Play Level", "Play Endless", "Scores", "Credits"};
 };
 } // namespace mmt_gd

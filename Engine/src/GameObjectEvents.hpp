@@ -88,7 +88,7 @@ public:
 };
 
 //GameOverEvent: Distance Traveled, Eggs Collected, reached end
-class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool>>
+class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool, int>>
 {
 public:
     using BasicDataEvent::BasicDataEvent;
@@ -137,6 +137,54 @@ public:
     }
 };
 class WaveSoundEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class IslandTileGenEvent final : public BasicDataEvent <std::vector<int>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class SwapTiles final : public BasicDataEvent<std::tuple<int, int>>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class SwapTileRequest final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class PauseEvent final : public BasicDataEvent<bool>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

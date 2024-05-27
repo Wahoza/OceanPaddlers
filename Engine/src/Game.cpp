@@ -7,9 +7,13 @@
 
 #include "DebugDraw.hpp"
 #include "InputManager.hpp"
-#include "MainState.hpp"
+#include "MainEndlessState.hpp"
+#include "MainLevelState.hpp"
 #include "MenuState.hpp"
-#include "GameOverState.hpp"
+#include "GameOverEndlessState.hpp"
+#include "GameOverLevelState.hpp"
+#include "HighScoresState.hpp"
+#include "CreditsState.hpp"
 #include "InputObject.hpp"
 #include <sstream>
 #include "GameObjectManager.hpp"
@@ -104,8 +108,12 @@ bool Game::init()
 
     //
     m_gameStateManager.registerState("MenuState", make_shared<MenuState>(&m_gameStateManager, this));
-    m_gameStateManager.registerState("MainState", make_shared<MainState>(&m_gameStateManager, this));
-    m_gameStateManager.registerState("GameOverState", make_shared<GameOverState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("MainEndlessState", make_shared<MainEndlessState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("MainLevelState", make_shared<MainLevelState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("GameOverEndlessState", make_shared<GameOverEndlessState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("GameOverLevelState", make_shared<GameOverLevelState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("HighScoresState", make_shared<HighScoreState>(&m_gameStateManager, this));
+    m_gameStateManager.registerState("CreditsState", make_shared<CreditsState>(&m_gameStateManager, this));
 
     //
     m_window.create(sf::VideoMode(m_config.m_resolution.x, m_config.m_resolution.y),

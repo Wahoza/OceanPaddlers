@@ -75,7 +75,7 @@
     <ClInclude Include="..\src\MenuState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\MainState.hpp">
+    <ClInclude Include="..\src\MainEndlessState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameStateManager.hpp">
@@ -192,7 +192,7 @@
     <ClInclude Include="..\src\AiManager.hpp">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GameOverState.hpp">
+    <ClInclude Include="..\src\GameOverEndlessState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\InputObject.hpp">
@@ -213,6 +213,48 @@
     <ClInclude Include="..\src\PlayerComponent.hpp">
       <Filter>Header Files\Debug\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LevelGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\FastNoiseLite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BackGroundDetailGen.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ObstacleGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PathGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ObjectSpawner.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RockGenerator.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\HighScoresState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TransitionObject.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TileNames.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CreditsState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MainLevelState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameOverLevelState.hpp">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -230,7 +272,7 @@
     <ClCompile Include="../src/GameStateManager.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="../src/MainState.cpp">
+    <ClCompile Include="..\src\MainEndlessState.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
     <ClCompile Include="../src/MenuState.cpp">
@@ -308,7 +350,7 @@
     <ClCompile Include="..\src\AiManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GameOverState.cpp">
+    <ClCompile Include="..\src\GameOverEndlessState.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
     <ClCompile Include="..\src\InputObject.cpp">
@@ -328,6 +370,45 @@
     </ClCompile>
     <ClCompile Include="..\src\PlayerComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\EndlessBackgroundGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LevelGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BackgroundDetailGen.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ObstacleGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PathGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ObjectSpawner.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RockGenerator.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\HighScoresState.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TransitionObject.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TileNames.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CreditsState.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MainLevelState.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameOverLevelState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

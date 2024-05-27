@@ -26,12 +26,13 @@ public:
         Bouncy,
         Hard,
         Event,
-        Wall
+        Wall,
+        Disabled
     };
 
     //how do rigidbodies interact?
     const std::unordered_map<std::string, CollisionType> collisionTypeMap =
-        {{"Bouncy", Bouncy}, {"Hard", Hard}, {"Event", Event}, {"Wall", Wall}};
+        {{"Bouncy", Bouncy}, {"Hard", Hard}, {"Event", Event}, {"Wall", Wall}, {"Disabled", Disabled}};
 
     // The debug geometry to visualize the bounding geometry of the object.
     // Can be part of a BBoxCollisionComponent.
@@ -47,6 +48,9 @@ public:
 
     Vector2f    getPosition();
     void        ChangePosition(Vector2f changePos);
+    void        removeSelf();
+    void        ChangeType(string type);
+
     const CollisionType ConvertToCollType(string input)
     {
         if (collisionTypeMap.find(input) != collisionTypeMap.end())

@@ -22,7 +22,8 @@ public:
     void RegisterCollectible(CollectibleComponent* Collectible);
 
     void UnregisterBody(RigidBodyComponent* RigidBody);
-
+    void UnregisterStaticCollider(StaticColliderComponent* Collider);
+    void UnregisterTrigger(TriggerComponent* Trigger);
     private:
     struct Manifold
     {

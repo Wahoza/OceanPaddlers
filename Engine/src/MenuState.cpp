@@ -17,7 +17,8 @@ using namespace std;
 void MenuState::init()
 {
     PROFILE_FUNCTION();
-
+    initButtonsDown = true;
+    
     if (m_isInit)
     {
         return;
@@ -30,10 +31,13 @@ void MenuState::init()
     }
     m_font.setSmooth(false);
     m_text.setPosition(m_game->getWindow().getView().getCenter());
-    m_text.setString("Press space to continue");
     m_text.setFillColor(sf::Color::White);
     m_text.setFont(m_font);
-    m_text.setOrigin(m_text.getLocalBounds().width * 0.5F, m_text.getLocalBounds().height * 0.5F);
+
+        generateSelectedOption(0);
+
+    sf::FloatRect textRect = m_text.getLocalBounds();
+    m_text.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 
     m_view = m_game->getWindow().getView();
 
@@ -47,6 +51,7 @@ void MenuState::init()
 
     m_background.setScale(m_game->getWindow().getSize().x / static_cast<float>(m_backgroundTexture.getSize().x),
                           m_game->getWindow().getSize().y / static_cast<float>(m_backgroundTexture.getSize().y));
+
     m_background.setPosition(m_game->getWindow().getView().getCenter());
 
     m_background.setTexture(m_backgroundTexture);
@@ -69,10 +74,64 @@ void MenuState::update(float delta)
 
     m_game->getWindow().setView(m_view);
 
-    if (InputManager::getInstance().isKeyPressed("Select"))
+    if (InputManager::getInstance().isKeyPressed("Select") || sf::Joystick::isButtonPressed(0, 0) ||
+        sf::Joystick::isButtonPressed(1, 0))
     {
-        m_gameStateManager->setState("MainState");
+        if (!initButtonsDown)
+        {
+
+            switch (currentSelection)
+            {
+                case 0:
+                    m_gameStateManager->setState("MainLevelState");
+                    return;
+                case 1:
+                    m_gameStateManager->setState("MainEndlessState");
+                    return;
+                case 2:
+                    m_gameStateManager->setState("HighScoresState");
+                    return;
+                case 3:
+                    m_gameStateManager->setState("CreditsState");
+                    return;
+            }
+        }
     }
+    else
+    {
+        initButtonsDown = false;
+    }
+
+    currentyAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+    if (InputManager::getInstance().isKeyDown("up", 0) || InputManager::getInstance().isKeyDown("up", 1))
+    {
+        currentyAxis += -100;
+    }
+    if (InputManager::getInstance().isKeyDown("down", 0) || InputManager::getInstance().isKeyDown("down", 1))
+    {
+        currentyAxis += 100;
+    }
+    //todo: for holding direction: if held long enough switch to next, decrease waittime for next switch->itterate through many letters with ease
+    if (abs(currentyAxis) >= 90 && abs(lastyAxis) <= 90)
+    {
+        //use to select next or previous char
+        int direction = int(currentyAxis / abs(currentyAxis));
+        currentSelection += direction;
+        if (currentSelection >= 4)
+        {
+            currentSelection = 0;
+        }
+        if (currentSelection < 0)
+        {
+            currentSelection = 3;
+        }
+
+        generateSelectedOption(currentSelection);
+        
+    }
+
+    lastyAxis = currentyAxis;
+
     InputObject::getInstance()->StopListen();
 }
 
@@ -91,5 +150,27 @@ void MenuState::exit()
     PROFILE_FUNCTION();
 
     GameState::exit();
+}
+void MenuState::generateSelectedOption(int id)
+{
+    std::string tempText = "";
+
+    for (size_t i = 0; i < options.size(); i++)
+    {
+        if (i == id)
+        {
+            tempText += "<" + options[i] + ">\n";
+        }
+        else
+        {
+            tempText += " " + options[i] + "\n";
+        }
+    }
+
+    m_text.setString(tempText);
+    //    for (size_t i = 0; i < options.size(); ++i)
+    //{
+    //    std::cout << "Length of \"" << options[i] << "\" is " << options[i].length() << std::endl;
+    //}
 }
 } // namespace mmt_gd

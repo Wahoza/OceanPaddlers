@@ -30,6 +30,7 @@ void SoundManager::init()
     EventBus::getInstance().addListener(InputEvent::Type, [this](IEvent::Ptr event) { playSound("Input"); });
     EventBus::getInstance().addListener(VictorySoundEvent::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
     EventBus::getInstance().addListener(WaveSoundEvent::Type, [this](IEvent::Ptr event) { playSound("Wave"); });
+    EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
 }
 void SoundManager::playSound(std::string soundName)
 {

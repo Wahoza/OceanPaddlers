@@ -22,6 +22,14 @@ void StaticColliderComponent::ChangePosition(Vector2f changePos)
 {
 
 }
+void StaticColliderComponent::removeSelf()
+{
+    PhysicsManager::getInstance()->UnregisterStaticCollider(this);
+}
+void StaticColliderComponent::ChangeType(string type)
+{
+    m_coll = ConvertToCollType(type);
+}
 bool StaticColliderComponent::init()
 {
     return true;

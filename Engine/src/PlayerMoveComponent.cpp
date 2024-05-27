@@ -45,7 +45,8 @@ void PlayerMoveComponent::calculateSpriteOffset(Vector2f input, int index)
 
     if (abs(input.x) - abs(input.y)*0.3 > abs(input.y))
     {
-        //std::cout << abs(input.x) <<std::endl;
+        //
+        //  << abs(input.x) <<std::endl;
         SpriteOffset = toSpriteOffset(3, index);
     }
     else

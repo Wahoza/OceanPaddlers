@@ -33,6 +33,7 @@ void TriggerComponent::Notify(GameObject& gameObject)
             if (PlayerComponent* comp = gameObject.getComponent<PlayerComponent>().get(); comp != nullptr)
             {
                 comp->Victory();
+                //removeSelf();
             }
             //Hud::getInstance()->won = true;
         }
@@ -46,10 +47,27 @@ void TriggerComponent::Notify(GameObject& gameObject)
             IEvent::Ptr Wave = std::make_shared<WaveSoundEvent>(true);
             EventBus::getInstance().fireEvent(Wave);
         }
+        if (m_notification == "Transition")
+        {
+            if (PlayerComponent* comp = gameObject.getComponent<PlayerComponent>().get(); comp != nullptr)
+            {
+                //comp->Victory();
+                bool  eventData(true);
+                IEvent::Ptr swapRequestEvent = std::make_shared<SwapTileRequest>(eventData);
+                EventBus::getInstance().fireEvent(swapRequestEvent);
+
+                //removeSelf();
+            }
+            //Hud::getInstance()->won = true;
+        }
     
 }
 Vector2f TriggerComponent::getPosition()
 {
     return {m_shape.left, m_shape.top};
+}
+void TriggerComponent::removeSelf()
+{
+    PhysicsManager::getInstance()->UnregisterTrigger(this);
 }
 }

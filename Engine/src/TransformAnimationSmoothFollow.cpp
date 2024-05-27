@@ -28,7 +28,12 @@ void mmt::TransformAnimationSmoothFollow::update(float deltaTime, sf::Transforma
         return;
     }
 
-    sf::Vector2f toTarget = m_target->getPosition() - transform.getPosition();
+    sf::Vector2f toTarget = furthestTartgetPos - transform.getPosition();
+
     transform.move(toTarget * m_smoothFactor * deltaTime);
     transform.setPosition(transform.getPosition().x, middleYval);
+    if (m_target->getPosition().x > furthestTartgetPos.x)
+    {
+        furthestTartgetPos = m_target->getPosition();
+    }
 }
