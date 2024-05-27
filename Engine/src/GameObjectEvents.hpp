@@ -184,4 +184,16 @@ public:
         return Type;
     }
 };
+class PauseEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 } // namespace mmt_gd

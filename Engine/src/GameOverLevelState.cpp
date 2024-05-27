@@ -59,7 +59,7 @@ void GameOverLevelState::init()
     m_eggsText.setFillColor(color);
 
     m_eggsText.setFont(m_font);
-    m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
+    m_eggsText.setString("Eggs collected: " + to_string(eggsCollected) + "/20");
 
     m_distanceText.setPosition(ScreenCenter.x - 700, ScreenCenter.y+150);
     m_distanceText.setFillColor(color);
@@ -71,7 +71,7 @@ void GameOverLevelState::init()
     m_totalScoreText.setFont(m_font);
     m_totalScoreText.setPosition(ScreenCenter.x - 700, ScreenCenter.y + 200);
     m_totalScoreText.setFillColor(color);
-    m_totalScoreText.setString("Total score: " + to_string(totalScore));
+    m_totalScoreText.setString("Total score: " + to_string(totalScore) + "\n \n Press A to continue");
 
     m_view = m_game->getWindow().getView();
 

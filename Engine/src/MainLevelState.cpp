@@ -104,13 +104,18 @@ void MainLevelState::update(const float deltaTime)
     {
         paused = !paused;
         //m_gameStateManager->setState("GameOverState");
+        bool         eventData(paused);
+        IEvent::Ptr _pauseEvent = std::make_shared<PauseEvent>(eventData);
+        EventBus::getInstance().fireEvent(_pauseEvent);
     }
+    
+    EventBus::getInstance().processEvents(deltaTime);
+
     if (paused)
     {
         return;
     }
 
-    EventBus::getInstance().processEvents(deltaTime);
     m_gameObjectManager.update(deltaTime);
 
     //m_PhysicsManager = PhysicsManager::getInstance();

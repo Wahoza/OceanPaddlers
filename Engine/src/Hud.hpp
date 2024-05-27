@@ -64,5 +64,8 @@ private:
     bool           transitionSequence = false;
 
     int seed;
+
+    sf::Text m_pauseText;
+    bool paused = false;
 };
 } // namespace mmt_gd

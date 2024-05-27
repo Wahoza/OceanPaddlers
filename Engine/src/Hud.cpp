@@ -32,6 +32,7 @@ Hud::Hud() : EggScore(0), currentlives(3), levelIterator(0)
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(HurtEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { Notify(event); });
+    EventBus::getInstance().addListener(PauseEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
 }
 void Hud::Notify(IEvent::Ptr event)
 {
@@ -70,6 +71,10 @@ void Hud::Notify(IEvent::Ptr event)
 
         swapText.setOrigin({swapText.getString().getSize() * swapText.getCharacterSize() / 2.f, 0});
     }
+    if (auto pauseEvent = std::dynamic_pointer_cast<PauseEvent>(event))
+    {
+        paused = pauseEvent.get()->getData();
+    }
 }
 
 void Hud::CreateHud()
@@ -87,7 +92,6 @@ void Hud::CreateHud()
         m_font.setSmooth(false);
         
 
-        text.setFillColor(sf::Color::Green);
         text.setFont(m_font);
         text.setCharacterSize(10);
         text.setString("x" + to_string(EggScore));
@@ -129,6 +133,18 @@ void Hud::CreateHud()
         swapText.setString("Swapping");
         swapText.setFont(m_font);
         swapText.setScale(0.3, 0.3);
+    }
+    {
+        m_pauseText.setFillColor(sf::Color::White);
+        m_pauseText.setFont(m_font);
+        m_pauseText.setCharacterSize(30);
+        m_pauseText.setString("Paused");
+        m_pauseText.setFillColor(sf::Color::White);
+        m_pauseText.setOutlineThickness(1);
+        m_pauseText.setOutlineColor(sf::Color::Black);
+
+        sf::FloatRect textRect = m_pauseText.getLocalBounds();
+        m_pauseText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
     }
 }
 void Hud::update(float deltaTime)
@@ -190,6 +206,14 @@ void Hud::draw(sf::RenderWindow& m_window)
             swapText.setPosition(windowCenter + Vector2f{0, yOffset});
             m_window.draw(TransitionShape);
             m_window.draw(swapText);
+        }
+    }
+    {
+
+        if (paused)
+        {
+            m_pauseText.setPosition(m_window.getView().getCenter());
+            m_window.draw(m_pauseText);
         }
     }
 }

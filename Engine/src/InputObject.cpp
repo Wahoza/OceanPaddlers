@@ -78,6 +78,7 @@ void InputObject::init(sf::Vector2f position, sf::Vector2f size, Color color)
     m_InputSprite.setScale(size.y / m_InputTexture.getSize().y, size.y / m_InputTexture.getSize().y);
     m_InputSprite.setPosition(position.x + size.x + 5, position.y);
     m_InputSprite.setTextureRect({0, 0, int(m_InputTexture.getSize().x / 2), int(m_InputTexture.getSize().y)});
+    m_InputSprite.setColor(color);
 }
 
 void InputObject::update(float deltaTime)
