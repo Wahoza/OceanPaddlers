@@ -15,15 +15,23 @@ namespace mmt_gd
 {
 void PhysicsManager::RegisterBody(RigidBodyComponent* RigidBody){
     m_bodies.push_back(RigidBody);
-    //std::cout << m_bodies.size() << std::endl;
 }
 void PhysicsManager::RegisterCollider(StaticColliderComponent* Collider)
 {
-    m_staticcolliders.push_back(Collider);
+    auto it = std::find(m_staticcolliders.begin(), m_staticcolliders.end(), Collider);
+    if (it == m_staticcolliders.end())
+    {
+        m_staticcolliders.push_back(Collider);
+    }
 }
 void PhysicsManager::RegisterTrigger(TriggerComponent* Trigger)
 {
-    m_triggers.push_back(Trigger);
+    auto it = std::find(m_triggers.begin(), m_triggers.end(), Trigger);
+    if (it == m_triggers.end())
+    {
+        m_triggers.push_back(Trigger);
+    }
+    
 }
 void PhysicsManager::RegisterCollectible(CollectibleComponent* Collectible)
 {
@@ -465,11 +473,18 @@ void PhysicsManager::shutdown()
     m_bodies.clear();
     for (auto& collider : m_staticcolliders)
     {
-        delete collider;
+        if (collider != nullptr)
+        {
+
+            delete collider;
+        }
     }
     for (auto& collider : m_triggers)
     {
-        delete collider;
+        if (collider != nullptr){
+
+            delete collider;
+        }
     }
     m_staticcolliders.clear();
     m_triggers.clear();

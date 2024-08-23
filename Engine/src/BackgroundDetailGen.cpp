@@ -12,8 +12,6 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
 
     m_seed = seed;
 
-    EventBus::getInstance().addListener(IslandTileGenEvent::Type, [this](IEvent::Ptr event) { IslandGenListener(event); });
-
     if (!m_texture.loadFromFile("../assets/noiseAssets.png"))
     {
         sf::err() << "Could not load icon\n";
@@ -65,6 +63,15 @@ void mmt_gd::BackgroundDetailGen::init(sf::IntRect _TextureRect, sf::Vector2i Ar
     initSpriteMap(m_SpriteMapForrest, "grassTiles/ForrestAssets.png");
     initSpriteMap(m_SpriteMapMines, "grassTiles/MineAssets.png");
     initSpriteMap(m_SpriteMapVillage, "grassTiles/VillageAssets.png");
+
+    if (isInit)
+    {
+        return;
+    }
+
+    isInit = true;
+
+    EventBus::getInstance().addListener(IslandTileGenEvent::Type, [this](IEvent::Ptr event) { IslandGenListener(event); });
 
     //m_IslandTiles.push_back({30*16,5*16 });
 }

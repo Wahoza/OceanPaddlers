@@ -18,7 +18,7 @@ void MenuState::init()
 {
     PROFILE_FUNCTION();
     initButtonsDown = true;
-    
+
     if (m_isInit)
     {
         return;
@@ -73,13 +73,11 @@ void MenuState::update(float delta)
     PROFILE_FUNCTION();
 
     m_game->getWindow().setView(m_view);
-
     if (InputManager::getInstance().isKeyPressed("Select") || sf::Joystick::isButtonPressed(0, 0) ||
         sf::Joystick::isButtonPressed(1, 0))
     {
         if (!initButtonsDown)
         {
-
             switch (currentSelection)
             {
                 case 0:
@@ -139,10 +137,10 @@ void MenuState::draw()
 {
     PROFILE_FUNCTION();
     m_game->getWindow().clear();
+
     m_game->getWindow().draw(m_background);
     m_game->getWindow().draw(m_text);
     m_game->getWindow().draw(m_logo);
-    m_game->getWindow().display();
 }
 
 void MenuState::exit()

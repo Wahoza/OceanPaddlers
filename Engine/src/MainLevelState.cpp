@@ -41,8 +41,7 @@ void MainLevelState::init()
     m_gameObjectManager.init();
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
-    m_Hud            = Hud::getInstance();
-    m_Hud->CreateHud();
+    m_Hud.CreateHud();
 
     // load tile map/level
     {
@@ -120,7 +119,7 @@ void MainLevelState::update(const float deltaTime)
 
     //m_PhysicsManager = PhysicsManager::getInstance();
     m_PhysicsManager->HandleCollisions(deltaTime);
-    m_Hud->update(deltaTime);
+    m_Hud.update(deltaTime);
     AiManager::getInstance()->update();
 }
 
@@ -128,7 +127,7 @@ void MainLevelState::draw()
 {
     PROFILE_FUNCTION();
     m_spriteManager.drawAll();
-    m_Hud->draw(m_game->getWindow());
+    m_Hud.draw(m_game->getWindow());
 }
 
 void MainLevelState::ListenforEnd(IEvent::Ptr event)
@@ -146,7 +145,6 @@ void MainLevelState::exit()
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
     m_PhysicsManager->shutdown();
-    //m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
     GameState::exit();

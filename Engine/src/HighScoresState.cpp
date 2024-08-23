@@ -185,6 +185,8 @@ void HighScoreState::update(float deltaTime)
 void HighScoreState::draw()
 {
     PROFILE_FUNCTION();
+    m_game->getWindow().clear();
+
     for (auto& item : Lines)
     {
         m_game->getWindow().draw(item);

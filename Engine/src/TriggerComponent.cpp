@@ -68,6 +68,7 @@ Vector2f TriggerComponent::getPosition()
 }
 void TriggerComponent::removeSelf()
 {
-    PhysicsManager::getInstance()->UnregisterTrigger(this);
+    //note: this breaks game if used improperly
+    return PhysicsManager::getInstance()->UnregisterTrigger(this);
 }
 }

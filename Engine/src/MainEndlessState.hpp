@@ -31,11 +31,12 @@ private:
     GameObjectManager m_gameObjectManager;
     SoundManager      m_soundManager;
     PhysicsManager*   m_PhysicsManager;
-    Hud*              m_Hud;
+    Hud              m_Hud;
     LevelGenerator    m_gen;
 
     bool paused = false;
     bool isEndless = true;
     bool isActive  = false;
+    bool isInit    = false;
 };
 } // namespace mmt_gd

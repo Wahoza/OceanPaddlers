@@ -68,7 +68,7 @@ private:
     vector<Vector2f> constlocalForces;
     Vector2f         m_velocity      = {0, 0};
     Vector2f         Loss            = {0.4, 0.8};
-    float            trueMaxVelocity = 100;
+    float            trueMaxVelocity = 40;
     float            initMaxVelocity    = 20;
     float            currentMaxVelocity = 0;
     void  AddLocalForce(Vector2f _force);

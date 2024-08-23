@@ -35,5 +35,6 @@ private:
     sf::FloatRect     _windowRect = {0, 0, 0, 0};
     sf::FloatRect     disabledArea   = {0, 0, 0, 0};
     sf::Vector2i     _area        = {0, 0};
+    bool              isInit         = false;
 };
 }

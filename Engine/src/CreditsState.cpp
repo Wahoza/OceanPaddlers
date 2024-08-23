@@ -95,6 +95,7 @@ void CreditsState::update(float delta)
 void CreditsState::draw()
 {
     PROFILE_FUNCTION();
+
     m_game->getWindow().draw(m_backgroundSprite);
     m_game->getWindow().draw(m_icon);
 

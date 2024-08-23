@@ -15,8 +15,6 @@ namespace mmt_gd
 class Hud
 {
 public:
-    static Hud* getInstance();
-    void        shutdown();
     void        CreateHud();
     Hud();
     void Notify(IEvent::Ptr event);    
@@ -50,12 +48,11 @@ public:
 
     bool won          = false;
 
-    int levelIterator = 1;
+    int levelIterator = 0;
 
 private:
     float       CurrentXPos = 0;
     string        m_layerName;
-    static Hud* m_instance;
 
     Text swapText;
     RectangleShape TransitionShape;

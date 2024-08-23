@@ -15,18 +15,27 @@ void LevelGenerator::Initialize(const std::unique_ptr<tson::Map>& map, const fs:
 {
     _seed = seed;
 
-    EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { SwapTileForAll(event); });
-    EventBus::getInstance().addListener(SwapTileRequest::Type, [this](IEvent::Ptr event) { DoSwap(event); });
-
     BackgroundGen.init(map, resourcePath, spriteManager);
 
     DetailGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y}, BackgroundGen.GetTotalSize(), seed);
 
-    ObstacleGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y}, BackgroundGen.GetTotalSize(), seed, spriteManager.getWindow());
+    ObstacleGen.init({0, 0, BackgroundGen.GetTileSize().x, BackgroundGen.GetTileSize().y},
+                     BackgroundGen.GetTotalSize(),
+                     seed,
+                     spriteManager.getWindow());
 
     TransObj.init(BackgroundGen.GetTotalSize(), 40);
 
     ObstacleGen.DisableGenArea(TransObj.getDisabledArea());
+
+    if (isInit)
+    {
+        return;
+    }
+
+    isInit = true;
+    EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { SwapTileForAll(event); });
+    EventBus::getInstance().addListener(SwapTileRequest::Type, [this](IEvent::Ptr event) { DoSwap(event); });
 }
 
 void LevelGenerator::update(float deltaTime)
@@ -74,6 +83,7 @@ void LevelGenerator::shutdown()
     TransObj.shutdown();
     
     isTransitioning = false;
+
 }
 void LevelGenerator::SwapTileForAll(IEvent::Ptr event)
 {

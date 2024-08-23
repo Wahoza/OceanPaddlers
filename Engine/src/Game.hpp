@@ -21,7 +21,7 @@ public:
     {
         //Window size is here!!
         sf::Vector2i m_resolution{1920, 1080};
-        std::string  m_windowName = "FinalFrontier";
+        std::string  m_windowName = "OceanPaddlers";
     };
 
     Config& getConfig()

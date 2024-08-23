@@ -26,7 +26,7 @@ private:
     GameObjectManager m_gameObjectManager;
     SoundManager      m_soundManager;
     PhysicsManager*   m_PhysicsManager;
-    Hud*              m_Hud;
+    Hud              m_Hud;
 
     bool paused = false;
     bool isActive = false;

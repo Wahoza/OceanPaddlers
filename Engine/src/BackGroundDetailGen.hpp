@@ -47,5 +47,6 @@ private:
     std::string FolderName = "SegmentedTiles/";
 
     std::vector<sf::Vector2f> m_IslandTiles;
+    bool                      isInit = false;
 };
 } // namespace mmt_gd

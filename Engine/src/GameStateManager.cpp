@@ -36,7 +36,7 @@ void GameStateManager::changeState(GameState* stateName)
 
         m_currentState = stateName;
 
-        if (m_currentState != nullptr)
+        if (m_currentState != nullptr || true)
         {
             m_currentState->init();
         }

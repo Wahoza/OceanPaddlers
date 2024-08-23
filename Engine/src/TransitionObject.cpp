@@ -3,14 +3,19 @@
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "SoundManager.hpp"
-
+#include "PhysicsManager.hpp"
 namespace mmt_gd
 {
 void TransitionObject::init(sf::Vector2i Area, int initOffset)
 {
     _windowRect = {0, 0, (float)Area.x * TextureSize, (float)Area.y * TextureSize};
-    _area   = Area * TextureSize;
-    trigger = new TriggerComponent({0, 0, 0, 0}, "Player0", "Transition");
+    _area = Area * TextureSize;
+
+
+        trigger = new TriggerComponent({0, 0, 0, 0}, "Player0", "Transition");
+    
+    PhysicsManager::getInstance()->RegisterTrigger(trigger);
+
     disabledArea = {_windowRect.left + TransitionDist + initOffset * TextureSize, 0, (float)TextureSize * areaWidth, _windowRect.height};
     trigger->m_shape = {_windowRect.left + TransitionDist + initOffset * TextureSize, 0, (float)TextureSize, _windowRect.height};
 
@@ -21,8 +26,12 @@ void TransitionObject::init(sf::Vector2i Area, int initOffset)
     transitionSprite.setTexture(transitionTexture);
     transitionSprite.setPosition(trigger->getPosition());
 
+    if (isInit)
+    {
+        return;
+    }
+    isInit = true;
     EventBus::getInstance().addListener(SwapTileRequest::Type, [this](IEvent::Ptr event) { Notify(); });
-
     //genTransitionPos();
     //std::cout << "I exist at " + std::to_string(trigger->getPosition().x) << std::endl;
 }
@@ -53,7 +62,11 @@ sf::FloatRect* TransitionObject::getDisabledArea()
 
 void TransitionObject::Notify()
 {
+    trigger->m_notification = "";
     genTransitionPos();
+    std::cout << trigger->m_shape.left << std::endl;
+    trigger->m_identifier = "Player0";
+
     SoundManager::getInstance().playSound("Victory");
 }
 
@@ -68,7 +81,6 @@ void TransitionObject::genTransitionPos()
 }
 void TransitionObject::shutdown()
 {
-    trigger = nullptr;
 }
 Vector2f TransitionObject::getPosition()
 {

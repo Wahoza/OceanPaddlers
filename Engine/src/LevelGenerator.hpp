@@ -34,5 +34,6 @@ private:
     float transitionTime = 0;
     float elapsedTransitionTime = 0;
     int _seed;
+    bool  isInit = false;
 };
 }

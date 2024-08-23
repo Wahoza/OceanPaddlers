@@ -46,6 +46,7 @@ void Game::run()
     }
     Instrumentor::instance().endSession();
     Instrumentor::instance().beginSession("runtime", "runtime.json");
+    m_window.setMouseCursorVisible(false);
 
     while (m_window.isOpen())
     {
@@ -159,7 +160,7 @@ void Game::draw()
     m_window.clear();
 
     m_gameStateManager.draw();
-
+    
     m_debugDraw->draw(m_window);
 
     m_window.display();
@@ -169,7 +170,6 @@ void Game::shutdown() const
 {
     m_gameStateManager.shutdown();
     PhysicsManager::getInstance()->shutdown();
-    Hud::getInstance()->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
 }

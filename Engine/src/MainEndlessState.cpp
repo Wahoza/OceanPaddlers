@@ -32,6 +32,7 @@ GameState(gameStateManager, game),
 m_spriteManager(game->getWindow())
 {
     EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { ListenforEnd(event); });
+    //EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { ListenforEnd(event); });
 }
 
 void MainEndlessState::init()
@@ -49,9 +50,9 @@ void MainEndlessState::init()
     m_gameObjectManager.init();
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
-    m_Hud            = Hud::getInstance();
-    m_Hud->CreateHud();
-    m_Hud->setSeed(seed);
+
+    m_Hud.CreateHud();
+    m_Hud.setSeed(seed);
 
     // load tile map/level
     {
@@ -119,21 +120,23 @@ void MainEndlessState::init()
     m_soundManager.playMusic("Music");
 
     sf::FloatRect viewport(0.f, 0.f, 400.f, 300.f);
+
+    isInit = true;
 }
 
 void MainEndlessState::update(const float deltaTime)
 {
     PROFILE_FUNCTION();
+
     if (InputManager::getInstance().isKeyPressed("Exit"))
     {
         paused = !paused;
-        //m_gameStateManager->setState("GameOverState");
+        //m_gameStateManager->setState("GameOverEndlessState");
+
         bool        eventData(paused);
         IEvent::Ptr _pauseEvent = std::make_shared<PauseEvent>(eventData);
         EventBus::getInstance().fireEvent(_pauseEvent);
-
     }
-    
 
     EventBus::getInstance().processEvents(deltaTime);
     if (paused)
@@ -148,7 +151,7 @@ void MainEndlessState::update(const float deltaTime)
 
     //m_PhysicsManager = PhysicsManager::getInstance();
     m_PhysicsManager->HandleCollisions(deltaTime);
-    m_Hud->update(deltaTime);
+    m_Hud.update(deltaTime);
     AiManager::getInstance()->update();
 }
 
@@ -168,15 +171,15 @@ void MainEndlessState::draw()
         m_spriteManager.drawAll();
     }
     
-    m_Hud->draw(m_game->getWindow());
+    m_Hud.draw(m_game->getWindow());
 }
 
 void MainEndlessState::ListenforEnd(IEvent::Ptr event)
 {
     if (isActive)
     {
-        m_gameStateManager->setState("GameOverEndlessState");
         isActive = false;
+        m_gameStateManager->setState("GameOverEndlessState");
     }
 }
 
@@ -186,12 +189,13 @@ void MainEndlessState::exit()
     m_spriteManager.shutdown();
     m_gameObjectManager.shutdown();
     m_PhysicsManager->shutdown();
-    //m_Hud->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
-    GameState::exit();
-    m_gen.shutdown();
     m_soundManager.stopMusic("Music");
+    
+        m_gen.shutdown();
+
+    GameState::exit();
 }
 
 } // namespace mmt_gd

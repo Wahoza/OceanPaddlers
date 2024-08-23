@@ -48,6 +48,7 @@ void PlayerComponent::GameEnd()
     std::tuple       eventData(distanceTraveled, EggScore, won, totalScore);
     IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
     EventBus::getInstance().fireEvent(GameOver);
+    EggScore = 0;
 }
 void PlayerComponent::Victory()
 {
