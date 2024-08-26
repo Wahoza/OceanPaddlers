@@ -31,8 +31,8 @@ void PlayerComponent::CollectibleCollision(string _item)
         //change this to a new unique event
         currentlives++;
         int eventData(currentlives);
-        IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
-        EventBus::getInstance().fireEvent(Hurt);
+        IEvent::Ptr healthGet = std::make_shared<HealthCollect>(eventData);
+        EventBus::getInstance().fireEvent(healthGet);
     }
 }
 void PlayerComponent::DamageCollision()

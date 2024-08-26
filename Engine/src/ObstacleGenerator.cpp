@@ -134,7 +134,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
             if (SubVector[i].noise < threshold && (i > 3 && i < 13))
             {
                 static std::mt19937                    genCollectible(_seed + windowRect.left + SubVector[i].pos.y);
-                static std::uniform_int_distribution<> collectibleSpread(0, 150);
+                static std::uniform_int_distribution<> collectibleSpread(0, 200);
 
                 if (collectibleSpread(genCollectible) <= 2)
                 {

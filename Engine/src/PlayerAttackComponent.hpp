@@ -18,7 +18,7 @@ private:
     Vector2f RotateVec(Vector2f input, float angle);
     void     DoAttackFrame(bool active);
     int  pID = 0;
-    float attackCooldown = 0.3;
+    float attackCooldown = 0.2;
     float attackDuration = 0.1;
     float attackTimer    = -1;
     float    directionThreshold = 0.5;

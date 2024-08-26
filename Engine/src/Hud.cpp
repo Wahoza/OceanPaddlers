@@ -26,6 +26,7 @@ m_font()
     EventBus::getInstance().addListener(ScoreEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(EggEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(HurtEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
+    EventBus::getInstance().addListener(HealthCollect::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(PauseEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
     EventBus::getInstance().addListener(GameOverEvent::Type, [this](IEvent::Ptr event) { Notify(event); });
@@ -41,6 +42,9 @@ void Hud::Notify(IEvent::Ptr event)
     if (auto hurtEvent = std::dynamic_pointer_cast<HurtEvent>(event))
     {
         currentlives = hurtEvent->getData();
+    }if (auto healthEvent = std::dynamic_pointer_cast<HealthCollect>(event))
+    {
+        currentlives = healthEvent->getData();
     }
 
     if (auto swapEvent = std::dynamic_pointer_cast<SwapTiles>(event))

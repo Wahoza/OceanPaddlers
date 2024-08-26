@@ -38,8 +38,11 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     }
 
     static std::mt19937                    genCollectible(_seed + pos.x + pos.y);
-    static std::uniform_int_distribution<> collectibleSpread(0, 20);
-    if (!(collectibleSpread(genCollectible) == 1 || CallsSinceLastSpawn >= maxCalls))
+    static std::uniform_int_distribution<> collectibleSpread(0, 80);
+
+    int collectibleResult = collectibleSpread(genCollectible);
+
+    if (!(collectibleResult <= 4 || CallsSinceLastSpawn >= maxCalls))
     {
         return;
     }
@@ -47,13 +50,23 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     auto gameObject = GameObject::create("Collectible" + std::to_string(CollectibleCtr));
     gameObject->setPosition(pos + Vector2f{8, 8});
 
+
+    string type = "Egg";
+    string textureLocation = "../assets/eggCollectible.png";
+    //std::cout << collectibleResult << std::endl;
+    if (collectibleResult == 1)
+    {
+        type = "Health";
+        textureLocation = "../assets/heartCollectible.png";
+    }
     gameObject->addComponent<CollectibleComponent>(*gameObject,
-                                                   "Egg",
+                                                   type,
                                                    static_cast<float>(16),
                                                    static_cast<float>(16));
         
     const auto renderComp = gameObject->addComponent<SpriteRenderComponent>(*gameObject,
-                                                                            *m_window, "../assets/eggCollectible.png",
+                                                                            *m_window,
+                                                                            textureLocation,
                                                                             "GameObjects");
     renderComp->init();
     renderComp->getSprite().setTextureRect({0, 0, 16, 16});

@@ -195,7 +195,32 @@ public:
     {
         return Type;
     }
-};class AttackEvent final : public BasicDataEvent<bool>
+};
+class AttackEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class FishHitSuccess final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class HealthCollect final : public BasicDataEvent<int>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

@@ -22,6 +22,8 @@ void SoundManager::init()
     addSound("../assets/audio/sounds/victory.wav", "Victory");
     addSound("../assets/audio/sounds/wave.wav", "Wave");
     addSound("../assets/audio/sounds/attack_turtle.wav", "TurtleAttack");
+    addSound("../assets/audio/sounds/fish_hit.wav", "FishHit");
+    addSound("../assets/audio/sounds/health_collect.wav", "Health");
 
 
     addMusic("../assets/audio/music/Music.ogg", "Music");
@@ -35,6 +37,8 @@ void SoundManager::init()
     EventBus::getInstance().addListener(WaveSoundEvent::Type, [this](IEvent::Ptr event) { playSound("Wave"); });
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
     EventBus::getInstance().addListener(AttackEvent::Type, [this](IEvent::Ptr event) { playSound("TurtleAttack"); });
+    EventBus::getInstance().addListener(FishHitSuccess::Type, [this](IEvent::Ptr event) { playSound("FishHit"); });
+    EventBus::getInstance().addListener(HealthCollect::Type, [this](IEvent::Ptr event) { playSound("Health"); });
 }
 void SoundManager::playSound(std::string soundName)
 {

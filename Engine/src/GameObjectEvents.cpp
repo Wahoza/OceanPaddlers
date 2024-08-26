@@ -20,3 +20,5 @@ constexpr mmt_gd::IEvent::EventType mmt_gd::SwapTiles::Type                     
 constexpr mmt_gd::IEvent::EventType mmt_gd::SwapTileRequest::Type                                = 0x8334567a;
 constexpr mmt_gd::IEvent::EventType mmt_gd::PauseEvent::Type                                = 0x8334567b;
 constexpr mmt_gd::IEvent::EventType mmt_gd::AttackEvent::Type                                = 0x9334567b;
+constexpr mmt_gd::IEvent::EventType mmt_gd::FishHitSuccess::Type                                 = 0x1434567b;
+constexpr mmt_gd::IEvent::EventType mmt_gd::HealthCollect::Type                                  = 0x2434567b;

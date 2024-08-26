@@ -236,6 +236,8 @@ void AIController::TakeDamage()
             sf::Vector2f vec = rb->getVelocity();
             rb->addVelocity(-vec - vec / std::sqrt(vec.x * vec.x + vec.y * vec.y) * 100.f);
         }
+        IEvent::Ptr FishColl = std::make_shared<FishHitSuccess>(true);
+        EventBus::getInstance().fireEvent(FishColl);
     }
     iFrameTime = iFrameDuration;
 }
