@@ -42,6 +42,5 @@ public:
     TriggerComponent(FloatRect shape, string identifier, string notification);
     float SquaredMaxVelocity = 1000;
     bool  enabled           = true;
-
 };
 } // namespace mmt_gd

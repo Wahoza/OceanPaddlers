@@ -48,15 +48,15 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     gameObject->setPosition(pos + Vector2f{8, 8});
 
     gameObject->addComponent<CollectibleComponent>(*gameObject,
-                                                   "pp",
-                                                   static_cast<float>(16 * 2),
-                                                   static_cast<float>(16 * 2));
+                                                   "Egg",
+                                                   static_cast<float>(16),
+                                                   static_cast<float>(16));
         
     const auto renderComp = gameObject->addComponent<SpriteRenderComponent>(*gameObject,
-                                                                            *m_window, "../assets/egg.png",
+                                                                            *m_window, "../assets/eggCollectible.png",
                                                                             "GameObjects");
     renderComp->init();
-    renderComp->getSprite().setTextureRect({0, 0, 32, 32});
+    renderComp->getSprite().setTextureRect({0, 0, 16, 16});
     renderComp->getSprite().setScale({1,1});
     renderComp->ShowSprite();
     EventBus::getInstance().fireEvent(std::make_shared<GameObjectCreateEvent>(gameObject));

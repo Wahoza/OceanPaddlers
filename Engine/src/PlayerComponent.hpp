@@ -13,7 +13,7 @@ class PlayerComponent : public IComponent
 //idea: rather then the two rects of the tether refrencing the tether as a player, they both call this component
 public:
     PlayerComponent(GameObject& gameObject);
-    void CollectibleCollision(); //send Collision Event
+    void CollectibleCollision(std::string _item); //send Collision Event
     void DamageCollision(); //send Damage Event or GameOver Event
     void GameEnd(); //send GameEnd Event
     void Victory();

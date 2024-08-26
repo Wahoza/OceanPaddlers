@@ -17,12 +17,23 @@ PlayerComponent::PlayerComponent(GameObject& gameObject) : IComponent(gameObject
     AiManager::getInstance()->setGoalObject(&gameObject);
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { onEnvironmentSwap(event); });
 }
-void PlayerComponent::CollectibleCollision()
+void PlayerComponent::CollectibleCollision(string _item)
 {
-    EggScore++;
-    int         eventData(EggScore);
-    IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
-    EventBus::getInstance().fireEvent(eggEvent);
+    if (_item == "Egg")
+    {
+        EggScore++;
+        int         eventData(EggScore);
+        IEvent::Ptr eggEvent = std::make_shared<EggEvent>(eventData);
+        EventBus::getInstance().fireEvent(eggEvent);
+    }
+    if (_item == "Health")
+    {
+        //change this to a new unique event
+        currentlives++;
+        int eventData(currentlives);
+        IEvent::Ptr Hurt = std::make_shared<HurtEvent>(eventData);
+        EventBus::getInstance().fireEvent(Hurt);
+    }
 }
 void PlayerComponent::DamageCollision()
 {
@@ -84,7 +95,6 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
     if (auto pos = m_gameObject.getPosition().y; !(pos > boundings[0] && pos < boundings[1])) {
         DamageCollision();
     }
-
     timeSinceLastSwap += deltaTime;
 }
 void PlayerComponent::onEnvironmentSwap(IEvent::Ptr event)

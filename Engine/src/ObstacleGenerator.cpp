@@ -55,14 +55,18 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
             Colliders.push_back(SubColliderVector);
         }
 
-    WallColliderBottom = new StaticColliderComponent(FloatRect{0, 0, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
-    WallColliderTop    = new StaticColliderComponent(FloatRect{0.f, (float)(Area.y - (3.5)) * TileLength, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
+    WallColliderTop = new StaticColliderComponent(FloatRect{0, 0, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
+    WallColliderBottom    = new StaticColliderComponent(FloatRect{0.f, (float)(Area.y - (3.5)) * TileLength, (float)Area.x * TileLength, 3.5f * TileLength}, "Wall");
+
+    WallColliderLeft   = new StaticColliderComponent(FloatRect{0.f, 0.f, 10.f, 20.f * TileLength}, "Wall");
+    WallColliderLeft->damage = false;
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
     _windowRect                      = windowRect;
     WallColliderTop->m_shape.left = windowRect.left;
     WallColliderBottom->m_shape.left = windowRect.left;
+    WallColliderLeft->m_shape.left   = windowRect.left;
 
     PathGen.GetPath(NPVs[0][1].pos.x / TileLength);
 
@@ -132,7 +136,7 @@ void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
                 static std::mt19937                    genCollectible(_seed + windowRect.left + SubVector[i].pos.y);
                 static std::uniform_int_distribution<> collectibleSpread(0, 150);
 
-                if (collectibleSpread(genCollectible) == 1)
+                if (collectibleSpread(genCollectible) <= 2)
                 {
                     ObjSpawner.createFish(SubVector[i].pos);
                 }

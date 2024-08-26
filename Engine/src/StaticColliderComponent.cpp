@@ -9,9 +9,10 @@
 namespace mmt_gd
 {
 StaticColliderComponent::StaticColliderComponent(FloatRect shape, string type) :
-m_shape(shape), m_coll(ConvertToCollType(type))
+m_shape(shape)
 {
     PhysicsManager::getInstance()->RegisterCollider(this);
+    m_coll = ConvertToCollType(type);
 }
 
 Vector2f StaticColliderComponent::getPosition()

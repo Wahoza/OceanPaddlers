@@ -161,7 +161,7 @@ void Hud::draw(sf::RenderWindow& m_window)
 
     Vector2f windowTopRight = m_window.getView().getCenter() +
                               Vector2f{m_window.getView().getSize().x / 2, -m_window.getView().getSize().y / 2};
-    Vector2f HeartOffset     = {heart.getScale().x * heart.getTexture()->getSize().x, 0};
+    Vector2f HeartOffset     = {heart.getScale().x * heart.getTexture()->getSize().x * currentlives / 5 + 16, 0}; //16 = Base Offset
     Vector2f NextHeartOffset = {heart.getScale().x * heart.getTexture()->getSize().x / 5, 0};
     for (float i = initlives; i > initlives - currentlives; i--)
     {

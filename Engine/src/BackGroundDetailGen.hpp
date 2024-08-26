@@ -15,7 +15,8 @@ public:
     };
     void initSpriteMap(std::unordered_map<int, std::shared_ptr<sf::Sprite>>& map, std::string FileName);
     void init(sf::IntRect _TextureRect, sf::Vector2i Area, int m_seed);
-    void update(float deltaTime, sf::FloatRect windowRect);
+    void update(float deltaTime, sf::FloatRect 
+    );
     void IslandGenListener(IEvent::Ptr event);
     void draw(sf::RenderWindow& window);
 

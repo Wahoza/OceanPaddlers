@@ -39,7 +39,7 @@ void CollectibleComponent::CollissionMessage(GameObject& CollObject)
     //std::cout << type << std::endl;
     if (CollObject.getComponent<PlayerComponent>() != nullptr)
     {
-        CollObject.getComponent<PlayerComponent>().get()->CollectibleCollision();
+        CollObject.getComponent<PlayerComponent>().get()->CollectibleCollision(type);
         m_gameObject.setActive(false);
     }
 }

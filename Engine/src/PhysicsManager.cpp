@@ -8,6 +8,7 @@
 #include "TetherComponent.hpp"
 #include "AIController.hpp"
 #include "PlayerComponent.hpp"
+#include <cmath>
 using namespace sf;
 using namespace std;
 
@@ -88,6 +89,16 @@ void PhysicsManager::HandleCollisions(float fDeltaTimeSeconds)
         // symplectic Euler
         body->m_acceleration = forces * body->m_invMass;
         body->m_velocity += body->m_acceleration * fDeltaTimeSeconds;
+        if (float squaredLength = std::pow(body->m_velocity.x, 2) + std::pow(body->m_velocity.y, 2); squaredLength > globalMaxVelocitySquared)
+        {
+            sf::Vector2f ReplacementVec = body->m_velocity / std::sqrt(squaredLength) * globalMaxVelocity;
+            body->m_velocity            = ReplacementVec;
+            if (body->GetTether() != nullptr)
+            {
+
+                body->GetTether()->setVelocity({0,0});
+            }
+        }
         //body.velocity = body.velocity * 0.99f; //< simple "friction"
         body->getGameObject().move(body->m_velocity * fDeltaTimeSeconds);
     }
@@ -252,7 +263,7 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
 
             }
             
-            CheckforTether(body1, impulse * penetration * body1->m_invMass, true);
+            CheckforTether(body1, impulse * penetration * body1->m_invMass, body2->damage);
 
         }
     }

@@ -197,7 +197,7 @@
                  "y":128
                 }, 
                 {
-                 "height":26.1515,
+                 "height":16,
                  "id":350,
                  "name":"Egg3",
                  "properties":[
@@ -209,12 +209,12 @@
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"egg.png"
+                         "value":"eggCollectible.png"
                         }, 
                         {
                          "name":"TextureRectHeight",
                          "type":"int",
-                         "value":32
+                         "value":16
                         }, 
                         {
                          "name":"TextureRectLeft",
@@ -229,14 +229,14 @@
                         {
                          "name":"TextureRectWidth",
                          "type":"int",
-                         "value":32
+                         "value":16
                         }],
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":26.1515,
+                 "width":16,
                  "x":800,
-                 "y":124
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",

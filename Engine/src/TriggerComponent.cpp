@@ -12,7 +12,7 @@
 #include "PlayerComponent.hpp"
 #include "AIController.hpp"
 #include "RigidBodyComponent.hpp"
-
+#include<cmath>
 namespace mmt_gd
 {
 TriggerComponent::TriggerComponent(FloatRect shape, string identifier, string notification) :
@@ -75,11 +75,6 @@ void TriggerComponent::Notify(GameObject& gameObject)
                 if (AIController* enemy = gameObject.getComponent<AIController>().get(); enemy != nullptr)
                 {
                     enemy->TakeDamage();
-                    if (RigidBodyComponent* rb = enemy->getGameObject().getComponent<RigidBodyComponent>().get();
-                        rb != nullptr)
-                    {
-                        rb->addVelocity(-rb->getVelocity() * 10.f);
-                    }
 
                 }
             }

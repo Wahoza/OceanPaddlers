@@ -219,6 +219,8 @@ void TetherComponent::ApplyForce(Vector2f _force)
 void TetherComponent::setVelocity(Vector2f _velocity)
 {
     forces.clear();
+    TetherItem1.getComponent<RigidBodyComponent>()->setVelocity(_velocity);
+    TetherItem2.getComponent<RigidBodyComponent>()->setVelocity(_velocity);
     forces.push_back(_velocity);
 }
 Vector2f TetherComponent::getVelocity()

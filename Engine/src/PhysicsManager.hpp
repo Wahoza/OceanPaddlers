@@ -50,6 +50,8 @@ public:
     void doCollectibleCollisions(RigidBodyComponent* body1);
     static bool aabbVsAabb(const FloatRect& a, const FloatRect& b, Vector2f& normal, float& penetration);
     
+    float globalMaxVelocity = 40;
+    float globalMaxVelocitySquared = 1600; //400;
 };
 
 }

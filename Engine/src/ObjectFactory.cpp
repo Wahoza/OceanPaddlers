@@ -143,7 +143,7 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
         else if (name == "Collectible")
         {
             gameObject->addComponent<CollectibleComponent>(*gameObject,
-                                                           "pp",
+                                      std::any_cast<string>(object.getProperties().getProperty("Collectible")->getValue()),
                                                            static_cast<float>(object.getSize().x),
                                                            static_cast<float>(object.getSize().y));
         }

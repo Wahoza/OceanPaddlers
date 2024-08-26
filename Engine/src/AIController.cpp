@@ -46,6 +46,9 @@ void AIController::update(const float deltaTime)
 
             agressiveUpdate(deltaTime);
             break;
+        case dazed:
+            dazedUpdate(deltaTime);
+            break;
         case disolve:
             if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)
             {
@@ -102,6 +105,13 @@ void AIController::idleUpdate(float deltaTime)
 {
     //do nothing, idle
 }
+void AIController::dazedUpdate(float deltaTime)
+{
+    auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
+    m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({1, 0});
+
+    sprite.setRotation(sprite.getRotation() + 360 * deltaTime);
+}
 
 
 void AIController::moveObj(Vector2f moveVec, float deltaTime)
@@ -148,6 +158,13 @@ void AIController::RequestNextState()
             elapsedTimeInPhase = 0;
             currentState = disolve;
 
+        }
+    }
+    else if (currentState == dazed)
+    {
+        if (elapsedTimeInPhase > 2)
+        {
+            currentState = idle;
         }
     }
     else if (currentState == disolve)
@@ -211,6 +228,19 @@ void AIController::TakeDamage()
     {
         currentState = disolve;
     }
+    else
+    {
+        currentState = dazed;
+        if (RigidBodyComponent* rb = getGameObject().getComponent<RigidBodyComponent>().get(); rb != nullptr)
+        {
+            sf::Vector2f vec = rb->getVelocity();
+            rb->addVelocity(-vec - vec / std::sqrt(vec.x * vec.x + vec.y * vec.y) * 100.f);
+        }
+    }
     iFrameTime = iFrameDuration;
+}
+AIController::State AIController::getCurrentState()
+{
+    return currentState;
 }
 }

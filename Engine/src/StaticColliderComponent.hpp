@@ -45,7 +45,7 @@ public:
 
     bool     init() ;
     void     update(float deltaTime) ;
-
+    bool        damage = true;
     Vector2f    getPosition();
     void        ChangePosition(Vector2f changePos);
     void        removeSelf();
