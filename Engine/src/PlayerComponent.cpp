@@ -84,11 +84,13 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
     if (auto pos = m_gameObject.getPosition().y; !(pos > boundings[0] && pos < boundings[1])) {
         DamageCollision();
     }
+
     timeSinceLastSwap += deltaTime;
 }
 void PlayerComponent::onEnvironmentSwap(IEvent::Ptr event)
 {
     auto swapEvent    = std::dynamic_pointer_cast<SwapTiles>(event);
+
     swapDuration      = std::get<1>(swapEvent.get()->getData());
     timeSinceLastSwap = 0;
 }

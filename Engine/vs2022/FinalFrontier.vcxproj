@@ -172,6 +172,7 @@
     <ClInclude Include="..\src\ObstacleGenerator.hpp" />
     <ClInclude Include="..\src\PathGenerator.hpp" />
     <ClInclude Include="..\src\PhysicsManager.hpp" />
+    <ClInclude Include="..\src\PlayerAttackComponent.hpp" />
     <ClInclude Include="..\src\PlayerComponent.hpp" />
     <ClInclude Include="..\src\RenderComponentEvents.hpp" />
     <ClInclude Include="..\src\RigidBodyComponent.hpp" />
@@ -233,6 +234,7 @@
     <ClCompile Include="..\src\ObstacleGenerator.cpp" />
     <ClCompile Include="..\src\PathGenerator.cpp" />
     <ClCompile Include="..\src\PhysicsManager.cpp" />
+    <ClCompile Include="..\src\PlayerAttackComponent.cpp" />
     <ClCompile Include="..\src\PlayerComponent.cpp" />
     <ClCompile Include="..\src\PlayerMoveComponent.cpp" />
     <ClCompile Include="..\src\CameraRenderComponent.cpp" />

@@ -35,6 +35,7 @@ public:
 
     void moveObj(sf::Vector2f moveVec, float deltaTime);
     void RequestNextState();
+    void SetState(State _state);
     void CompleteSpriteChanges(sf::Vector2f orientation);
 
     AIController(GameObject& _gameObject);
@@ -44,12 +45,18 @@ public:
 
     float CalculateDist();
     void  CollisionEvent();
-    float speed = 100;
 
+    void  TakeDamage();
+    float speed = 100;
+    bool attackable = true; //base for fish
+    int  healthPoints = 2; //base for fish
+    
 private:
     State       currentState = idle;
 
     GameObject* m_goal = nullptr;
     float       elapsedTimeInPhase = 0;
+    float       iFrameTime = 0;
+    float       iFrameDuration     = 0.15;
 };
 } // namespace mmt_gd

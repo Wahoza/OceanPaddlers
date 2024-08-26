@@ -58,7 +58,7 @@
     <Filter Include="Source Files\Animations">
       <UniqueIdentifier>{06ab3e91-e435-4694-853d-d496d0686ad2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Debug\GameObject">
+    <Filter Include="Header Files\GameObject">
       <UniqueIdentifier>{5783397e-48fb-4d06-abf7-4fe3dab64aa4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -70,7 +70,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameObject.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\MenuState.hpp">
       <Filter>Header Files\GameState</Filter>
@@ -82,25 +82,25 @@
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\IComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\IRenderComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SpriteRenderComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameState.hpp">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="..\src\CameraRenderComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerMoveComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TileLayerRenderComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SpriteManager.hpp">
       <Filter>Header Files\Manager</Filter>
@@ -172,22 +172,22 @@
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\RigidBodyComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\StaticColliderComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TriggerComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AIController.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\CollectibleComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TetherComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AiManager.hpp">
       <Filter>Header Files\Manager</Filter>
@@ -199,19 +199,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ScoreConverter.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Hud.hpp">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ScoreDisplayComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SoundManager.hpp">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerComponent.hpp">
-      <Filter>Header Files\Debug\GameObject</Filter>
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp">
       <Filter>Header Files\Map</Filter>
@@ -254,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="..\src\GameOverLevelState.hpp">
       <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PlayerAttackComponent.hpp">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="..\src\GameOverLevelState.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PlayerAttackComponent.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

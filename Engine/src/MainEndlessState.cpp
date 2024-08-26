@@ -22,6 +22,7 @@
 
 #include "InputObject.hpp"
 #include "SoundManager.hpp"
+
 #include <memory>
 #include <thread>
 

@@ -9,6 +9,8 @@
 
 #include "GameObjectManager.hpp"
 #include "PlayerMoveComponent.hpp"
+#include "PlayerAttackComponent.hpp"
+
 #include "SpriteRenderComponent.hpp"
 
 #include "AiManager.hpp"
@@ -31,7 +33,8 @@ TetherComponent::TetherComponent(
     float       mass,
     float       loss,
     bool        controll,
-    float _movePercentage) :
+    float       _movePercentage,
+    float       HitBoxScale) :
 IComponent(gameObject),
 movePercentage(_movePercentage),
 length(shape.width / 2),
@@ -39,7 +42,7 @@ TetherItem1(createNewTetheredObject("tethered1")),
 TetherItem2(createNewTetheredObject("tethered2"))
 {
     mass              = 20;
-    float scaleFactor = 0.6;
+    float scaleFactor = HitBoxScale;
     length = shape.width / 2 * scaleFactor;
     float height = shape.height*scaleFactor;
 
@@ -60,7 +63,11 @@ TetherItem2(createNewTetheredObject("tethered2"))
     if (controll)
     {
         TetherItem1.addComponent<PlayerMoveComponent>(TetherItem1, 0, true);
+        TetherItem1.addComponent<PlayerAttackComponent>(TetherItem1, Vector2f(length, height), 10, 1, 0);
+
         TetherItem2.addComponent<PlayerMoveComponent>(TetherItem2, 1, true);
+        TetherItem1.addComponent<PlayerAttackComponent>(TetherItem2, Vector2f(length, height), 10, 1, 1);
+
     }
 
     //reposition for editor's sake
@@ -90,7 +97,7 @@ void TetherComponent::update(const float deltaTime)
     if (m_gameObject.getComponent<SpriteRenderComponent>() != nullptr)
     {
         auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
-        float angle  = atan2(orientation.y, orientation.x);
+        angle  = atan2(orientation.y, orientation.x);
 
 
         angle        = angle * 180.0f / static_cast<float>(3.14);
@@ -102,7 +109,10 @@ void TetherComponent::update(const float deltaTime)
     }
 
 }
-
+float TetherComponent::getCurrentAngle()
+{
+    return angle;
+}
 void TetherComponent::calculateRBForce(float deltaTime)
 {
     forces.push_back(TetherItem1.getComponent<RigidBodyComponent>()->getVelocity() * deltaTime);
@@ -167,7 +177,6 @@ vector<GameObject*> TetherComponent::getTethers()
 }
 TetherComponent::~TetherComponent()
 {
-
     delete &TetherItem1;
     delete &TetherItem2;
 }

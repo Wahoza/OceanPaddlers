@@ -21,6 +21,9 @@ void SoundManager::init()
     addSound("../assets/audio/sounds/input.wav", "Input");
     addSound("../assets/audio/sounds/victory.wav", "Victory");
     addSound("../assets/audio/sounds/wave.wav", "Wave");
+    addSound("../assets/audio/sounds/attack_turtle.wav", "TurtleAttack");
+
+
     addMusic("../assets/audio/music/Music.ogg", "Music");
     
     EventBus::getInstance().addListener(HurtEvent::Type, [this](IEvent::Ptr event) { playSound("StoneBonk"); });
@@ -31,12 +34,14 @@ void SoundManager::init()
     EventBus::getInstance().addListener(VictorySoundEvent::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
     EventBus::getInstance().addListener(WaveSoundEvent::Type, [this](IEvent::Ptr event) { playSound("Wave"); });
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
+    EventBus::getInstance().addListener(AttackEvent::Type, [this](IEvent::Ptr event) { playSound("TurtleAttack"); });
 }
 void SoundManager::playSound(std::string soundName)
 {
     //play soundbuffer based on name
     if (sound.getStatus() == sf::Sound::Status::Playing && soundName != "StoneBonk" && soundName != "EggCollect")
     {
+
         return;
     }
     auto it = m_buffers.find(soundName);

@@ -18,9 +18,18 @@ class TetherComponent : public IComponent
     //it will split up the collider into two gameObjects; Logic will be implemented into physicsmanager for testing if both colliding objects are Element of tether.
     //Also: moveVecs should be reoriented according to orientation
 public:
-    TetherComponent(GameObject& gameObject, FloatRect shape, Vector2f offset, string forces, float mass, float loss, bool controll, float _movePercentage);
+    TetherComponent(GameObject& gameObject,
+                    FloatRect   shape,
+                    Vector2f    offset,
+                    string      forces,
+                    float       mass,
+                    float       loss,
+                    bool        controll,
+                    float       _movePercentage,
+                    float       HitBoxScale);
     ~TetherComponent();
-    void update(const float deltaTime) override;
+    void     update(const float deltaTime) override;
+    float    getCurrentAngle();
     void calculateRBForce(float deltaTime);
     void CalculateEffect(float deltaTime);
     void RepositionBodies();
@@ -40,7 +49,7 @@ public:
     void     ApplyForce(Vector2f _force);
     void     setVelocity(Vector2f _velocity);
 
-    Vector2f     getVelocity();
+    Vector2f getVelocity();
     Vector2f getPosition();
 
     std::vector<sf::Vector2f> StringToVecList(string input)
@@ -71,6 +80,7 @@ private:
     float            trueMaxVelocity = 40;
     float            initMaxVelocity    = 20;
     float            currentMaxVelocity = 0;
+    float            angle;
     void  AddLocalForce(Vector2f _force);
 };
 }

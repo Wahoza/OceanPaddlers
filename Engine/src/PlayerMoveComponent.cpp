@@ -62,7 +62,6 @@ void PlayerMoveComponent::calculateSpriteOffset(Vector2f input, int index)
 
     }
    
-
     m_gameObject.getComponent<RigidBodyComponent>()
         .get()
         ->GetTether()

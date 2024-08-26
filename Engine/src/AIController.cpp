@@ -21,6 +21,11 @@ void AIController::update(const float deltaTime)
     {
         return;
     }
+
+    if (iFrameTime > 0)
+    {
+        iFrameTime -= deltaTime;
+    }
     RequestNextState();
     elapsedTimeInPhase += deltaTime;
 
@@ -151,11 +156,16 @@ void AIController::RequestNextState()
         m_gameObject.getComponent<RigidBodyComponent>()->setVelocity({0, 0});
     }
 }
+void AIController::SetState(State _state)
+{
+    currentState = _state;
+}
 void AIController::CompleteSpriteChanges(Vector2f orientation)
 {
     Vector2f NewOrientation = Vector2f{-orientation.y, orientation.x};
     auto& sprite = m_gameObject.getComponent<SpriteRenderComponent>().get()->getSprite();
     float angle = atan2(NewOrientation.y, NewOrientation.x);
+
     angle = angle * 180.0f / static_cast<float>(3.14);
 
 
@@ -188,5 +198,19 @@ void AIController::CollisionEvent()
 {
     IEvent::Ptr FishColl = std::make_shared<FishCollisionEvent>(1);
     EventBus::getInstance().fireEvent(FishColl);
+}
+void AIController::TakeDamage()
+{
+    if (iFrameTime > 0)
+    {
+        return;
+    }
+
+    healthPoints --;
+    if (healthPoints <= 0)
+    {
+        currentState = disolve;
+    }
+    iFrameTime = iFrameDuration;
 }
 }

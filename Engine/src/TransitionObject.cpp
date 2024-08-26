@@ -12,9 +12,10 @@ void TransitionObject::init(sf::Vector2i Area, int initOffset)
     _area = Area * TextureSize;
 
 
-        trigger = new TriggerComponent({0, 0, 0, 0}, "Player0", "Transition");
-    
+    trigger = new TriggerComponent({0, 0, 0, 0}, "Player0", "Transition");
+
     PhysicsManager::getInstance()->RegisterTrigger(trigger);
+    trigger->setEnabled(true);
 
     disabledArea = {_windowRect.left + TransitionDist + initOffset * TextureSize, 0, (float)TextureSize * areaWidth, _windowRect.height};
     trigger->m_shape = {_windowRect.left + TransitionDist + initOffset * TextureSize, 0, (float)TextureSize, _windowRect.height};
@@ -62,12 +63,11 @@ sf::FloatRect* TransitionObject::getDisabledArea()
 
 void TransitionObject::Notify()
 {
-    trigger->m_notification = "";
     genTransitionPos();
     std::cout << trigger->m_shape.left << std::endl;
     trigger->m_identifier = "Player0";
 
-    SoundManager::getInstance().playSound("Victory");
+    //SoundManager::getInstance()->playSound("Victory");
 }
 
 void TransitionObject::genTransitionPos()

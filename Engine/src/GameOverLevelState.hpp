@@ -6,7 +6,6 @@
 #include "GameState.hpp"
 #include "FinalFrontier/dll_export.hpp"
 #include "IEvent.hpp"
-#include "InputObject.hpp"
 namespace mmt_gd
 {
 

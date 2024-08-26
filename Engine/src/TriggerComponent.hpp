@@ -35,9 +35,13 @@ public:
     void     Notify(GameObject& gameObject);
     string m_notification;
     string m_identifier;
+    string   m_origin = "World";
     Vector2f getPosition();
+    void     setEnabled(bool enabled);
     void     removeSelf();
     TriggerComponent(FloatRect shape, string identifier, string notification);
     float SquaredMaxVelocity = 1000;
+    bool  enabled           = true;
+
 };
 } // namespace mmt_gd

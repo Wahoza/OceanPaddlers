@@ -195,5 +195,17 @@ public:
     {
         return Type;
     }
+};class AttackEvent final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
 };
+
 } // namespace mmt_gd

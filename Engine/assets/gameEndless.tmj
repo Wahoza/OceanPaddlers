@@ -125,6 +125,11 @@
                  "name":"Player0",
                  "properties":[
                         {
+                         "name":"AttackRange",
+                         "type":"float",
+                         "value":2
+                        }, 
+                        {
                          "name":"Border",
                          "type":"bool",
                          "value":true
@@ -138,6 +143,11 @@
                          "name":"Forces",
                          "type":"string",
                          "value":"20 0"
+                        }, 
+                        {
+                         "name":"HitboxScale",
+                         "type":"float",
+                         "value":0.6
                         }, 
                         {
                          "name":"Mass",

@@ -23,5 +23,6 @@ public:
     void calculateSpriteOffset(sf::Vector2f input, int index);
     bool rigidControll;
     int m_playerIndex;
+
 };
 } // namespace mmt_gd

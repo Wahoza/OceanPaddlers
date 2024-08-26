@@ -89,12 +89,13 @@ void Game::initInputManager()
     m_inputManager->bind("left", sf::Keyboard::A, 0);
     m_inputManager->bind("down", sf::Keyboard::S, 0);
     m_inputManager->bind("right", sf::Keyboard::D, 0);
-    m_inputManager->bind("fire", sf::Keyboard::Space, 0);
+    m_inputManager->bind("attack", sf::Keyboard::C, 0);
 
     m_inputManager->bind("up", sf::Keyboard::Up, 1);
     m_inputManager->bind("left", sf::Keyboard::Left, 1);
     m_inputManager->bind("down", sf::Keyboard::Down, 1);
     m_inputManager->bind("right", sf::Keyboard::Right, 1);
+    m_inputManager->bind("attack", sf::Keyboard::RShift, 1);
 
     m_inputManager->bind("debugdraw", sf::Keyboard::F1, 0);
 }

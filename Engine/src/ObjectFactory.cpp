@@ -17,6 +17,8 @@
 #include "AIController.hpp"
 #include "ScoreConverter.hpp"
 #include "PlayerComponent.hpp"
+#include "PlayerAttackComponent.hpp"
+
 namespace mmt_gd
 {
 static GameObject::Ptr loadSprite(tson::Object&        object,
@@ -97,6 +99,11 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
 
             if (object.getProperties().getProperty("TetherPercentage"))
             {
+                float hitScale = 0.6;
+                if (object.getProperties().getProperty("HitboxScale"))
+                {
+                    hitScale = std::any_cast<float>(object.getProperties().getProperty("HitboxScale")->getValue());
+                }
                 float percentage = std::any_cast<float>(object.getProperties().getProperty("TetherPercentage")->getValue());
                 gameObject->addComponent<TetherComponent>(*gameObject,
                                                              FloatRect{0,
@@ -108,8 +115,10 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
                                                              mass,
                                                              loss,
                                                              true,
-                                                             percentage
+                                                             percentage,
+                                                             hitScale
                     );
+                
             }
             else
             {
@@ -138,6 +147,18 @@ static GameObject::Ptr loadSprite(tson::Object&        object,
                                                            static_cast<float>(object.getSize().x),
                                                            static_cast<float>(object.getSize().y));
         }
+        //else if (name == "AttackRange")
+        //{
+        //    //(GameObject& gameObject, sf::Vector2f size, float expansion)
+        //    float hitScale = 0.6;
+        //    if (object.getProperties().getProperty("HitboxScale"))
+        //    {
+        //        hitScale = std::any_cast<float>(object.getProperties().getProperty("HitboxScale")->getValue());
+        //    }
+
+        //    float range = std::any_cast<float>(object.getProperties().getProperty("AttackRange")->getValue());
+        //    gameObject->addComponent<PlayerAttackComponent>(*gameObject, Vector2f{static_cast<float>(object.getSize().x), static_cast<float>(object.getSize().y)}, range, hitScale) ;
+        //}
     }
 
     if (spriteTexture.string().length() > 0)

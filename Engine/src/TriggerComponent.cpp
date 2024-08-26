@@ -10,6 +10,9 @@
 #include "GameObjectEvents.hpp"
 #include "Hud.hpp"
 #include "PlayerComponent.hpp"
+#include "AIController.hpp"
+#include "RigidBodyComponent.hpp"
+
 namespace mmt_gd
 {
 TriggerComponent::TriggerComponent(FloatRect shape, string identifier, string notification) :
@@ -28,6 +31,10 @@ void TriggerComponent::Notify(GameObject& gameObject)
 {
     //std::cout << m_notification << std::endl;
     //
+    if (!enabled)
+    {
+        return;
+    }
         if (m_notification == "Goal")
         {
             if (PlayerComponent* comp = gameObject.getComponent<PlayerComponent>().get(); comp != nullptr)
@@ -60,12 +67,34 @@ void TriggerComponent::Notify(GameObject& gameObject)
             }
             //Hud::getInstance()->won = true;
         }
+        if (m_notification == "Attack")
+        {
+
+            if (m_origin != gameObject.getId())
+            {
+                if (AIController* enemy = gameObject.getComponent<AIController>().get(); enemy != nullptr)
+                {
+                    enemy->TakeDamage();
+                    if (RigidBodyComponent* rb = enemy->getGameObject().getComponent<RigidBodyComponent>().get();
+                        rb != nullptr)
+                    {
+                        rb->addVelocity(-rb->getVelocity() * 10.f);
+                    }
+
+                }
+            }
+        }
     
 }
 Vector2f TriggerComponent::getPosition()
 {
     return {m_shape.left, m_shape.top};
 }
+void TriggerComponent::setEnabled(bool _enabled)
+{
+    enabled = _enabled;
+}
+
 void TriggerComponent::removeSelf()
 {
     //note: this breaks game if used improperly

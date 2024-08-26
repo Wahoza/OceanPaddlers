@@ -68,36 +68,7 @@ void PhysicsManager::HandleCollisions(float fDeltaTimeSeconds)
     findCollisions();
     resolveCollisions();
     //std::cout << "update" << std::endl;
-    for (auto& body : m_staticcolliders)
-    {
-        if (body->m_coll == StaticColliderComponent::Disabled)
-        {
-            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
-                                                   {body->m_shape.width, body->m_shape.height},
-                                                   {100,100,100,255});
-        }
-        else
-        {
-            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
-                                                   {body->m_shape.width, body->m_shape.height},
-                                                   sf::Color::Green);
-        }
-        //std::cout << body->m_shape.width << std::endl;
-    }
-    for (auto& body : m_triggers)
-    {
-        DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
-                                               {body->m_shape.width, body->m_shape.height},
-                                               sf::Color::Red);
-        //std::cout << body->m_shape.width << std::endl;
-    }
-    for (auto& body : m_collectibles)
-    {
-        DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
-                                               {body->m_shape.width, body->m_shape.height},
-                                               sf::Color::Red);
-        //std::cout << body->m_shape.width << std::endl;
-    }
+    
     for (auto& body : m_bodies)
     {
         DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
@@ -120,6 +91,8 @@ void PhysicsManager::HandleCollisions(float fDeltaTimeSeconds)
         //body.velocity = body.velocity * 0.99f; //< simple "friction"
         body->getGameObject().move(body->m_velocity * fDeltaTimeSeconds);
     }
+
+    DebugDrawBoxes();
 }
 
 void PhysicsManager::findCollisions()
@@ -295,7 +268,10 @@ void PhysicsManager::doTriggerCollisions(RigidBodyComponent* body1)
 
         if (body1->getGameObject().getId().find(body2->m_identifier) == std::string::npos)
         {
-            continue;
+            if (!(body2->m_identifier == "Enemy"))
+            {
+                continue;
+            }
         }
 
         Transform body1Transform;
@@ -490,5 +466,58 @@ void PhysicsManager::shutdown()
     m_triggers.clear();
     delete m_instance;
     m_instance = nullptr;
+}
+void PhysicsManager::DebugDrawBoxes()
+{
+    if (!DebugDraw::getInstance().is_enabled())
+    {
+        return;
+    }
+    for (auto& body : m_staticcolliders)
+    {
+        if (body->m_coll == StaticColliderComponent::Disabled)
+        {
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   {100, 100, 100, 255});
+        }
+        else
+        {
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   sf::Color::Green);
+        }
+        //std::cout << body->m_shape.width << std::endl;
+    }
+    for (auto& body : m_triggers)
+    {
+        if (body->enabled)
+        {
+
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   sf::Color::Red);
+        }
+        else
+        {
+            DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                                   {body->m_shape.width, body->m_shape.height},
+                                                   {97, 51, 51});
+        }
+        //std::cout << body->m_shape.width << std::endl;
+    }
+    for (auto& body : m_collectibles)
+    {
+        DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                               {body->m_shape.width, body->m_shape.height},
+                                               sf::Color::Red);
+        //std::cout << body->m_shape.width << std::endl;
+    }
+    for (auto& body : m_bodies)
+    {
+        DebugDraw::getInstance().drawRectangle({body->m_shape.left, body->m_shape.top},
+                                               {body->m_shape.width, body->m_shape.height},
+                                               sf::Color::Yellow);
+    }
 }
 } // namespace mmt_gd

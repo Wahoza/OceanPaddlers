@@ -15,6 +15,7 @@ public:
 
     static PhysicsManager* getInstance();
     void shutdown();
+    void DebugDrawBoxes();
     void HandleCollisions(float fDeltaTimeSeconds);
     void RegisterBody(RigidBodyComponent* RigidBody);
     void RegisterCollider(StaticColliderComponent* Collider);
