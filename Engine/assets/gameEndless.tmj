@@ -204,7 +204,7 @@
                         {
                          "name":"Collectible",
                          "type":"string",
-                         "value":"PowerUp"
+                         "value":"Egg"
                         }, 
                         {
                          "name":"Texture",

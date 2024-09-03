@@ -28,13 +28,14 @@ void ParticleManager::update(float deltaTime)
         
         auto& ttl = std::get<2>(*particle);
         auto& originalttl = std::get<3>(*particle);
+        ttl               = ttl - deltaTime;
+
         if (ttl < 0)
         {
             particle = particles.erase(particle);
             continue;
         }
 
-        ttl = ttl - deltaTime;
         //std::cout << ttl << std::endl;
 
         auto& rect = std::get<0>(*particle);
@@ -49,6 +50,7 @@ void ParticleManager::update(float deltaTime)
         {
             sf::Color originalColor = rect.getFillColor();
             sf::Color originalOutline = rect.getOutlineColor();
+
             rect.setFillColor({originalColor.r, originalColor.b, originalColor.g, sf::Uint8((ttl / originalttl) * 255.0f)});
             rect.setOutlineColor(
                 {originalOutline.r, originalOutline.b, originalOutline.g, sf::Uint8((ttl / originalttl) * 255.0f)});
