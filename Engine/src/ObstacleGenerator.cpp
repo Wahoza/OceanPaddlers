@@ -5,30 +5,35 @@
 #include "StaticColliderComponent.hpp"
 #include "DebugDraw.hpp"
 #include "PhysicsManager.hpp"
+#include "TileNames.hpp"
 
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "IEvent.hpp"
 
 #include <random>
+#include "CollisionParticleHandler.hpp"
 
 namespace mmt_gd
 {
 void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window)
 {
     _windowRect = {0, 0, (float)Area.x * 16, (float)Area.y * 16};
+
     PathGen.init(seed, {0,9}, Area);
     ObjSpawner.init(TileLength, &window, seed);
     RockGen.init(Area, seed);
+
     _seed = seed;
     noise.SetSeed(seed);
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
-    LoadTextures("grassTiles/", _TextureRect);
+    LoadTextures("grassTiles/", _TextureRect, 0);
 
     TileLength  = _TextureRect.width;
     waitingDist = 20 * TileLength;
     waiting     = true;
+    
         for (int x = Area.x; x >= 0; x--)
         {
             std::vector<NoisePositionValue> SubVector;
@@ -60,6 +65,8 @@ void ObstacleGenerator::init(sf::IntRect _TextureRect, sf::Vector2i Area, int se
 
     WallColliderLeft   = new StaticColliderComponent(FloatRect{0.f, 0.f, 10.f, 20.f * TileLength}, "Wall");
     WallColliderLeft->damage = false;
+
+
 }
 void ObstacleGenerator::update(float deltaTime, sf::FloatRect windowRect)
 {
@@ -253,6 +260,10 @@ void ObstacleGenerator::draw(sf::RenderWindow& window)
     }
     for (auto& dockTile : DockTileVector)
     {
+        if (!dockTile.draw)
+        {
+            continue;
+        }
         m_dockPrinter.setTextureRect({dockTile.LeftTop.x,
                                       dockTile.LeftTop.y,
                                       m_dockPrinter.getTextureRect().width,
@@ -616,8 +627,102 @@ void ObstacleGenerator::DisableGenArea(sf::FloatRect* Rect)
 {
     disabledArea = Rect;
 }
-void ObstacleGenerator::LoadTextures(string Folder, IntRect _TextureRect)
+void ObstacleGenerator::IslandDestroyListen(sf::FloatRect _shape)
 {
+    switch (static_cast<int>(_shape.left) % 16)
+    {
+        case 1:
+        {
+            // Regular Island
+            float goalRevalX = _shape.left - 1;
+            float goalRevalY = _shape.top - 1;
+
+            for (auto& item : ObstacleSpriteMap)
+            {
+                if (item[0].pos.x == goalRevalX)
+                {
+                    for (auto& _island : item)
+                    {
+                        if (_island.pos.y == goalRevalY)
+                        {
+
+                            _island.print = false;
+                            sf::Vector2f center = {_shape.left + 8.f, _shape.top + 8.f};
+                            ParticleManager::getInstance()
+                                ->generateParticlesAroundPoint(center,
+                                                                     5,
+                                                                     ParticleRadius,
+                                                                     ParticleSpeed,
+                                                                     ParticleSize,
+                                                                     TileNames::getTileTypeColor(currentSwapType, _island.isDirt? 1 : 0),
+                                                                     ParticleoutlineSize,
+                                                                     ParticleoutlineColor,
+                                                                     ParticleTTL,1);
+
+                            break; // Break out of the inner loop
+                            //TileNames::getTileTypeColor(currentSwapType, _island.isDirt? 1 : 0)
+                        }
+                    }
+                    break; // Break out of the outer loop
+                }
+            }
+            break; // End of case 1
+        }
+        case 3:
+        {
+            // Rock or boat
+            RockGen.destroyRock(_shape);
+            sf::Vector2f center = {_shape.left + 8.f, _shape.top + 8.f};
+
+            ParticleManager::getInstance()
+                ->generateParticlesAroundPoint(center,
+                                               3,
+                                               ParticleRadius,
+                                               ParticleSpeed,
+                                               ParticleSize,
+                                               TileNames::getTileTypeColor(currentSwapType, 3),
+                                               ParticleoutlineSize,
+                                               ParticleoutlineColor,
+                                               ParticleTTL,1);
+            break; // End of case 3
+        }
+        case 4:
+        {
+            float goalRevalX = _shape.left - 4;
+            float goalRevalY = _shape.top - 4;
+            Vector2f goal       = {goalRevalX, goalRevalY};
+            for (auto& dock : DockTileVector)
+            {
+                if (dock.pos == goal)
+                {
+                    dock.draw = false;
+                    sf::Vector2f center = {_shape.left + 8.f, _shape.top + 8.f};
+
+                    ParticleManager::getInstance()
+                        ->generateParticlesAroundPoint(center,
+                                                       3,
+                                                       ParticleRadius,
+                                                       ParticleSpeed,
+                                                       ParticleSize,
+                                                       TileNames::getTileTypeColor(currentSwapType, 2),
+                                                       ParticleoutlineSize,
+                                                       ParticleoutlineColor,
+                                                       ParticleTTL,0);
+                    break; // Break out of the inner loop
+                }
+            }
+            //break;
+        }
+        // Add other cases if necessary
+        default:
+            // Optionally handle default case
+            break;
+
+    }
+}
+void ObstacleGenerator::LoadTextures(string Folder, IntRect _TextureRect, int currentType)
+{
+    currentSwapType      = currentType;
     string TotalFilePath = "../assets/SegmentedTiles/" + Folder;
     if (!m_texture.loadFromFile(TotalFilePath + "tiles.png"))
     {
@@ -662,5 +767,6 @@ void ObstacleGenerator::shutdown()
     DockColliders     = {};
     PathGen.shutdown();
     RockGen.shutdown();
+    //
 }
 } // namespace mmt_gd

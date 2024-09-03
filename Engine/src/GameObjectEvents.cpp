@@ -12,6 +12,7 @@ constexpr mmt_gd::IEvent::EventType mmt_gd::EggEvent::Type             = 0x12345
 constexpr mmt_gd::IEvent::EventType mmt_gd::HurtEvent::Type               = 0x22345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::GameOverEvent::Type              = 0x32345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::FishCollisionEvent::Type           = 0x42345679;
+constexpr mmt_gd::IEvent::EventType mmt_gd::IslandCollisionEvent::Type                           = 0x42345671;
 constexpr mmt_gd::IEvent::EventType mmt_gd::InputEvent::Type         = 0x52345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::VictorySoundEvent::Type                   = 0x62345679;
 constexpr mmt_gd::IEvent::EventType mmt_gd::WaveSoundEvent::Type               = 0x63345679;
@@ -22,3 +23,4 @@ constexpr mmt_gd::IEvent::EventType mmt_gd::PauseEvent::Type                    
 constexpr mmt_gd::IEvent::EventType mmt_gd::AttackEvent::Type                                = 0x9334567b;
 constexpr mmt_gd::IEvent::EventType mmt_gd::FishHitSuccess::Type                                 = 0x1434567b;
 constexpr mmt_gd::IEvent::EventType mmt_gd::HealthCollect::Type                                  = 0x2434567b;
+constexpr mmt_gd::IEvent::EventType mmt_gd::PowerUP::Type                                  = 0x3434567b;

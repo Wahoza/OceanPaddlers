@@ -38,26 +38,36 @@ void ObjectSpawner::createPotentialCollectible(sf::Vector2f pos)
     }
 
     static std::mt19937                    genCollectible(_seed + pos.x + pos.y);
-    static std::uniform_int_distribution<> collectibleSpread(0, 80);
+    static std::uniform_int_distribution<> collectibleSpread(0, 400);
 
     int collectibleResult = collectibleSpread(genCollectible);
 
-    if (!(collectibleResult <= 4 || CallsSinceLastSpawn >= maxCalls))
+    if (!(collectibleResult <= 20 || CallsSinceLastSpawn >= maxCalls))
     {
         return;
     }
+    else if (CallsSinceLastSpawn >= maxCalls)
+    {
+        collectibleResult = 10;
+    }
+
 
     auto gameObject = GameObject::create("Collectible" + std::to_string(CollectibleCtr));
     gameObject->setPosition(pos + Vector2f{8, 8});
 
 
     string type = "Egg";
-    string textureLocation = "../assets/eggCollectible.png";
+    string textureLocation = Path + Egg;
     //std::cout << collectibleResult << std::endl;
-    if (collectibleResult == 1)
+    if (collectibleResult >= 15)
     {
         type = "Health";
-        textureLocation = "../assets/heartCollectible.png";
+        textureLocation = Path + Heart;
+    }
+    if (collectibleResult >= 19)
+    {
+        type            = "PowerUp";
+        textureLocation = Path + Powerup;
     }
     gameObject->addComponent<CollectibleComponent>(*gameObject,
                                                    type,

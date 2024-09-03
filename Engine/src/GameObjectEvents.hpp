@@ -112,6 +112,18 @@ public:
         return Type;
     }
 };
+class IslandCollisionEvent final : public BasicDataEvent<sf::FloatRect>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
 class InputEvent final : public BasicDataEvent<char>
 {
 public:
@@ -221,6 +233,18 @@ public:
     }
 };
 class HealthCollect final : public BasicDataEvent<int>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class PowerUP final : public BasicDataEvent<bool>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

@@ -25,6 +25,9 @@ public:
     void LoadTextures(std::string FolderName);
     void shutdown();
 
+    void IslandDestructionListener(sf::FloatRect island);
+
+
 private:
     int m_seed = 420;
 
@@ -49,5 +52,6 @@ private:
 
     std::vector<sf::Vector2f> m_IslandTiles;
     bool                      isInit = false;
+    bool                      isPowerUP = false;
 };
 } // namespace mmt_gd

@@ -56,6 +56,15 @@ void AIController::update(const float deltaTime)
             }
             disolveUpdate(deltaTime);
             break;
+        case killed:
+            if (m_gameObject.getComponent<RigidBodyComponent>() != nullptr)
+            {
+                m_gameObject.getComponent<RigidBodyComponent>().get()->isActive = false;
+            }
+            m_gameObject.getComponent<SpriteRenderComponent>()->HideSprite();
+
+            killedUpdate(deltaTime);
+            break;
     }
 }
 bool AIController::init()
@@ -99,6 +108,11 @@ void AIController::interestedUpdate(float deltaTime)
 
     m_gameObject.getComponent<SpriteRenderComponent>()->IncrementOffset({((int)(elapsedTimeInPhase * 3) % 4 + 1), 0});
     CompleteSpriteChanges(moveVec);
+
+    if (elapsedTimeInPhase > maxInterestedTime)
+    {
+        SetState(disolve);
+    }
 }
 
 void AIController::idleUpdate(float deltaTime)
@@ -112,7 +126,9 @@ void AIController::dazedUpdate(float deltaTime)
 
     sprite.setRotation(sprite.getRotation() + 360 * deltaTime);
 }
-
+void AIController::killedUpdate(float deltaTime)
+{
+}
 
 void AIController::moveObj(Vector2f moveVec, float deltaTime)
 {
@@ -172,9 +188,15 @@ void AIController::RequestNextState()
         //m_gameObject.setActive(false); 
         m_gameObject.getComponent<RigidBodyComponent>()->setVelocity({0, 0});
     }
+    else if (currentState == killed)
+    {
+        //m_gameObject.setActive(false);
+        m_gameObject.getComponent<RigidBodyComponent>()->setVelocity({0, 0});
+    }
 }
 void AIController::SetState(State _state)
 {
+    elapsedTimeInPhase = 0;
     currentState = _state;
 }
 void AIController::CompleteSpriteChanges(Vector2f orientation)
@@ -226,7 +248,16 @@ void AIController::TakeDamage()
     healthPoints --;
     if (healthPoints <= 0)
     {
-        currentState = disolve;
+        currentState = killed;
+        ParticleManager::getInstance()->generateParticlesAroundPoint(m_gameObject.getPosition(),
+                                                 6,
+                                                 ParticleRadius,
+                                                 ParticleSpeed,
+                                                 ParticleSize,
+                                                 ParticleColor,
+                                                 ParticleoutlineSize,
+                                                 ParticleoutlineColor,
+                                                 ParticleTTL,1);
     }
     else
     {

@@ -13,6 +13,7 @@ public:
     void loadTextures(std::string Filepath);
     void generateNextRock(float xpos, int pathy);
     void generateNextCurrent(float xpos, int pathy);
+    void destroyRock(sf::FloatRect _shape);
     void draw(sf::RenderWindow& window);
     void shutdown();
 
@@ -22,6 +23,7 @@ private:
         StaticColliderComponent* collider;
         sf::Vector2f             pos;
         sf::Vector2i             LeftTop;
+        bool                     draw;
     };
 
     std::vector<std::vector<Obstacle>>                Rocks;

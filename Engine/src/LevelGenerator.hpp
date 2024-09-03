@@ -20,15 +20,17 @@ public:
     void SwapTileForAll(IEvent::Ptr event);
     void DoSwap(IEvent::Ptr event);
 
+    void HandleIslandDestruction(IEvent::Ptr event);
+
 private:
     EndlessBackgroundGenerator BackgroundGen;
     ObstacleGenerator          ObstacleGen;
     BackgroundDetailGen        DetailGen;
     TransitionObject           TransObj;
-
     sf::FloatRect m_lastWindowRect;
 
     string swapString = "grassTiles";
+    int currentSwapID = 0;
 
     bool isTransitioning = false;
     float transitionTime = 0;

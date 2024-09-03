@@ -43,6 +43,10 @@ void SpriteRenderComponent::IncrementOffset(sf::Vector2i increment)
 {
     m_offset += increment;
 }
+void SpriteRenderComponent::SwapTexture(sf::Texture textureFile)
+{
+    m_sprite.setTexture(m_texture);
+}
 bool SpriteRenderComponent::init()
 {
     sf::Image image;

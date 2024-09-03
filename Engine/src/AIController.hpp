@@ -6,7 +6,7 @@
 
 #include "GameObject.hpp"
 #include "IComponent.hpp"
-
+#include "CollisionParticleHandler.hpp"
 
 //using namespace sf;
 namespace mmt_gd
@@ -22,7 +22,8 @@ public:
         agressive,
         idle,
         dazed,
-        disolve
+        disolve,
+        killed
     };
 
     void setGoalObject(GameObject* _goal);
@@ -32,6 +33,7 @@ public:
     void agressiveUpdate(float deltaTime);
     void idleUpdate(float deltaTime);
     void dazedUpdate(float deltaTime);
+    void killedUpdate(float deltaTime);
     void interestedUpdate(float deltaTime);
     void disolveUpdate(float deltaTime);
 
@@ -56,9 +58,18 @@ public:
     
 private:
     State       currentState = idle;
+
     GameObject* m_goal = nullptr;
     float       elapsedTimeInPhase = 0;
     float       iFrameTime = 0;
     float       iFrameDuration     = 0.15;
+    float               maxInterestedTime    = 4;
+    sf::Vector2f        ParticleSize         = {2, 1};
+    float           ParticleoutlineSize  = 0.5;
+    sf::Color           ParticleoutlineColor = {220, 117, 77, 255};
+    sf::Color           ParticleColor        = {208, 54, 77, 255};
+    float           ParticleSpeed        = 5;
+    float           ParticleTTL          = 0.5;
+    float           ParticleRadius       = 3;
 };
 } // namespace mmt_gd

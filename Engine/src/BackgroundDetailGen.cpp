@@ -234,6 +234,7 @@ void BackgroundDetailGen::IslandGenListener(IEvent::Ptr event)
         }
     }
 }
+
 void BackgroundDetailGen::initSpriteMap(std::unordered_map<int, std::shared_ptr<sf::Sprite>>& map, std::string FileName)
 {
     //note: these tiles can Overlap for larger tiles (eg. the windmill.) this is why the origin of the sprite will be recentered. SpriteSheets ALWAYS need to be two tiles high.
@@ -273,6 +274,31 @@ void BackgroundDetailGen::LoadTextures(std::string FolderName)
     initSpriteMap(m_SpriteMapMines, FolderName + "MineAssets.png");
     initSpriteMap(m_SpriteMapVillage, FolderName + "VillageAssets.png");
 }
+
+void BackgroundDetailGen::IslandDestructionListener(sf::FloatRect island)
+{
+    float goalRevalX = island.left - 1;
+    float goalRevalY = island.top - 1;
+    for (auto& item : m_NoisePosVals)
+    {
+        if (item[0].pos.x == goalRevalX)
+        {
+
+            for (auto& _island : item)
+            {
+
+                if (_island.pos.y == goalRevalY)
+                {
+
+                    _island.draw = false;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+}
+
 void BackgroundDetailGen::shutdown()
 {
     m_NoisePosVals = {};

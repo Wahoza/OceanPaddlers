@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "EndlessBackgroundGenerator.hpp"
 #include "BackGroundDetailGen.hpp"
-
+#include "IEvent.hpp"
+#include "GameObjectEvents.hpp"
+#include "EventBus.hpp"
 #include "Tileson.hpp"
 #include "SpriteManager.hpp"
 namespace mmt_gd
 {
-void EndlessBackgroundGenerator::Initialize()
-{
-}
+
 void EndlessBackgroundGenerator::loadTileSetTextures(const std::unique_ptr<tson::Map>& map,
                                         const fs::path&                   resourcePath,
                                         SpriteManager&                    spriteManager,
@@ -103,6 +103,13 @@ void EndlessBackgroundGenerator::init(const std::unique_ptr<tson::Map>& map, con
     Organize();
     tileSize = sprites[0]->getTextureRect().getSize().x;
     LoadFromFolder("grassTiles/");
+
+     if (isInit)
+    {
+        return;
+    }
+    isInit = true;
+    EventBus::getInstance().addListener(PowerUP::Type, [this](IEvent::Ptr event) { PwrUPListener(event); });
 }
 void EndlessBackgroundGenerator::Organize()
 {
@@ -127,6 +134,25 @@ void EndlessBackgroundGenerator::Organize()
         else if (isFirstZero)
         {
             isFirstZero = false;
+        }
+    }
+}
+void EndlessBackgroundGenerator::RemoveUselessTiles()
+{
+    for (auto& SubVec : OrganizedSprites)
+    {
+        int iterator = 0;
+        for (auto& tile = SubVec.begin(); tile != SubVec.end();)
+        {
+            if (iterator > 4 && iterator < 13)
+            {
+                tile = SubVec.erase(tile);
+                ++iterator;
+
+                continue;
+            }
+            ++iterator;
+            ++tile;
         }
     }
 }
@@ -155,9 +181,25 @@ void EndlessBackgroundGenerator::update(float deltaTime, sf::FloatRect lastWindo
     }
     //m_DetailGen.update(deltaTime, m_lastWindowRect);
 }
+void EndlessBackgroundGenerator::PwrUPListener(IEvent::Ptr event)
+{
+    std::cout << isPowerUP;
+
+    if (auto PowerUp = std::dynamic_pointer_cast<PowerUP>(event))
+    {
+        isPowerUP = PowerUp.get()->getData();
+    }
+}
 void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
 {
-    window.clear(clearColor);
+    if (!isPowerUP)
+    {
+        window.clear(clearColor);
+    }
+    else
+    {
+        window.clear(sf::Color::Black);
+    }
     for (auto& Tile : sprites)
     {
         float ySpritePos = Tile.get()->getPosition().y;

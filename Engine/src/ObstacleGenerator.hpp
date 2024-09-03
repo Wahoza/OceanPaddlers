@@ -33,6 +33,7 @@ public:
     {
         Vector2f pos;
         Vector2i LeftTop;
+        bool     draw = true;
     };
 
     void init(sf::IntRect _TextureRect, sf::Vector2i Area, int seed, RenderWindow& window);
@@ -42,8 +43,10 @@ public:
 
     void shutdown();
 
-    void LoadTextures(string Folder, IntRect _TextureRect);
+    void LoadTextures(string Folder, IntRect _TextureRect, int currentType);
     void DisableGenArea(sf::FloatRect* Rect);
+
+    void IslandDestroyListen(sf::FloatRect _shape);
 
 private:
 
@@ -101,5 +104,14 @@ private:
     int TextureSize = 16;
 
     sf::FloatRect _windowRect;
+
+    int currentSwapType = 0;
+
+    Vector2f        ParticleSize = {2, 1};
+    float           ParticleoutlineSize  = 0.5;
+    Color           ParticleoutlineColor = {0, 0, 0, 255};
+    float           ParticleSpeed        = 4;
+    float           ParticleTTL          = 0.7;
+    float           ParticleRadius       = 3;
 };
 }

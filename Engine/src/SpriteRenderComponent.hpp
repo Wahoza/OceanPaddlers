@@ -32,7 +32,7 @@ public:
     void updateIntRect(sf::Vector2i Iterator);
 
     void IncrementOffset(sf::Vector2i increment);
-
+    void SwapTexture(sf::Texture textureFile);
     void HideSprite();
     void setSpriteOpacity(float opacity);
     void ShowSprite();

@@ -8,6 +8,8 @@
 #include "TetherComponent.hpp"
 #include "AIController.hpp"
 #include "PlayerComponent.hpp"
+#include "GameObjectEvents.hpp"
+#include "EventBus.hpp"
 #include <cmath>
 using namespace sf;
 using namespace std;
@@ -97,6 +99,7 @@ void PhysicsManager::HandleCollisions(float fDeltaTimeSeconds)
             {
 
                 body->GetTether()->setVelocity({0,0});
+                body->GetTether()->forces.clear();
             }
         }
         //body.velocity = body.velocity * 0.99f; //< simple "friction"
@@ -218,11 +221,22 @@ void PhysicsManager::doStaticCollisions(RigidBodyComponent* body1)
                 if (TetherComponent* tether = body1->GetTether();
                     tether != nullptr) //.getId().find(itB->m_identifier) == std::string::npos))
                 {
+
                     if (auto player = tether->getGameObject().getComponent<PlayerComponent>(); player != nullptr)
-                    {
+                    { 
+ 
+                        if (player->getPowerUpState())
+                        {
+                            body2->ChangeType("Disabled");
+                            sf::FloatRect eventData(body2->m_shape);
+                            IEvent::Ptr   Collision = std::make_shared<IslandCollisionEvent>(eventData);
+                            EventBus::getInstance().fireEvent(Collision);
+                            return;
+                        }
                         if (player->getHurtTime() > 0.3 && player->getHurtTime() < player->getMaxHurtTime())
                         {
                             body2->ChangeType("Disabled");
+                            
 
                             return;
                         };

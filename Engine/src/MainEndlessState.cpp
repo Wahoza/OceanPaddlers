@@ -19,6 +19,7 @@
 #include "IEvent.hpp"
 #include "GameObjectEvents.hpp"
 #include "EventBus.hpp"
+#include "CollisionParticleHandler.hpp"
 
 #include "InputObject.hpp"
 #include "SoundManager.hpp"
@@ -52,6 +53,7 @@ void MainEndlessState::init()
     m_spriteManager.init();
     m_PhysicsManager = PhysicsManager::getInstance();
 
+    ParticleManager::getInstance()->setGravity({0, 50});
     m_Hud.CreateHud();
     m_Hud.setSeed(seed);
 
@@ -154,6 +156,7 @@ void MainEndlessState::update(const float deltaTime)
     m_PhysicsManager->HandleCollisions(deltaTime);
     m_Hud.update(deltaTime);
     AiManager::getInstance()->update();
+    ParticleManager::getInstance()->update(deltaTime);
 }
 
 void MainEndlessState::draw()
@@ -171,7 +174,7 @@ void MainEndlessState::draw()
     {
         m_spriteManager.drawAll();
     }
-    
+    ParticleManager::getInstance()->draw(m_game->getWindow());
     m_Hud.draw(m_game->getWindow());
 }
 
@@ -193,7 +196,7 @@ void MainEndlessState::exit()
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
     m_soundManager.stopMusic("Music");
-    
+    ParticleManager::getInstance()->shutdown();
         m_gen.shutdown();
 
     GameState::exit();

@@ -204,12 +204,12 @@
                         {
                          "name":"Collectible",
                          "type":"string",
-                         "value":"Egg"
+                         "value":"PowerUp"
                         }, 
                         {
                          "name":"Texture",
                          "type":"string",
-                         "value":"eggCollectible.png"
+                         "value":"collectibles\/eggCollectible.png"
                         }, 
                         {
                          "name":"TextureRectHeight",

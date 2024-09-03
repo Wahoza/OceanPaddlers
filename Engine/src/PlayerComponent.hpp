@@ -18,12 +18,17 @@ public:
     void GameEnd(); //send GameEnd Event
     void Victory();
     void update(float deltaTime) override;
-    void  onEnvironmentSwap(IEvent::Ptr event);
+    void      onEnvironmentSwap(IEvent::Ptr event);
     float getHurtTime();
     float getMaxHurtTime();
+    bool      getPowerUpState();
     bool init() override;
 
 private:
+    sf::Color convertToWhiteOrBlack(const sf::Color& color);
+    sf::Color getRandomBrightColor();
+
+
     int  EggScore     = 0;
     int  initlives    = 3;
     int  currentlives = 3;
@@ -40,6 +45,17 @@ private:
     float maxHurtTime   = 5;
     float hurtTime      = maxHurtTime + 1;
 
+    float              PowerUpTimer = 0;
+    float              PowerUpDuration = 15;
+    float              ParticleTriggerInterveal = 0.3;
+    float              ParticleTriggerTimer = 0.0;
+
+    bool firstPowerUpUpdate = true;
+
+    sf::Color          spriteColor = {0, 0, 0, 0};
+    bool               ColorStored              = false;
+    sf::Texture        spriteTexture;
+    sf::Texture        alternateTexture;
     std::vector<float> boundings = {0, 20 * 16};
 };
 

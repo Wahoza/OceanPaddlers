@@ -143,6 +143,7 @@
     <ClInclude Include="..\src\AiManager.hpp" />
     <ClInclude Include="..\src\BackGroundDetailGen.hpp" />
     <ClInclude Include="..\src\CollectibleComponent.hpp" />
+    <ClInclude Include="..\src\CollisionParticleHandler.hpp" />
     <ClInclude Include="..\src\CreditsState.hpp" />
     <ClInclude Include="..\src\EndlessBackgroundGenerator.hpp" />
     <ClInclude Include="..\src\FastNoiseLite.h" />
@@ -206,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/main.cpp" />
+    <ClCompile Include="..\src\CollisionParticleHandler.cpp" />
     <ClCompile Include="..\src\GameOverLevelState.cpp" />
     <ClCompile Include="..\src\MainEndlessState.cpp" />
     <ClCompile Include="../src/MenuState.cpp" />

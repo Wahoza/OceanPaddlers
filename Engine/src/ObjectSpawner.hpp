@@ -22,5 +22,9 @@ private:
 
 
     sf::RenderWindow* m_window;
+    std::string            Powerup = "powerupCollectible.png";
+    std::string       Heart   = "heartCollectible.png";
+    std::string            Egg     = "eggCollectible.png";
+    std::string            Path    = "../assets/collectibles/";
 };
 }

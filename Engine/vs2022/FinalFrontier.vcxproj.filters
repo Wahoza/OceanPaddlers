@@ -258,6 +258,9 @@
     <ClInclude Include="..\src\PlayerAttackComponent.hpp">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\CollisionParticleHandler.hpp">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/stdafx.cpp">
@@ -415,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="..\src\PlayerAttackComponent.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CollisionParticleHandler.cpp">
+      <Filter>Source Files\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

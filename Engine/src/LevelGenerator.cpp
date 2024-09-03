@@ -28,6 +28,7 @@ void LevelGenerator::Initialize(const std::unique_ptr<tson::Map>& map, const fs:
 
     ObstacleGen.DisableGenArea(TransObj.getDisabledArea());
 
+    BackgroundGen.RemoveUselessTiles();
     if (isInit)
     {
         return;
@@ -36,6 +37,7 @@ void LevelGenerator::Initialize(const std::unique_ptr<tson::Map>& map, const fs:
     isInit = true;
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { SwapTileForAll(event); });
     EventBus::getInstance().addListener(SwapTileRequest::Type, [this](IEvent::Ptr event) { DoSwap(event); });
+    EventBus::getInstance().addListener(IslandCollisionEvent::Type, [this](IEvent::Ptr event) { HandleIslandDestruction(event); });
 }
 
 void LevelGenerator::update(float deltaTime)
@@ -50,7 +52,7 @@ void LevelGenerator::update(float deltaTime)
         if (elapsedTransitionTime >= transitionTime)
         {
             BackgroundGen.LoadFromFolder(swapString);
-            ObstacleGen.LoadTextures(swapString, {0,0,16,16});
+            ObstacleGen.LoadTextures(swapString, {0, 0, 16, 16}, currentSwapID);
             DetailGen.LoadTextures(swapString);
             isTransitioning = false;
         }
@@ -69,6 +71,7 @@ void LevelGenerator::drawBackground(sf::RenderWindow& window)
     BackgroundGen.draw(window);
     ObstacleGen.drawWater(window);
 }
+
 void LevelGenerator::drawForeground(sf::RenderWindow& window)
 {
     ObstacleGen.draw(window);
@@ -90,9 +93,9 @@ void LevelGenerator::SwapTileForAll(IEvent::Ptr event)
     swapString = "grassTiles";
     if (auto swapEvent = std::dynamic_pointer_cast<SwapTiles>(event))
     {
-        int swapType = std::get<0>(swapEvent.get()->getData());
-
-        swapString = TileNames::getFolderLocation(swapType);
+        currentSwapID = std::get<0>(swapEvent.get()->getData());
+        
+        swapString = TileNames::getFolderLocation(currentSwapID);
         
         transitionTime = std::get<1>(swapEvent.get()->getData()) / 2.f;
         elapsedTransitionTime = 0;
@@ -110,5 +113,14 @@ void LevelGenerator::DoSwap(IEvent::Ptr event)
     std::tuple  eventData(dist(gen), 3);
     IEvent::Ptr swapEvent = std::make_shared<SwapTiles>(eventData);
     EventBus::getInstance().fireEvent(swapEvent);
+}
+void LevelGenerator::HandleIslandDestruction(IEvent::Ptr event)
+{
+    if (auto destroyEvent = std::dynamic_pointer_cast<IslandCollisionEvent>(event))
+    {
+        sf::FloatRect _shape = destroyEvent->getData();
+        DetailGen.IslandDestructionListener(_shape);
+        ObstacleGen.IslandDestroyListen(_shape);
+    }
 }
 } // namespace mmt_gd

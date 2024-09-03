@@ -162,6 +162,35 @@ void RockGenerator::generateNextCurrent(float xpos, int pathy)
     }
 }
 
+void RockGenerator::destroyRock(sf::FloatRect _shape)
+{
+    float goalRevalX = _shape.left - 3;
+    float goalRevalY = _shape.top - 5;
+    std::cout << Rocks.size() << std::endl;
+    for (auto& obstacleVec : Rocks)
+    {
+        if (obstacleVec.size() == 0)
+        {
+            continue;
+        }
+        if (obstacleVec[0].pos.x == goalRevalX)
+        {
+            for (auto& obstacle : obstacleVec)
+            {
+
+                std::cout << std::to_string(obstacle.pos.x) + "X " + std::to_string(obstacle.pos.y) + "Y" << std::endl;
+                if (obstacle.pos.y == goalRevalY)
+                {
+
+                    obstacle.draw = false;
+                    return;
+                }
+            }
+        }
+        
+    }
+}
+
 void RockGenerator::draw(sf::RenderWindow& window)
 {
     for (auto& currentVec : Currents)
@@ -178,10 +207,13 @@ void RockGenerator::draw(sf::RenderWindow& window)
     {
         for (auto& obstacle : obstacleVec)
         {
-            m_Sprite.setTextureRect({obstacle.LeftTop.x, obstacle.LeftTop.y, TextureSize, TextureSize});
-            m_Sprite.setPosition(obstacle.pos);
+            if (obstacle.draw)
+            {
+                m_Sprite.setTextureRect({obstacle.LeftTop.x, obstacle.LeftTop.y, TextureSize, TextureSize});
+                m_Sprite.setPosition(obstacle.pos);
 
-            window.draw(m_Sprite);
+                window.draw(m_Sprite);
+            }
         }
     }
 }

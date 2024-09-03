@@ -3,6 +3,7 @@
 //License: LICENSE.txt
 #pragma once
 #include "stdafx.h"
+#include "IEvent.hpp"
 #include <unordered_map>
 namespace mmt_gd
 {
@@ -26,6 +27,8 @@ public:
 
     void addSound(std::string filePath, std::string soundName);
     void addMusic(std::string filePath, std::string musicName);
+
+    void doPowerupMusic(IEvent::Ptr event);
 
 private:
     std::unordered_map<std::string, std::shared_ptr<sf::SoundBuffer>> m_buffers;

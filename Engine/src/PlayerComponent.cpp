@@ -9,6 +9,10 @@
 #include "EventBus.hpp"
 #include "SpriteRenderComponent.hpp"
 #include "AiManager.hpp"
+#include "CollisionParticleHandler.hpp"
+
+#include <ctime>
+#include <cstdlib>
 
 namespace mmt_gd
 {
@@ -16,6 +20,11 @@ PlayerComponent::PlayerComponent(GameObject& gameObject) : IComponent(gameObject
 {
     AiManager::getInstance()->setGoalObject(&gameObject);
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { onEnvironmentSwap(event); });
+
+    if (!alternateTexture.loadFromFile("../assets/turtles_monochrome.png"))
+    {
+        sf::err() << "Could not load monochrome texture from playr" << std::endl;
+    }
 }
 void PlayerComponent::CollectibleCollision(string _item)
 {
@@ -34,10 +43,17 @@ void PlayerComponent::CollectibleCollision(string _item)
         IEvent::Ptr healthGet = std::make_shared<HealthCollect>(eventData);
         EventBus::getInstance().fireEvent(healthGet);
     }
+    if (_item == "PowerUp")
+    {
+        PowerUpTimer = PowerUpDuration;
+        bool         eventData(true);
+        IEvent::Ptr PWRUP = std::make_shared<PowerUP>(eventData);
+        EventBus::getInstance().fireEvent(PWRUP);
+    }
 }
 void PlayerComponent::DamageCollision()
 {
-    if (!(hurtTime < maxHurtTime) && timeSinceLastSwap > swapDuration)
+    if (!(hurtTime < maxHurtTime) && timeSinceLastSwap > swapDuration && PowerUpTimer <= 0)
     {
         hurtTime = 0;
         currentlives--;
@@ -95,8 +111,95 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
     if (auto pos = m_gameObject.getPosition().y; !(pos > boundings[0] && pos < boundings[1])) {
         DamageCollision();
     }
+
+    if (0 < PowerUpTimer)
+    {
+        PowerUpTimer -= deltaTime;
+        ParticleTriggerTimer += deltaTime;
+        if (!ColorStored)
+        {
+
+            if (spriteColor == sf::Color{0, 0, 0, 0})
+            {
+                spriteColor = m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().getColor();
+                spriteTexture = *m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().getTexture();
+                ColorStored = true;
+            }
+        }
+        if (firstPowerUpUpdate && !PowerUpTimer < 0.5)
+        {
+            firstPowerUpUpdate = false;
+            m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().setTexture(alternateTexture);
+
+        }
+        if (ParticleTriggerInterveal < ParticleTriggerTimer && PowerUpTimer > 0.5)
+        {
+            sf::Color baseColor  = getRandomBrightColor();
+            ParticleTriggerTimer = 0.1 - float(std::rand()) / (RAND_MAX * 2);
+            ParticleManager::getInstance()
+                ->generateParticlesAroundPoint(m_gameObject.getPosition(),
+                                               20,
+                                               20,
+                                               20,
+                                               {2, 4}, baseColor,
+                                               1,
+                                               getRandomBrightColor(),
+                                               5,0);
+            m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().setColor(baseColor);
+        }
+        if (PowerUpTimer < 0.5)
+        {
+            if (!firstPowerUpUpdate)
+            {
+                bool        eventData(false);
+                IEvent::Ptr PWRUP = std::make_shared<PowerUP>(eventData);
+                EventBus::getInstance().fireEvent(PWRUP);
+
+                firstPowerUpUpdate = true;
+            }
+            m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().setTexture(spriteTexture);
+            m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().setColor(spriteColor);
+        }
+    }
     timeSinceLastSwap += deltaTime;
 }
+sf::Color PlayerComponent::convertToWhiteOrBlack(const sf::Color& color)
+{
+    // Calculate luminance
+    float luminance = 0.299f * color.r + 0.587f * color.g + 0.114f * color.b;
+
+    // Define a threshold (you can adjust this as needed)
+    const float threshold = 250.0f;
+
+    // Convert to white or black based on the threshold
+    if (luminance > threshold)
+    {
+        return sf::Color::White; // Bright enough, convert to white
+    }
+    else
+    {
+        return sf::Color::Black; // Dark, convert to black
+    }
+}
+sf::Color PlayerComponent::getRandomBrightColor()
+{
+    // Define a list of bright colors
+    std::vector<sf::Color> brightColors = {
+        sf::Color::Red,
+        sf::Color::Green,
+        sf::Color::Blue,
+        sf::Color::Yellow,
+        sf::Color::Magenta,
+        sf::Color::Cyan,
+        sf::Color(255, 165, 0),  // Orange
+        sf::Color(255, 105, 180) // Hot Pink
+    };
+
+    // Randomly select a color from the list
+    int randomIndex = std::rand() % brightColors.size();
+    return brightColors[randomIndex];
+}
+
 void PlayerComponent::onEnvironmentSwap(IEvent::Ptr event)
 {
     auto swapEvent    = std::dynamic_pointer_cast<SwapTiles>(event);
@@ -111,6 +214,10 @@ float PlayerComponent::getHurtTime()
 float PlayerComponent::getMaxHurtTime()
 {
     return maxHurtTime;
+}
+bool mmt_gd::PlayerComponent::getPowerUpState()
+{
+    return PowerUpTimer > 0;
 }
 bool PlayerComponent::init()
 {
