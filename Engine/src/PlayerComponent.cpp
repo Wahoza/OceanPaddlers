@@ -217,7 +217,7 @@ float PlayerComponent::getMaxHurtTime()
 }
 bool mmt_gd::PlayerComponent::getPowerUpState()
 {
-    return PowerUpTimer > 0;
+    return (PowerUpTimer > 0);
 }
 bool PlayerComponent::init()
 {

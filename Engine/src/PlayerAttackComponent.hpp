@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "IComponent.hpp"
 #include "TriggerComponent.hpp"
+#include "IEvent.hpp"
 namespace mmt_gd
 {
 class PlayerAttackComponent : public IComponent
@@ -13,6 +14,7 @@ public:
     
 private:
     //Trigger, Offset
+    void ListenPowerupState(IEvent::Ptr event);
     std::vector<std::tuple<TriggerComponent*, Vector2f>> triggers;
     void     RealignTriggers(std::vector<std::tuple<TriggerComponent*, Vector2f>> _triggers);
     Vector2f RotateVec(Vector2f input, float angle);
@@ -23,5 +25,6 @@ private:
     float attackTimer    = -1;
     float    directionThreshold = 0.5;
     bool     attacking          = false;
+    bool     poweredUp = false;
 };
 }

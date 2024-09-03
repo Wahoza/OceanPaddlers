@@ -14,7 +14,8 @@
 #include "EventBus.hpp"
 #include "GameObjectEvents.hpp"
 #include "SpriteRenderComponent.hpp"
-
+#include "PlayerComponent.hpp"
+#include "IEvent.hpp"
 namespace mmt_gd
 {
 PlayerAttackComponent::PlayerAttackComponent(
@@ -71,6 +72,14 @@ IComponent(gameObject)
 
         pID = PlayerID;
     }
+    EventBus::getInstance().addListener(PowerUP::Type, [this](IEvent::Ptr event) { ListenPowerupState(event); });
+}
+void PlayerAttackComponent::ListenPowerupState(IEvent::Ptr event)
+{
+    if (auto pwrEvent = std::dynamic_pointer_cast<PowerUP>(event))
+    {
+        poweredUp = pwrEvent->getData();
+    }
 }
 bool PlayerAttackComponent::init()
 {
@@ -114,7 +123,16 @@ void PlayerAttackComponent::update(const float deltaTime)
 
     }
     //std::cout << getGameObject().getComponent<RigidBodyComponent>().get()->GetTether()->getCurrentAngle() << std::endl;
-    if ((inputManager.isKeyPressed("attack", pID) || sf::Joystick::isButtonPressed(pID, 0)) && attackTimer < 0 && !attacking)
+    if (poweredUp)
+    {
+        for (auto& trigger : triggers)
+        {
+            std::get<0>(trigger)->setEnabled(true);
+        }
+        attackTimer = 0.1;
+        attacking   = true;
+    }
+    if (((inputManager.isKeyPressed("attack", pID) || sf::Joystick::isButtonPressed(pID, 0)) && attackTimer < 0 && !attacking))
     {
         Vector2f moveVec = RotateVec(inputVec,getGameObject().getComponent<RigidBodyComponent>().get()->GetTether()->getCurrentAngle() * -1);
         bool attacked = false;
