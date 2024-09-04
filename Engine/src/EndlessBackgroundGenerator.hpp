@@ -31,7 +31,9 @@ public:
     void      draw(sf::RenderWindow& window);
     void LoadFromFolder(std::string FolderName);
     void shutdown();
-    void PwrUPListener(IEvent::Ptr event);
+    void      PwrUPListener(IEvent::Ptr event);
+
+    void clearWindow(sf::RenderWindow& window);
 
     sf::Vector2i GetTotalSize();
     sf::Vector2i GetTileSize();

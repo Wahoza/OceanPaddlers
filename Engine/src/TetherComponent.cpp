@@ -46,6 +46,7 @@ TetherItem2(createNewTetheredObject("tethered2"))
     length = shape.width / 2 * scaleFactor;
     float height = shape.height*scaleFactor;
 
+    initShape = {length, height};
     //note: forces are changed here for purpose of the game, as it is better feel like this
     TetherItem1.addComponent<RigidBodyComponent>(TetherItem1,
                             FloatRect{0, 0, length, height}, Vector2f{0.f, 0.f}, "0 0",
@@ -154,6 +155,10 @@ void TetherComponent::RepositionBodies()
                       TetherItem2.getComponent<RigidBodyComponent>().get()->m_shape.height};
     TetherItem1.setPosition((-orientation / 2.f * length + m_gameObject.getPosition() - size1/ 2.f));
     TetherItem2.setPosition((orientation / 2.f * length + m_gameObject.getPosition() - size2 / 2.f));
+}
+Vector2f TetherComponent::getOriginalDimensions()
+{
+    return initShape;
 }
 Vector2f TetherComponent::normalize(Vector2f vec)
 {

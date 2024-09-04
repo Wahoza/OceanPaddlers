@@ -6,6 +6,7 @@
 #include "EventBus.hpp"
 #include "Tileson.hpp"
 #include "SpriteManager.hpp"
+
 namespace mmt_gd
 {
 
@@ -190,7 +191,7 @@ void EndlessBackgroundGenerator::PwrUPListener(IEvent::Ptr event)
         isPowerUP = PowerUp.get()->getData();
     }
 }
-void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
+void EndlessBackgroundGenerator::clearWindow(sf::RenderWindow& window)
 {
     if (!isPowerUP)
     {
@@ -200,6 +201,12 @@ void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
     {
         window.clear(sf::Color::Black);
     }
+}
+void EndlessBackgroundGenerator::draw(sf::RenderWindow& window)
+{
+    //ParticleManager::getInstance()->drawBackground(m_game->getWindow());
+
+
     for (auto& Tile : sprites)
     {
         float ySpritePos = Tile.get()->getPosition().y;

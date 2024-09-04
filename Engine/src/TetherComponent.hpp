@@ -33,6 +33,7 @@ public:
     void calculateRBForce(float deltaTime);
     void CalculateEffect(float deltaTime);
     void RepositionBodies();
+    Vector2f getOriginalDimensions();
     bool init() override;
     Vector2f normalize(Vector2f vec);
     using ptr = std::shared_ptr<TetherComponent>;
@@ -80,7 +81,9 @@ private:
     float            trueMaxVelocity = 40;
     float            initMaxVelocity    = 20;
     float            currentMaxVelocity = 0;
-    float            angle;
+    float            angle = 0;
+
+    Vector2f initShape = {0, 0};
     void  AddLocalForce(Vector2f _force);
 };
 }

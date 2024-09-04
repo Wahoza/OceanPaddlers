@@ -246,7 +246,7 @@ void AIController::TakeDamage()
     }
 
     healthPoints --;
-    if (healthPoints <= 0)
+    if (healthPoints == 0)
     {
         currentState = killed;
         int  eventData(1);

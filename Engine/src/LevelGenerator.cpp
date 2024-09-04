@@ -59,7 +59,10 @@ void LevelGenerator::update(float deltaTime)
         elapsedTransitionTime += deltaTime;
     }
 }
-
+void LevelGenerator::clearWindow(sf::RenderWindow& window)
+{
+    BackgroundGen.clearWindow(window);
+}
 void LevelGenerator::drawBackground(sf::RenderWindow& window)
 {
     m_lastWindowRect = {window.getView().getCenter().x - window.getView().getSize().x / 2,
@@ -68,8 +71,8 @@ void LevelGenerator::drawBackground(sf::RenderWindow& window)
      window.getView().getSize().y
     };
 
-    BackgroundGen.draw(window);
     ObstacleGen.drawWater(window);
+    BackgroundGen.draw(window);
 }
 
 void LevelGenerator::drawForeground(sf::RenderWindow& window)

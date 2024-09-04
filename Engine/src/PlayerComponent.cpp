@@ -119,6 +119,7 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
         DamageCollision();
     }
 
+
     if (0 < PowerUpTimer)
     {
         PowerUpTimer -= deltaTime;
@@ -168,7 +169,43 @@ void mmt_gd::PlayerComponent::update(float deltaTime)
             m_gameObject.getComponent<SpriteRenderComponent>()->getSprite().setColor(spriteColor);
         }
     }
+    else
+    {
+        generateWaterParticles(deltaTime);
+    }
     timeSinceLastSwap += deltaTime;
+}
+void PlayerComponent::generateWaterParticles(float deltaTime)
+{
+    WaterParticleTimer += deltaTime;
+    if (WaterParticleCooldown < WaterParticleTimer)
+    {
+        WaterParticleTimer = 0;
+        if (auto tether = m_gameObject.getComponent<TetherComponent>(); tether != nullptr)
+        {
+            float angle = tether->getCurrentAngle();
+            float angleInRadians = angle * (3.14f / 180.0f);
+
+            // Calculate the x and y components
+            float x = std::cos(angleInRadians);
+            float y = std::sin(angleInRadians);
+            sf::Vector2f direction = {x, y};
+            sf::Vector2f perpendicularDirection = {-y, x};
+            float length = tether->getOriginalDimensions().x;
+            float height = tether->getOriginalDimensions().y / 2;
+
+
+            //forgive me of my sins
+            ParticleManager::getInstance()
+                ->generateBackgroundParticle(WaterParticleSize, WaterColor, 0, {0, 0, 0, 0}, 2, {-10, y * forceAway}, m_gameObject.getPosition() + (direction * length) + (perpendicularDirection * height), 0);
+            ParticleManager::getInstance()
+                ->generateBackgroundParticle(WaterParticleSize, WaterColor, 0, {0, 0, 0, 0}, 2, {-10, y * forceAway}, m_gameObject.getPosition() + (direction * length) + (perpendicularDirection * -height), 0);
+            ParticleManager::getInstance()
+                ->generateBackgroundParticle(WaterParticleSize, WaterColor, 0, {0, 0, 0, 0}, 4, {-10, -y * forceAway}, m_gameObject.getPosition() + (direction * -length)+ (perpendicularDirection * height), 0);
+            ParticleManager::getInstance()
+                ->generateBackgroundParticle(WaterParticleSize, WaterColor, 0, {0, 0, 0, 0}, 4, {-10, -y * forceAway}, m_gameObject.getPosition() + (direction * -length)+ (perpendicularDirection * -height), 0);
+        }
+    }
 }
 sf::Color PlayerComponent::convertToWhiteOrBlack(const sf::Color& color)
 {

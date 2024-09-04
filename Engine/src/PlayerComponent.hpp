@@ -18,6 +18,7 @@ PlayerComponent(GameObject& gameObject);
     void GameEnd(); //send GameEnd Event
     void Victory();
     void update(float deltaTime) override;
+    void generateWaterParticles(float deltaTime);
     void      onEnvironmentSwap(IEvent::Ptr event);
     float getHurtTime();
     float getMaxHurtTime();
@@ -56,10 +57,16 @@ private:
     bool firstPowerUpUpdate = true;
 
     sf::Color          spriteColor = {0, 0, 0, 0};
-    bool               ColorStored              = false;
+    bool               ColorStored = false;
     sf::Texture        spriteTexture;
     sf::Texture        alternateTexture;
     std::vector<float> boundings = {0, 20 * 16};
+
+    sf::Color WaterColor = {100, 203, 240, 150};
+    float     forceAway             = 10;
+    float        WaterParticleCooldown = 0.8;
+    sf::Vector2f WaterParticleSize  = {2,2};
+    float     WaterParticleTimer    = 0;
 };
 
 }

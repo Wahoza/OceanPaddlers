@@ -13,6 +13,8 @@ public:
     void Initialize(const std::unique_ptr<tson::Map>& map, const fs::path& resourcePath, SpriteManager& spriteManager, int seed);
     void update(float deltaTime);
 
+    void clearWindow(sf::RenderWindow& window);
+
     void drawBackground(sf::RenderWindow& window);
     void drawForeground(sf::RenderWindow& window);
     void shutdown();

@@ -164,6 +164,10 @@ void MainEndlessState::draw()
     PROFILE_FUNCTION();
     if (isEndless)
     {
+        m_gen.clearWindow(m_game->getWindow());
+
+        ParticleManager::getInstance()->drawBackground(m_game->getWindow());
+
         m_gen.drawBackground(m_game->getWindow());
         m_spriteManager.drawBackground();
         m_spriteManager.drawCenter();

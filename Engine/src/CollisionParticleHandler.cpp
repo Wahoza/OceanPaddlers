@@ -23,16 +23,22 @@ void ParticleManager::setGravity(sf::Vector2f _gravity)
 }
 void ParticleManager::update(float deltaTime)
 {
-    for (auto& particle = particles.begin(); particle != particles.end();)
+    updateParticle(deltaTime, backgroundParticles); 
+    updateParticle(deltaTime, particles);
+}
+void ParticleManager::updateParticle(float deltaTime,
+                                   std::vector<std::tuple<sf::RectangleShape, sf::Vector2f, float, float, float>>& particleVec)
+{
+    for (auto& particle = particleVec.begin(); particle != particleVec.end();)
     {
-        
-        auto& ttl = std::get<2>(*particle);
+
+        auto& ttl         = std::get<2>(*particle);
         auto& originalttl = std::get<3>(*particle);
         ttl               = ttl - deltaTime;
 
         if (ttl < 0)
         {
-            particle = particles.erase(particle);
+            particle = particleVec.erase(particle);
             continue;
         }
 
@@ -48,7 +54,7 @@ void ParticleManager::update(float deltaTime)
 
         if (ttl < originalttl / 5)
         {
-            sf::Color originalColor = rect.getFillColor();
+            sf::Color originalColor   = rect.getFillColor();
             sf::Color originalOutline = rect.getOutlineColor();
 
             rect.setFillColor({originalColor.r, originalColor.b, originalColor.g, sf::Uint8((ttl / originalttl) * 255.0f)});
@@ -58,7 +64,15 @@ void ParticleManager::update(float deltaTime)
         ++particle;
     }
 }
-void ParticleManager::generateNewParticle(sf::Vector2f size, sf::Color col, float outline, sf::Color outlineColor, float timetolive, sf::Vector2f direction, sf::Vector2f pos, float weight)
+void ParticleManager::generateNewParticle(
+    sf::Vector2f size,
+    sf::Color    col,
+    float        outline,
+    sf::Color    outlineColor,
+    float        timetolive,
+    sf::Vector2f direction,
+    sf::Vector2f pos,
+    float        weight)
 {
     sf::RectangleShape particle;
     particle.setFillColor(col);
@@ -77,9 +91,45 @@ void ParticleManager::generateNewParticle(sf::Vector2f size, sf::Color col, floa
 
     particles.push_back({particle, direction, timetolive, timetolive + randomTTLOffset, weight});
 
-    if (particles.size() - 1 >= maxParticles)
+    if (particles.size() + backgroundParticles.size() >= maxParticles)
     {
-        if (!particles.empty())
+        if (!backgroundParticles.empty())
+        {
+            backgroundParticles.erase(backgroundParticles.begin());
+        }
+        else if (!particles.empty())
+        {
+            // Erase the oldest item (the first element in the vector)
+            particles.erase(particles.begin());
+        }
+    }
+}
+void ParticleManager::generateBackgroundParticle(sf::Vector2f size, sf::Color col, float outline, sf::Color outlineColor, float timetolive, sf::Vector2f direction, sf::Vector2f pos, float weight)
+{
+    sf::RectangleShape particle;
+    particle.setFillColor(col);
+    particle.setOutlineColor(outlineColor);
+    particle.setOutlineThickness(outline);
+
+    particle.setSize(size);
+    particle.setOrigin(size / 2.f);
+    particle.setPosition(pos);
+
+    float randomOffset = static_cast<float>(std::rand()) / RAND_MAX;
+
+    particle.rotate(randomOffset * 365);
+
+    float randomTTLOffset = float(int(randomOffset * 100) % 10) / 10;
+
+    backgroundParticles.push_back({particle, direction, timetolive, timetolive + randomTTLOffset, weight});
+
+    if (particles.size() + backgroundParticles.size()>= maxParticles)
+    {
+        if (!backgroundParticles.empty())
+        {
+            backgroundParticles.erase(backgroundParticles.begin());
+        }
+        else if (!particles.empty())
         {
             // Erase the oldest item (the first element in the vector)
             particles.erase(particles.begin());
@@ -89,6 +139,12 @@ void ParticleManager::generateNewParticle(sf::Vector2f size, sf::Color col, floa
 void ParticleManager::draw(sf::RenderWindow& window)
 {
     for (auto& particle : particles)
+    {
+        window.draw(std::get<0>(particle));
+    }
+}void ParticleManager::drawBackground(sf::RenderWindow& window)
+{
+    for (auto& particle : backgroundParticles)
     {
         window.draw(std::get<0>(particle));
     }
