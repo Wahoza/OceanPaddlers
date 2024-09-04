@@ -20,7 +20,7 @@
 #include "Tileson.hpp"
 #include "TransformAnimationComponent.hpp"
 #include "TransformAnimationSmoothFollow.hpp"
-
+#include "CollisionParticleHandler.hpp"
 #include <memory>
 #include <thread>
 
@@ -147,8 +147,9 @@ void MainLevelState::exit()
     m_PhysicsManager->shutdown();
     AiManager::getInstance()->shutdown();
     InputObject::getInstance()->shutdown();
-    GameState::exit();
     m_soundManager.stopMusic("Music");
+    ParticleManager::getInstance()->shutdown();
+    GameState::exit();
 }
 
 } // namespace mmt_gd

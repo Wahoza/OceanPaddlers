@@ -2327,7 +2327,7 @@
          "name":"Background",
          "objects":[
                 {
-                 "height":104,
+                 "height":125,
                  "id":348,
                  "name":"Anleitung",
                  "properties":[
@@ -2339,7 +2339,7 @@
                         {
                          "name":"TextureRectHeight",
                          "type":"int",
-                         "value":105
+                         "value":125
                         }, 
                         {
                          "name":"TextureRectLeft",
@@ -2354,14 +2354,14 @@
                         {
                          "name":"TextureRectWidth",
                          "type":"int",
-                         "value":211
+                         "value":150
                         }],
                  "rotation":0,
                  "type":"Sprite",
                  "visible":true,
-                 "width":201.979,
-                 "x":440,
-                 "y":83
+                 "width":150,
+                 "x":448,
+                 "y":75
                 }, 
                 {
                  "height":13.5,
@@ -2725,7 +2725,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],

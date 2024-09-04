@@ -193,8 +193,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":64,
-                 "x":512,
-                 "y":128
+                 "x":480,
+                 "y":126
                 }, 
                 {
                  "height":16,
@@ -283,8 +283,8 @@
          "name":"Background",
          "objects":[
                 {
-                 "height":104,
-                 "id":348,
+                 "height":125,
+                 "id":378,
                  "name":"Anleitung",
                  "properties":[
                         {
@@ -295,7 +295,7 @@
                         {
                          "name":"TextureRectHeight",
                          "type":"int",
-                         "value":105
+                         "value":125
                         }, 
                         {
                          "name":"TextureRectLeft",
@@ -310,23 +310,23 @@
                         {
                          "name":"TextureRectWidth",
                          "type":"int",
-                         "value":211
+                         "value":150
                         }],
                  "rotation":0,
                  "type":"Sprite",
-                 "visible":true,
-                 "width":201.979,
-                 "x":440,
-                 "y":83
+                 "visible":false,
+                 "width":150,
+                 "x":448,
+                 "y":75
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":17,
- "nextobjectid":378,
+ "nextobjectid":379,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
