@@ -109,11 +109,11 @@ void GameOverLevelState::updateStats(IEvent::Ptr event)
 {
     if (auto gameOverevent = std::dynamic_pointer_cast<GameOverEvent>(event))
     {
-        distance = std::get<0>(gameOverevent.get()->getData());
-
         eggsCollected = std::get<1>(gameOverevent.get()->getData());
-        won = std::get<2>(gameOverevent.get()->getData());
-        totalScore = std::get<3>(gameOverevent.get()->getData());
+        FishKills     = std::get<2>(gameOverevent.get()->getData());
+        won           = std::get<3>(gameOverevent.get()->getData());
+        totalScore    = std::get<4>(gameOverevent.get()->getData());
+        
     }
 }
 

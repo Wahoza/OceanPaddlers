@@ -32,6 +32,7 @@ namespace mmt_gd
         float distance = 0;
         int   eggsCollected = 0;
         int      totalScore    = 0;
+        int      FishKills = 0;
         bool  won = false;
 	};
 } // namespace mmt_gd

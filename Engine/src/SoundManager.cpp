@@ -26,6 +26,7 @@ void SoundManager::init()
     addSound("../assets/audio/sounds/wave.wav", "Wave");
     addSound("../assets/audio/sounds/attack_turtle.wav", "TurtleAttack");
     addSound("../assets/audio/sounds/fish_hit.wav", "FishHit");
+    addSound("../assets/audio/sounds/fish_kill.wav", "FishKill");
     addSound("../assets/audio/sounds/health_collect.wav", "Health");
     addSound("../assets/audio/sounds/explosion_tile.wav", "Explosion");
 
@@ -43,6 +44,7 @@ void SoundManager::init()
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { playSound("Victory"); });
     EventBus::getInstance().addListener(AttackEvent::Type, [this](IEvent::Ptr event) { playSound("TurtleAttack"); });
     EventBus::getInstance().addListener(FishHitSuccess::Type, [this](IEvent::Ptr event) { playSound("FishHit"); });
+    EventBus::getInstance().addListener(FishKill::Type, [this](IEvent::Ptr event) { playSound("FishKill"); });
     EventBus::getInstance().addListener(HealthCollect::Type, [this](IEvent::Ptr event) { playSound("Health"); });
     EventBus::getInstance().addListener(IslandCollisionEvent::Type, [this](IEvent::Ptr event) { playSound("Explosion"); });
 

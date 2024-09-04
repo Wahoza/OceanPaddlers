@@ -19,12 +19,19 @@ namespace mmt_gd
 PlayerComponent::PlayerComponent(GameObject& gameObject) : IComponent(gameObject)
 {
     AiManager::getInstance()->setGoalObject(&gameObject);
+
     EventBus::getInstance().addListener(SwapTiles::Type, [this](IEvent::Ptr event) { onEnvironmentSwap(event); });
+    EventBus::getInstance().addListener(FishKill::Type, [this](IEvent::Ptr event) { FishKillListener(event); });
 
     if (!alternateTexture.loadFromFile("../assets/turtles_monochrome.png"))
     {
         sf::err() << "Could not load monochrome texture from playr" << std::endl;
     }
+}
+void PlayerComponent::FishKillListener(IEvent::Ptr event)
+{
+    int FishKillIncrement = std::dynamic_pointer_cast<FishKill>(event)->getData();
+    FishKills += FishKillIncrement;
 }
 void PlayerComponent::CollectibleCollision(string _item)
 {
@@ -72,7 +79,7 @@ void PlayerComponent::GameEnd()
 {
     float       distanceTraveled = m_gameObject.getPosition().x / distancePixeltoM;
     totalScore             = distanceTraveled * 3 + EggScore * 12;
-    std::tuple       eventData(distanceTraveled, EggScore, won, totalScore);
+    std::tuple       eventData(distanceTraveled, EggScore, FishKills, won, totalScore);
     IEvent::Ptr GameOver = std::make_shared<GameOverEvent>(eventData);
     EventBus::getInstance().fireEvent(GameOver);
     EggScore = 0;

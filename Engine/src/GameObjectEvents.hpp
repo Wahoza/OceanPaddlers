@@ -87,8 +87,8 @@ public:
     }
 };
 
-//GameOverEvent: Distance Traveled, Eggs Collected, reached end
-class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, bool, int>>
+//GameOverEvent: Distance Traveled, Eggs Collected, Fish Killed, reached end
+class GameOverEvent final : public BasicDataEvent<std::tuple<float, int, int, bool, int>>
 {
 public:
     using BasicDataEvent::BasicDataEvent;
@@ -245,6 +245,18 @@ public:
     }
 };
 class PowerUP final : public BasicDataEvent<bool>
+{
+public:
+    using BasicDataEvent::BasicDataEvent;
+
+    static const EventType Type;
+
+    EventType getEventType() override
+    {
+        return Type;
+    }
+};
+class FishKill final : public BasicDataEvent<int>
 {
 public:
     using BasicDataEvent::BasicDataEvent;

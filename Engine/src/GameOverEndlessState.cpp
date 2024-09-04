@@ -60,7 +60,13 @@ void GameOverEndlessState::init()
     m_eggsText.setFont(m_font);
     m_eggsText.setString("Eggs collected: " + to_string(eggsCollected));
 
-    m_distanceText.setPosition(ScreenCenter.x, ScreenCenter.y+150);
+    m_fishKillsText.setPosition(ScreenCenter.x, ScreenCenter.y+150);
+    m_fishKillsText.setFillColor(color);
+
+    m_fishKillsText.setFont(m_font);
+    m_fishKillsText.setString("Fish Killed: " + to_string(FishKills));
+
+    m_distanceText.setPosition(ScreenCenter.x, ScreenCenter.y+200);
     m_distanceText.setFillColor(color);
 
     m_distanceText.setFont(m_font);
@@ -68,7 +74,7 @@ void GameOverEndlessState::init()
 
 
     m_totalScoreText.setFont(m_font);
-    m_totalScoreText.setPosition(ScreenCenter.x, ScreenCenter.y + 200);
+    m_totalScoreText.setPosition(ScreenCenter.x, ScreenCenter.y + 250);
     m_totalScoreText.setFillColor(color);
     m_totalScoreText.setString("Total score: " + to_string(totalScore));
 
@@ -112,6 +118,7 @@ void GameOverEndlessState::draw()
     m_game->getWindow().draw(m_eggsText);
     m_game->getWindow().draw(m_distanceText);
     m_game->getWindow().draw(m_totalScoreText);
+    m_game->getWindow().draw(m_fishKillsText);
 
     m_game->getWindow().draw(m_name);
 
@@ -127,8 +134,9 @@ void GameOverEndlessState::updateStats(IEvent::Ptr event)
         distance = std::get<0>(gameOverevent.get()->getData());
 
         eggsCollected = std::get<1>(gameOverevent.get()->getData());
-        won = std::get<2>(gameOverevent.get()->getData());
-        totalScore = std::get<3>(gameOverevent.get()->getData());
+        FishKills = std::get<2>(gameOverevent.get()->getData());
+        won = std::get<3>(gameOverevent.get()->getData());
+        totalScore = std::get<4>(gameOverevent.get()->getData());
     }
 }
 

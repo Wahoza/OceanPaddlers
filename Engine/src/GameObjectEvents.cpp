@@ -24,3 +24,4 @@ constexpr mmt_gd::IEvent::EventType mmt_gd::AttackEvent::Type                   
 constexpr mmt_gd::IEvent::EventType mmt_gd::FishHitSuccess::Type                                 = 0x1434567b;
 constexpr mmt_gd::IEvent::EventType mmt_gd::HealthCollect::Type                                  = 0x2434567b;
 constexpr mmt_gd::IEvent::EventType mmt_gd::PowerUP::Type                                  = 0x3434567b;
+constexpr mmt_gd::IEvent::EventType mmt_gd::FishKill::Type                                  = 0x4434567b;

@@ -249,6 +249,10 @@ void AIController::TakeDamage()
     if (healthPoints <= 0)
     {
         currentState = killed;
+        int  eventData(1);
+        IEvent::Ptr Fish = std::make_shared<FishKill>(eventData);
+        EventBus::getInstance().fireEvent(Fish);
+
         ParticleManager::getInstance()->generateParticlesAroundPoint(m_gameObject.getPosition(),
                                                  6,
                                                  ParticleRadius,

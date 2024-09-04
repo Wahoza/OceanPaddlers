@@ -12,7 +12,7 @@ class PlayerComponent : public IComponent
 {
 //idea: rather then the two rects of the tether refrencing the tether as a player, they both call this component
 public:
-    PlayerComponent(GameObject& gameObject);
+PlayerComponent(GameObject& gameObject);
     void CollectibleCollision(std::string _item); //send Collision Event
     void DamageCollision(); //send Damage Event or GameOver Event
     void GameEnd(); //send GameEnd Event
@@ -25,11 +25,14 @@ public:
     bool init() override;
 
 private:
+    void FishKillListener(IEvent::Ptr event);
+
     sf::Color convertToWhiteOrBlack(const sf::Color& color);
     sf::Color getRandomBrightColor();
 
 
     int  EggScore     = 0;
+    int  FishKills    = 0;
     int  initlives    = 3;
     int  currentlives = 3;
     int  totalScore   = 0;

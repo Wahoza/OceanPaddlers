@@ -16,6 +16,9 @@
 #include "SpriteRenderComponent.hpp"
 #include "PlayerComponent.hpp"
 #include "IEvent.hpp"
+
+#include <cmath>
+
 namespace mmt_gd
 {
 PlayerAttackComponent::PlayerAttackComponent(
@@ -119,7 +122,14 @@ void PlayerAttackComponent::update(const float deltaTime)
         float xAxis = sf::Joystick::getAxisPosition(pID, sf::Joystick::X);
         float yAxis = sf::Joystick::getAxisPosition(pID, sf::Joystick::Y);
 
-        inputVec = {xAxis, yAxis};
+        if (std::abs(xAxis) > 20)
+        {
+            inputVec += Vector2f{xAxis, 0};
+        } 
+        if (std::abs(yAxis) > 20)
+        {
+            inputVec += Vector2f{0, yAxis};
+        }
 
     }
     //std::cout << getGameObject().getComponent<RigidBodyComponent>().get()->GetTether()->getCurrentAngle() << std::endl;
